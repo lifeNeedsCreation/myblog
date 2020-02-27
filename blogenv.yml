@@ -1,0 +1,37 @@
+name: myblog
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - bzip2=1.0.6
+  - ca-certificates=2019.3.9
+  - certifi=2019.3.9
+  - django=2.1.7
+  - django-haystack=2.8.1
+  - libffi=3.2.1
+  - markdown=3.0.1
+  - ncurses=6.1
+  - openssl=1.1.1b
+  - pip=19.0.3
+  - pygments=2.3.1
+  - pymysql=0.8.1
+  - python=3.7.3
+  - pytz=2018.9
+  - readline=7.0
+  - setuptools=40.8.0
+  - sqlite=3.26.0
+  - tk=8.6.9
+  - wheel=0.33.1
+  - whoosh=2.7.4
+  - xz=5.2.4
+  - zlib=1.2.11
+  - pip:
+    - chardet==3.0.4
+    - django-markdownx==2.0.28
+    - idna==2.8
+    - martor==1.4.0
+    - pillow==5.4.1
+    - requests==2.21.0
+    - urllib3==1.24.1
+prefix: /usr/local/anaconda3/envs/myblog
+
