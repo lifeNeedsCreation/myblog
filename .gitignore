@@ -127,3 +127,40 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# python bytecode
+*.py[cod]
+settings_local.py
+manage_local.py
+
+# Vim swap files
+*.swp
+
+# Sphinx files
+docs/_build/
+
+# Log files
+*.log
+.DS_Store
+
+# Coverage files
+.coverage
+
+# Tmp file
+*~
+
+# Local configure file for lzc
+chj*
+
+# other files
+desktop.ini
+*.cfg
+.idea
+*.rdb
+*workspace.xml
+
+# data
+data
+db.sqlite3
+
+

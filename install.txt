@@ -1,0 +1,123 @@
+## 核心服务环境安装
+1.一些依赖(请先安装完依赖，再安装python2.7)
+需要root权限
+yum install pcre pcre-devel pcre-static python-flup openssl openssl-devel gcc-c++ bzip2-devel sqlite-devel libffi-devel libxslt-devel libjpeg-devel freetype-devel httpd-devel lzo-devel zlib zlib-devel libxml2 libxml2-devel python-devel postgresql-devel mysql-devel -y
+
+
+2. 一些工具
+需要root权限
+yum install screen wget vim lrzsz git lzop nc telnet -y
+
+3.安装python2.7
+wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz
+tar xvf Python-2.7.15.tgz
+cd Python-2.7.15
+./configure --prefix=/usr/local/python2
+make
+make install
+创建链接将python指向2.7版本(python默认是指向2.6版本的)
+删除原有的指向2.6的链接，创建新的链接指向2.7
+rm -f /usr/bin/python
+ln -s /usr/local/python2/bin/python /usr/bin/python
+
+4.安装pip
+需要root权限
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+ln -s /usr/local/python2/bin/pip /usr/bin/pip
+
+5.虚拟环境安装
+需要root权限
+* 安装virtualenv 和 virtualenvwrapper
+pip install virtualenv
+pip install virtualenvwrapper
+#创建虚拟环境
+    查看脚本路径
+    which virtualenvwrapper.sh
+    激活
+    source /usr/local/python2/bin/virtualenvwrapper.sh
+    指定虚拟环境目录
+    export WORKON_HOME=/home/chenghongjia/workon_home/
+    创建虚拟环境 recommend
+    mkvirtualenv recommend -p python2.7
+将相关环境变量写入到profile文件
+vim ~/.bash_profile
+追加：
+source /usr/local/python2/bin/virtualenvwrapper.sh (virtualenvwrapper.sh文件的路径)
+export WORKON_HOME=/home/chenghongjia/workon_home/  （虚拟环境目录）
+
+相关命令列表
+workon:列出虚拟环境列表
+
+lsvirtualenv:同上
+
+mkvirtualenv :新建虚拟环境
+
+workon [虚拟环境名称]:切换虚拟环境
+
+rmvirtualenv :删除虚拟环境
+
+deactivate: 离开虚拟环境
+
+6.下载源码
+（需要根据源码在服务器上存放的路径来修改部分代码）
+7.安装相关依赖
+pip install -r /home/dc/chenghj/project/fm_recommend_server/fm_recommend/requirements.txt
+
+收集管理平台的样式
+sed -i 's/\r$//' run_command_online.sh
+./run_command_online.sh collectstatic（每台机器都要添加）
+
+
+8.安装nginx并配置nginx，启动
+wget http://nginx.org/download/nginx-1.8.0.tar.gz
+tar -zxvf nginx-1.8.0.tar.gz
+cd nginx-1.8.0
+./configure
+make
+make install(需要root权限)
+配置ngxin：参考工程中configure目录下的nginx_online.conf文件进行配置
+启动服务：/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+9.django相关操作：
+创建数据库（mysql）表
+python manage_online.py migrate
+python manage_online.py makemigrations datamodel
+python manage_online.py migrate datamodel
+
+创建管理系统的创建超级用户
+python manage_online.py createsuperuser(其中一台机器上操作就可以)
+输入需要创建的用户名和密码即可
+
+10.启动服务
+sed -i 's/\r$//' uwsgi_online.sh
+首次启动：./uwsgi_online.sh start
+后续每次上线新功能的时候只需执行：./uwsgi_online.sh reload 即可 (先把代码拉到本地，哈哈哈哈)
+
+启动uwsgi服务说明：
+1、启动：start
+2、停止：stop
+3、重启：restart(会有停服务的空挡期，因为先停，然后休眠两秒，再启服务，休眠的原因：停服务与启服务之间时间间隔太短，启服务会失败，所以加休眠)
+        reload(不会有停服务的空挡期，但是必须保证服务是运行的才能重新加载，服务如果停止没有运行，执行reload会报错，失败，所以必须先start后才可以执行reload)
+
+
+11.通用安装
+* crond
+12.添加相关的定时任务
+13.添加日志数据落磁盘的脚本
+
+
+注意：所有.sh文件脚本都需要执行如下命令:
+sed -i 's/\r$//' uwsgi_online.sh
+因为不同系统的换行符不一样
+
+
+
+
+
+
+
+
+
+
+
