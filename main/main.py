@@ -106,9 +106,9 @@ if __name__ == "__main__":
     placement = "'" + "','".join(constants.PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension).compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_ctr").compute_data()
     elif kind == "ctr":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension).compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_ctr").compute_data()
     else:
         pass
 

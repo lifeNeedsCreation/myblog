@@ -6,12 +6,13 @@ import datetime
 class CTRData(object):
 
     # 构造函数， 初始化数据
-    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension):
+    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
         self.placement = placement
         self.indicator_dimension = indicator_dimension
+        self.table_name = table_name
 
     def get_data(self, sql):
         res_num = {}
@@ -62,11 +63,10 @@ class CTRData(object):
                                               "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement, json_extract_scalar(data, '$.news_post.id') as news_id from buzzbreak-model-240306.stream_events.news_click where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as click_data"
                                               " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as click_accout_info"
                                               " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON click_accout_info.account_id = memories.account_id where key is not null and value is not null) as result_data1 "
-                                              "where created_at>=updated_at) as result group by placement, key, country_code, value"
-                                    )
+                                              "where created_at>=updated_at) as result group by placement, key, country_code, value")
         # 结果数据存入数据库
         cursor = mysql_client.cursor()
-        inser_sql = "INSERT INTO day_ctr(treatment_name, placement, country_code, dimension, ctr, ctr_union, start_time, end_time, create_time) VALUES"
+        inser_sql = "INSERT INTO " + self.table_name + " (treatment_name, placement, country_code, dimension, ctr, ctr_union, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         flag = False
         for key in impression_data_union.keys():
