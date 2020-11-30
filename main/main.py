@@ -7,6 +7,7 @@ sys.path.append(BASE_DIR)
 from utils import ctr
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
+from utils import constants
 
 
 KIND = {
@@ -101,10 +102,13 @@ if __name__ == "__main__":
     #     print('参数 %s 为：%s' % (i + 1, args[i]))
 
     # 开始数据指标统计
+    country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
+    placement = "'" + "','".join(constants.PLACEMENT) + "'"
+    indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
-        ctr.CTRData(start_time, end_time).compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension).compute_data()
     elif kind == "ctr":
-        ctr.CTRData(start_time, end_time).compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension).compute_data()
     else:
         pass
 

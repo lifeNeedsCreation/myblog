@@ -6,9 +6,12 @@ import datetime
 class CTRData(object):
 
     # 构造函数， 初始化数据
-    def __init__(self, start_time, end_time):
+    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension):
         self.start_time = start_time
         self.end_time = end_time
+        self.country_code = country_code
+        self.placement = placement
+        self.indicator_dimension = indicator_dimension
 
     def get_data(self, sql):
         res_num = {}
