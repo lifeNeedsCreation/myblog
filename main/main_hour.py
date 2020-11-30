@@ -12,12 +12,10 @@ from utils import constants
 
 KIND = {
     "all": 1,
-    "ctr": 1,
+    "ctr_hour": 1,
 }
 
-
-# 周期：天
-
+# 周期：小时
 if __name__ == "__main__":
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  start!")
     argv = sys.argv[1:]
@@ -91,9 +89,9 @@ if __name__ == "__main__":
     # 设置缺省值
     now_time_utc = datetime.datetime.utcnow()
     if not start_time:
-        start_time = now_time_utc - datetime.timedelta(days=1, hours=now_time_utc.hour, minutes=now_time_utc.minute, seconds=now_time_utc.second, microseconds=now_time_utc.microsecond)
+        start_time = now_time_utc - datetime.timedelta(hours=1, minutes=now_time_utc.minute, seconds=now_time_utc.second, microseconds=now_time_utc.microsecond)
     if not end_time:
-        end_time = now_time_utc - datetime.timedelta(hours=now_time_utc.hour, minutes=now_time_utc.minute, seconds=now_time_utc.second, microseconds=now_time_utc.microsecond)
+        end_time = now_time_utc - datetime.timedelta(minutes=now_time_utc.minute, seconds=now_time_utc.second, microseconds=now_time_utc.microsecond)
     if not kind:
         kind = "all"
     if start_time >= end_time:
@@ -109,9 +107,9 @@ if __name__ == "__main__":
     placement = "'" + "','".join(constants.PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_ctr").compute_data()
-    elif kind == "ctr":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_ctr").compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr").compute_data()
+    elif kind == "ctr_hour":
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr").compute_data()
     else:
         pass
 
