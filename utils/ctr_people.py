@@ -3,7 +3,7 @@ from utils.mysql import mysql_client
 import datetime
 
 
-class CTRData(object):
+class CTRPeopleData(object):
 
     # 构造函数， 初始化数据
     """
