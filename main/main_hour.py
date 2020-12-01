@@ -4,7 +4,7 @@ import datetime
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-from utils import ctr
+from utils import ctr, ctr_people
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 from utils import constants
@@ -13,6 +13,7 @@ from utils import constants
 KIND = {
     "all": 1,
     "ctr_hour": 1,
+    "ctr_people_hour": 1,
 }
 
 # 周期：小时
@@ -108,8 +109,11 @@ if __name__ == "__main__":
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr").compute_data()
+        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr_people").compute_data()
     elif kind == "ctr_hour":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr").compute_data()
+    elif kind == "ctr_people_hour":
+        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr_people").compute_data()
     else:
         pass
 
