@@ -47,7 +47,6 @@ class CTRPeopleData(object):
                                    " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as click_accout_info"
                                    " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON click_accout_info.account_id = memories.account_id where key is not null and value is not null) as result "
                                    "where created_at>=updated_at) as result1 group by placement, key, country_code, value")
-        print("click_data")
 
         impression_data = self.get_data("select placement, key, country_code, value,count(*) as num from "
                                         "(select distinct account_id,placement,country_code,key,value from "
@@ -57,7 +56,6 @@ class CTRPeopleData(object):
                                         " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON impression_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as impression_accout_info"
                                         " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON impression_accout_info.account_id = memories.account_id where key is not null and value is not null) as result "
                                         "where created_at>=updated_at) as result1 group by placement, key, country_code, value")
-        print("impression_data")
 
         impression_data_union = self.get_data("select placement, key, country_code, value, count(*) as num from "
                                               "(select distinct account_id, placement, country_code, key, value from "
@@ -74,7 +72,6 @@ class CTRPeopleData(object):
                                               " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as click_accout_info"
                                               " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON click_accout_info.account_id = memories.account_id where key is not null and value is not null) as result_data1 "
                                               "where created_at>=updated_at) as result group by placement, key, country_code, value")
-        print("impression_data_union")
         # 结果数据存入数据库
         cursor = mysql_client.cursor()
         inser_sql = "INSERT INTO " + self.table_name + " (treatment_name, placement, country_code, dimension, ctr, ctr_union, start_time, end_time, create_time) VALUES"
