@@ -108,12 +108,12 @@ if __name__ == "__main__":
     placement = "'" + "','".join(constants.PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr").compute_data()
-        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr_people").compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
+        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people").compute_data()
     elif kind == "ctr_hour":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr").compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
     elif kind == "ctr_people_hour":
-        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_ctr_people").compute_data()
+        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people").compute_data()
     else:
         pass
 
