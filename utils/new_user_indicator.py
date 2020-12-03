@@ -43,8 +43,8 @@ class NewUserIndicator(object):
 
     def get_big_query_sql_user_profile(self, table, field):
         query_str = ""
-        if field == "login":
-            pass
+        if field == "first_time_login_method":
+            query_str = "select distinct id, created_at, country_code, " + field + " from buzzbreak-model-240306.input.accounts where name is not null and created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") +"' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "' and country_code in (" + self.country_code + ")"
         else:
             query_str = "select distinct accounts.id, accounts.created_at, accounts.country_code, profiles." + field + " from " \
                         "(select id, created_at, country_code from buzzbreak-model-240306.input.accounts where name is not null and created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") +"' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "' and country_code in (" + self.country_code + ")) as accounts"\
@@ -97,7 +97,9 @@ class NewUserIndicator(object):
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "gender_input")
         inser_sql, flag = self.get_insert_sql(big_query_sql, "gender_input", flag, inser_sql)
         # 维度:login渠道
-        # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "login")
+        big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "first_time_login_method")
+        big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "first_time_login_method")
+        inser_sql, flag = self.get_insert_sql(big_query_sql, "first_time_login_method", flag, inser_sql)
         # 维度:有无phone number
         # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "phone_No")
         # 结果数据存入数据库
