@@ -117,8 +117,7 @@ if __name__ == "__main__":
             if i == kind:
                 continue
             else:
-                print(i)
-                new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
+                new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(i)[0], KIND.get(i)[1]).compute_data()
     else:
         new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
 
