@@ -101,8 +101,8 @@ class NewUserIndicator(object):
         # 维度:有无phone number
         # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "phone_No")
         # 结果数据存入数据库
-        cursor = mysql_client.cursor()
         if flag:
+            cursor = mysql_client.cursor()
             inser_sql = inser_sql[:len(inser_sql)-1]
             try:
                 # 执行sql语句
@@ -112,8 +112,8 @@ class NewUserIndicator(object):
             except:
                 # 如果发生错误则回滚
                 mysql_client.rollback()
-        if cursor:
-            cursor.close()
+            if cursor:
+                cursor.close()
 
 
 
