@@ -23,7 +23,7 @@ KIND = {
 # 周期：天
 
 if __name__ == "__main__":
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "new user day start!")
+    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " new user day start!")
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
     if len(argv) <= 0:
@@ -117,6 +117,7 @@ if __name__ == "__main__":
             if i == kind:
                 continue
             else:
+                print(i)
                 new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
     else:
         new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
@@ -126,6 +127,6 @@ if __name__ == "__main__":
         bigquery_client.close()
     if mysql_client:
         mysql_client.close()
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "new user day complete!")
+    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " new user day complete!")
 
 
