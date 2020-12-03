@@ -87,16 +87,16 @@ class NewUserIndicator(object):
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
+        flag = False
+        inser_sql = "INSERT INTO " + self.indicator_table + " (country_code, dimension, total_num, people_num, no_people_num, people_percent, no_people_percent, start_time, end_time, create_time) VALUES"
         # 维度:media source
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "media_source")
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "media_source")
-        flag = False
-        inser_sql = "INSERT INTO " + self.indicator_table + " (country_code, dimension, total_num, people_num, no_people_num, people_percent, no_people_percent, start_time, end_time, create_time) VALUES"
         inser_sql, flag = self.get_insert_sql(big_query_sql, "media_source", flag, inser_sql)
-
-
         # 维度:gender_input
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "gender_input")
+        big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "gender_input")
+        inser_sql, flag = self.get_insert_sql(big_query_sql, "gender_input", flag, inser_sql)
         # 维度:login渠道
         # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "login")
         # 维度:有无phone number
