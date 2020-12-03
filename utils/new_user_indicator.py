@@ -42,15 +42,25 @@ class NewUserIndicator(object):
         if field == "login":
             pass
         else:
-            query_str = "select accounts.id, accounts.created_at, accounts.country_code, profiles." + field + " from " \
+            query_str = "select distinct accounts.id, accounts.created_at, accounts.country_code, profiles." + field + " from " \
                         "(select id, created_at, country_code from buzzbreak-model-240306.input.accounts where name is not null and created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") +"' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "' and country_code in (" + self.country_code + ")) as accounts"\
                         " LEFT JOIN " + table + " as profiles on accounts.id=profiles.account_id where account_id is not null"
         return query_str
+
+    def get_big_query_sql_user_behavior(self, sql, field):
+        if self.behavior_table == "buzzbreak-model-240306.partiko.point_transactions":
+            sql = "select distinct id,country_code," + field + ", account_id, purpose from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at, json_extract_scalar(data, '$.purpose') as purpose from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
+        elif self.behavior_table == "buzzbreak-model-240306.partiko.referrals":
+            sql = "select distinct id,country_code," + field + ", referrer_account_id as account_id from (" + sql + ") as accounts_pro LEFT JOIN (select referrer_account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.referrer_account_id"
+        else:
+            sql = "select distinct id,country_code," + field + ", account_id from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
+        return sql
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
         # 维度:media source
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "media_source")
+        big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "media_source")
         # 维度:gender_input
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "gender_input")
         # 维度:login渠道
