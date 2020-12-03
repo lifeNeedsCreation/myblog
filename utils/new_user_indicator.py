@@ -39,6 +39,12 @@ class NewUserIndicator(object):
 
     def get_big_query_sql_user_profile(self, table, field):
         query_str = ""
+        if field == "login":
+            pass
+        else:
+            query_str = "select accounts.id, accounts.created_at, accounts.country_code, profiles." + field + " from " \
+                        "(select id, created_at, country_code from buzzbreak-model-240306.input.accounts where name is not null and created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") +"' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "' and country_code in (" + self.country_code + ")) as accounts"\
+                        " LEFT JOIN " + table + " as profiles on accounts.id=profiles.account_id where account_id is not null"
         return query_str
 
     # 组装查询sql，并将统计计算结果存入mysql
@@ -48,9 +54,9 @@ class NewUserIndicator(object):
         # 维度:gender_input
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "gender_input")
         # 维度:login渠道
-        # big_query_sql = self.get_big_query_sql_user_profile()
+        # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "login")
         # 维度:有无phone number
-        # big_query_sql = self.get_big_query_sql_user_profile()
+        # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "phone_No")
         # 结果数据存入数据库
         cursor = mysql_client.cursor()
         inser_sql = "INSERT INTO " + self.table_name + " (treatment_name, placement, country_code, dimension, ctr, ctr_union, start_time, end_time, create_time) VALUES"

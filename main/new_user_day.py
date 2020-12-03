@@ -111,7 +111,7 @@ if __name__ == "__main__":
     # 开始数据指标统计
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
     # 新用户行为的时间上限
-    limit_time = end_time + datetime.timedelta(days=1)
+    limit_time = end_time + datetime.timedelta(hours=8)
     if kind == "all":
         for i in KIND.keys():
             if i == kind:
