@@ -4,6 +4,7 @@ import datetime
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
+from utils import new_user_indicator
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 from utils import constants
@@ -11,11 +12,11 @@ from utils import constants
 
 KIND = {
     "all": 1,
-    "is_click_video": 1,
-    "is_click_news": 1,
-    "is_get_integral": 1,
-    "is_withdraw": 1,
-    "is_invite_friends": 1,
+    "is_click_video": ["buzzbreak-model-240306.stream_events.video_click", "new_user_day_click_video"],
+    "is_click_news": ["buzzbreak-model-240306.stream_events.news_click", "new_user_day_click_news"],
+    "is_get_integral": ["buzzbreak-model-240306.partiko.point_transactions", "new_user_day_integral"],
+    "is_withdraw": ["buzzbreak-model-240306.partiko.withdraw_transactions", "new_user_day_withdraw"],
+    "is_invite_friends": ["buzzbreak-model-240306.partiko.referrals", "new_user_day_invite_friends"],
 }
 
 
@@ -109,21 +110,18 @@ if __name__ == "__main__":
 
     # 开始数据指标统计
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
+    # 新用户行为的时间上限
+    limit_time = end_time + datetime.timedelta(days=1)
     if kind == "all":
-        pass
-    elif kind == "is_click_video":
-        pass
-    elif kind == "is_click_news":
-        pass
-    elif kind == "is_get_integral":
-        pass
-    elif kind == "is_withdraw":
-        pass
-    elif kind == "is_invite_friends":
-        pass
+        for i in KIND.keys():
+            if i == kind:
+                continue
+            else:
+                new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
     else:
-        pass
+        new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
 
+    # 关闭相关数据库的客户端
     if bigquery_client:
         bigquery_client.close()
     if mysql_client:
