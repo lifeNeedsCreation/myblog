@@ -49,11 +49,11 @@ class NewUserIndicator(object):
 
     def get_big_query_sql_user_behavior(self, sql, field):
         if self.behavior_table == "buzzbreak-model-240306.partiko.point_transactions":
-            sql = "select distinct id,country_code," + field + ", account_id, purpose from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at, json_extract_scalar(data, '$.purpose') as purpose from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
+            sql = "select distinct id,country_code," + field + " from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at, json_extract_scalar(data, '$.purpose') as purpose from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
         elif self.behavior_table == "buzzbreak-model-240306.partiko.referrals":
-            sql = "select distinct id,country_code," + field + ", referrer_account_id as account_id from (" + sql + ") as accounts_pro LEFT JOIN (select referrer_account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.referrer_account_id"
+            sql = "select distinct id,country_code," + field + " from (" + sql + ") as accounts_pro LEFT JOIN (select referrer_account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.referrer_account_id"
         else:
-            sql = "select distinct id,country_code," + field + ", account_id from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
+            sql = "select distinct id,country_code," + field + " from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
         return sql
 
     # 组装查询sql，并将统计计算结果存入mysql
@@ -61,6 +61,17 @@ class NewUserIndicator(object):
         # 维度:media source
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "media_source")
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "media_source")
+        if self.behavior_table == "buzzbreak-model-240306.partiko.point_transactions":
+            big_query_sql_yes = "select country_code,media_source,count(*) as num from (" + big_query_sql + " where behavior.purpose in ('immersive_video','read_news')) as result group by country_code, media_source"
+            big_query_sql_no = "select country_code,media_source,count(*) as num from (" + big_query_sql + " where behavior.purpose not in ('immersive_video','read_news')) as result group by country_code, media_source"
+        elif self.behavior_table == "buzzbreak-model-240306.partiko.referrals":
+            big_query_sql_yes = "select country_code,media_source,count(*) as num from (" + big_query_sql + " where behavior.referrer_account_id is not null) as result group by country_code, media_source"
+            big_query_sql_no = "select country_code,media_source,count(*) as num from (" + big_query_sql + " where behavior.referrer_account_id is null) as result group by country_code, media_source"
+        else:
+            big_query_sql_yes = "select country_code,media_source,count(*) as num from (" + big_query_sql + " where behavior.account_id is not null) as result group by country_code, media_source"
+            big_query_sql_no = "select country_code,media_source,count(*) as num from (" + big_query_sql + " where behavior.account_id is null) as result group by country_code, media_source"
+        data_yes = self.get_data(big_query_sql_yes)
+        data_no = self.get_data(big_query_sql_no)
         # 维度:gender_input
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "gender_input")
         # 维度:login渠道
