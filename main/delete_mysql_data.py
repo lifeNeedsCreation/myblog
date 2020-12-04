@@ -43,11 +43,23 @@ if __name__ == "__main__":
     # 设置缺省值
     if not days:
         days = 60
+    query_sql = "show tables from indicator_data"
+    cursor = mysql_client.cursor()
+    try:
+        # 执行sql语句
+        tables_num = cursor.execute(query_sql)
+        print(tables_num)
+        for i in cursor.fetchall():
+            print(i)
+            for k, v in i.items():
+                print(k)
+                print("table name:" + v)
+    except:
+        # 如果发生错误则回滚
+        mysql_client.rollback()
 
     if mysql_client:
         mysql_client.close()
-    print(days)
-    print(type(days))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " delete data complete!")
 
 
