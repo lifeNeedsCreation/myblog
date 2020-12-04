@@ -55,9 +55,10 @@ if __name__ == "__main__":
                 print(k)
                 print("table name:" + v)
     except:
-        # 如果发生错误则回滚
-        mysql_client.rollback()
+        print("mysql operate except")
 
+    if cursor:
+        cursor.close()
     if mysql_client:
         mysql_client.close()
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " delete data complete!")
