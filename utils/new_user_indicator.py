@@ -2,6 +2,7 @@
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 import datetime
+import sys
 
 
 class NewUserIndicator(object):
@@ -33,6 +34,8 @@ class NewUserIndicator(object):
             dimension = row[field]
             if not dimension or dimension == "null":
                 dimension = field + ":null"
+            else:
+                dimension = field + ":" + dimension
             num = row["num"]
             if dimension and country_code:
                 key = country_code + "&&" + dimension
@@ -46,10 +49,15 @@ class NewUserIndicator(object):
         query_str = ""
         if field == "first_time_login_method":
             query_str = "select distinct id, created_at, country_code, " + field + " from buzzbreak-model-240306.input.accounts where name is not null and created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") +"' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "' and country_code in (" + self.country_code + ")"
-        else:
+        elif table == "buzzbreak-model-240306.partiko.account_profiles":
             query_str = "select distinct accounts.id, accounts.created_at, accounts.country_code, profiles." + field + " from " \
                         "(select id, created_at, country_code from buzzbreak-model-240306.input.accounts where name is not null and created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") +"' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "' and country_code in (" + self.country_code + ")) as accounts"\
-                        " LEFT JOIN " + table + " as profiles on accounts.id=profiles.account_id where account_id is not null"
+                        " LEFT JOIN (select distinct account_profiles.* from " + table + " as account_profiles inner join (select account_id, max(updated_at) as updated_at_max from " + table + " group by account_id) as a on account_profiles.account_id=a.account_id and account_profiles.updated_at=a.updated_at_max) as profiles on accounts.id=profiles.account_id where profiles.account_id is not null"
+        else:
+            print(table)
+            print(field)
+            print("相关信息有误")
+            sys.exit(2)
         return query_str
 
     def get_big_query_sql_user_behavior(self, sql, field):
