@@ -26,7 +26,6 @@ class NewUserIndicator(object):
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql, field):
-        print(sql)
         res_num = {}
         bq_job = bigquery_client.query(sql).to_dataframe()
         for index, row in bq_job.iterrows():
@@ -95,7 +94,6 @@ class NewUserIndicator(object):
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
-        print(self.indicator_table)
         flag = False
         inser_sql = "INSERT INTO " + self.indicator_table + " (country_code, dimension, total_num, people_num, no_people_num, people_percent, no_people_percent, start_time, end_time, create_time) VALUES"
         # 维度:media source
@@ -110,24 +108,22 @@ class NewUserIndicator(object):
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "first_time_login_method")
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "first_time_login_method")
         inser_sql, flag = self.get_insert_sql(big_query_sql, "first_time_login_method", flag, inser_sql)
-        print(inser_sql)
-        print(flag)
         # 维度:有无phone number
         # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "phone_No")
         # 结果数据存入数据库
-        # if flag:
-        #     cursor = mysql_client.cursor()
-        #     inser_sql = inser_sql[:len(inser_sql)-1]
-        #     try:
-        #         # 执行sql语句
-        #         cursor.execute(inser_sql)
-        #         # 提交到数据库执行
-        #         mysql_client.commit()
-        #     except:
-        #         # 如果发生错误则回滚
-        #         mysql_client.rollback()
-        #     if cursor:
-        #         cursor.close()
+        if flag:
+            cursor = mysql_client.cursor()
+            inser_sql = inser_sql[:len(inser_sql)-1]
+            try:
+                # 执行sql语句
+                cursor.execute(inser_sql)
+                # 提交到数据库执行
+                mysql_client.commit()
+            except:
+                # 如果发生错误则回滚
+                mysql_client.rollback()
+            if cursor:
+                cursor.close()
 
 
 
