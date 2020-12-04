@@ -46,6 +46,8 @@ if __name__ == "__main__":
 
     if mysql_client:
         mysql_client.close()
+    print(days)
+    print(type(days))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " delete data complete!")
 
 
