@@ -53,9 +53,8 @@ if __name__ == "__main__":
             table_list.append(i[0])
     except:
         print("mysql operate except")
-    print(len(table_list))
-    for i in table_list:
-        print(i)
+    for table_name in table_list:
+        print(table_name)
     if cursor:
         cursor.close()
     if mysql_client:
