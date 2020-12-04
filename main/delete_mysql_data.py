@@ -45,16 +45,17 @@ if __name__ == "__main__":
         days = 60
     query_sql = "show tables from indicator_data"
     cursor = mysql_client.cursor()
+    table_list = list()
     try:
         # 执行sql语句
         tables_num = cursor.execute(query_sql)
-        print(tables_num)
         for i in cursor.fetchall():
-            print(i)
-            print(type(i))
+            table_list.append(i[0])
     except:
         print("mysql operate except")
-
+    print(len(table_list))
+    for i in table_list:
+        print(i)
     if cursor:
         cursor.close()
     if mysql_client:
