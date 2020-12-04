@@ -3,9 +3,9 @@ import sys
 import getopt
 import datetime
 import os
-from utils.mysql import mysql_client
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
+from utils.mysql import mysql_client
 
 
 # 定时删除mysql库中数据
