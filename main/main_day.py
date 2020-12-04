@@ -1,19 +1,21 @@
+import os
 import sys
 import getopt
 import datetime
-import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-from utils import ctr, ctr_people
+
+from utils import constants
+from utils import ctr, ctr_people, new_users_retention_news_event
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
-from utils import constants
-
 
 KIND = {
     "all": 1,
     "ctr": 1,
     "ctr_people": 1,
+    "new_users_retention_news_event": 1
 }
 
 
@@ -112,10 +114,13 @@ if __name__ == "__main__":
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr").compute_data()
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr_people").compute_data()
+        new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").country_code()
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr").compute_data()
     elif kind == "ctr_people":
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr_people").compute_data()
+    elif kind == "new_users_retention_news_event":
+        new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").country_code()
     else:
         pass
 
