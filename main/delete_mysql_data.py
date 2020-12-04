@@ -51,9 +51,7 @@ if __name__ == "__main__":
         print(tables_num)
         for i in cursor.fetchall():
             print(i)
-            for k, v in i.items():
-                print(k)
-                print("table name:" + v)
+            print(type(i))
     except:
         print("mysql operate except")
 
