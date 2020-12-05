@@ -53,8 +53,10 @@ if __name__ == "__main__":
             table_list.append(i[0])
     except:
         print("mysql operate except")
+    now_time_utc = datetime.datetime.utcnow()
+    limit_time =
     for table_name in table_list:
-        print(table_name)
+        pass
     if cursor:
         cursor.close()
     if mysql_client:
