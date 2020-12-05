@@ -61,7 +61,8 @@ if __name__ == "__main__":
         print(table_name)
         try:
             cursor.execute(sql_str)
-            cursor.commit()
+            print(cursor.rowcount)
+            mysql_client.commit()
         except Exception as e:
             print(sql_str)
             print("delete table:" + table_name + " data,operate except")
