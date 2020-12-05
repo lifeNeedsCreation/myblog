@@ -22,7 +22,7 @@ class NewUsersRetentionNewsEvent:
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
-        df_result = bigquery_client(sql).to_dataframe()
+        df_result = bigquery_client.query(sql).to_dataframe()
         fields = [
             'country_code',
             'key',
@@ -79,9 +79,9 @@ class NewUsersRetentionNewsEvent:
             select
             distinct country_code,key,value,created_date,initial_event,retention_event,date,date_diff,initial_users,retention_users,retention_rate
             from (
-            (select i.country_code,i.key,i.value,i.created_date,'news_event' as initial_event,'open_event' as retention_event,date,date_diff,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_with_news_event_count as i left join retention_with_open_event_count as r on i.country_code=r.country_code and i.key=r.key and i.value=r.value and i.created_date=r.created_date)
+            (select i.country_code,i.key,i.value,i.created_date,'news_event' as initial_event,'open_event' as retention_event,date,date_diff,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_with_news_event_count as i inner join retention_with_open_event_count as r on i.country_code=r.country_code and i.key=r.key and i.value=r.value and i.created_date=r.created_date)
             union all
-            (select i.country_code,i.key,i.value,i.created_date,'news_event' as initial_event,'news_event' as retention_event,date,date_diff,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_with_news_event_count as i left join retention_with_news_event_count as r on i.country_code=r.country_code and i.key=r.key and i.value=r.value and i.created_date=r.created_date)
+            (select i.country_code,i.key,i.value,i.created_date,'news_event' as initial_event,'news_event' as retention_event,date,date_diff,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_with_news_event_count as i inner join retention_with_news_event_count as r on i.country_code=r.country_code and i.key=r.key and i.value=r.value and i.created_date=r.created_date)
             )
             '''
         retention_data = self.get_data(query)
