@@ -53,7 +53,7 @@ if __name__ == "__main__":
             table_list.append(i[0])
     except Exception as e:
         print("mysql operate except")
-        print(e.msg)
+        print(e.message)
     now_time_utc = datetime.datetime.utcnow()
     limit_time = now_time_utc - datetime.timedelta(days=days, hours=now_time_utc.hour, minutes=now_time_utc.minute, seconds=now_time_utc.second, microseconds=now_time_utc.microsecond)
     for table_name in table_list:
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(sql_str)
             print("delete table:" + table_name + " data,operate except")
-            print(e.msg)
+            print(e.message)
     if cursor:
         cursor.close()
     if mysql_client:
