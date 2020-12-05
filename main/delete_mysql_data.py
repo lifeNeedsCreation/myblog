@@ -57,6 +57,7 @@ if __name__ == "__main__":
     limit_time = now_time_utc - datetime.timedelta(days=days, hours=now_time_utc.hour, minutes=now_time_utc.minute, seconds=now_time_utc.second, microseconds=now_time_utc.microsecond)
     for table_name in table_list:
         sql_str = "DELETE FROM " + table_name + " where create_time<'" + limit_time.strftime("%Y-%m-%d %H:%M:%S") + "'"
+        print(table_name)
         try:
             cursor.execute(sql_str)
             cursor.commit()
