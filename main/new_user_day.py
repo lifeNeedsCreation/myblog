@@ -11,12 +11,12 @@ from utils import constants
 
 
 KIND = {
-    "all": 1,
-    "is_click_video": ["buzzbreak-model-240306.stream_events.video_click", "new_user_day_click_video"],
-    "is_click_news": ["buzzbreak-model-240306.stream_events.news_click", "new_user_day_click_news"],
-    "is_get_integral": ["buzzbreak-model-240306.partiko.point_transactions", "new_user_day_integral"],
-    "is_withdraw": ["buzzbreak-model-240306.partiko.withdraw_transactions", "new_user_day_withdraw"],
-    "is_invite_friends": ["buzzbreak-model-240306.partiko.referrals", "new_user_day_invite_friends"],
+    "all": 1,    # 新用户所有指标
+    "is_click_video": ["buzzbreak-model-240306.stream_events.video_click", "new_user_day_click_video"],   # 新用户点击视频指标
+    "is_click_news": ["buzzbreak-model-240306.stream_events.news_click", "new_user_day_click_news"],     # 新用户点击新闻指标
+    "is_get_integral": ["buzzbreak-model-240306.partiko.point_transactions", "new_user_day_integral"],   # 新用户积分指标
+    "is_withdraw": ["buzzbreak-model-240306.partiko.withdraw_transactions", "new_user_day_withdraw"],   # 新用户提现指标
+    "is_invite_friends": ["buzzbreak-model-240306.partiko.referrals", "new_user_day_invite_friends"],   # 新用户邀请好友指标
 }
 
 

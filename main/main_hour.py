@@ -11,9 +11,9 @@ from utils import constants
 
 
 KIND = {
-    "all": 1,
-    "ctr_hour": 1,
-    "ctr_people_hour": 1,
+    "all": 1,   # 所有指标
+    "ctr_hour": 1,   # 新闻ctr
+    "ctr_people_hour": 1,   # 新闻click_user_ratio
 }
 
 # 周期：小时
