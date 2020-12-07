@@ -4,7 +4,7 @@ import datetime
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-from utils import ctr, ctr_people
+from utils import ctr, ctr_people, video_ctr
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 from utils import constants
@@ -14,6 +14,7 @@ KIND = {
     "all": 1,   # 所有指标
     "ctr_hour": 1,   # 新闻ctr
     "ctr_people_hour": 1,   # 新闻click_user_ratio
+    "video_ctr_hour": 1,  # 视频ctr
 }
 
 # 周期：小时
@@ -106,6 +107,7 @@ if __name__ == "__main__":
     # 开始数据指标统计
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
     placement = "'" + "','".join(constants.PLACEMENT) + "'"
+    video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
@@ -114,6 +116,8 @@ if __name__ == "__main__":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
     elif kind == "ctr_people_hour":
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people").compute_data()
+    elif kind == "video_ctr_hour":
+        video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr").compute_data()
     else:
         pass
 
