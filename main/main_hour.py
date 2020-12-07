@@ -112,6 +112,7 @@ if __name__ == "__main__":
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people").compute_data()
+        video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr").compute_data()
     elif kind == "ctr_hour":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
     elif kind == "ctr_people_hour":
