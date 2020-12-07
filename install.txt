@@ -121,3 +121,23 @@ sed -i 's/\r$//' uwsgi_online.sh
 
 
 
+                      创建新用户：useradd chenghj
+                      给新用户设置密码 passwd chenghj
+                      切换到新用户 su chenghj
+                      创建ssh密钥存放的路径以及文件：
+                      mkdir ~/.ssh
+                      vim  ~/.ssh/authorized_keys
+                      并赋予权限
+                      chmod 700 ~/.ssh
+                      chmod 600 ~/.ssh/authorized_keys
+
+                       创建密钥：
+                       ssh-keygen -t rsa
+                       回车，此时输入密钥文件的名字，再回车，再输入要设置的密码，回车，再一次输入确认密码。
+                       公钥文件（.pub文件）内容拷贝到服务器上~/.ssh/authorized_keys文件中
+                       私钥和公钥文件拷贝到客户端/Users/buzzbreak/.ssh/ (~/.ssh/)文件夹中（下），/Users/buzzbreak/为当前用户的目录，可以用~/来替代
+
+
+
+
+
