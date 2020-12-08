@@ -7,9 +7,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from utils import constants
-from utils import ctr, ctr_people, new_users_retention_news_event, video_ctr, video_ctr_people, retention_tab_impression
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
+from utils import ctr
+from utils import ctr_people
+from utils import video_ctr
+from utils import video_ctr_people
+from utils import new_users_retention_news_event
+from utils import new_users_retention_tab_impression
+from utils import experiment_new_users_retention_tab_impression
 
 # 指标列表
 KIND = {
@@ -19,6 +25,8 @@ KIND = {
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
+    "new_users_retention_tab_impression": 1,    # tab_impression 新用户留存
+    "experiment_new_users_retention_tab_impression": 1,     # tab_impression 实验中新用户留存
 }
 
 
@@ -121,6 +129,8 @@ if __name__ == "__main__":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr").compute_data()
         video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
+        new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, 'new_users_retention_tab_impression').compute_data()
+        experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr").compute_data()
     elif kind == "ctr_people":
@@ -131,8 +141,10 @@ if __name__ == "__main__":
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr").compute_data()
     elif kind == "video_ctr_people":
         video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
-    elif kind == '':
-        retention_tab_impression.RetentionTabImpression(start_time, end_time, country_code, 'retention_tab_impression')
+    elif kind == 'new_users_retention_tab_impression':
+        new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, 'new_users_retention_tab_impression').compute_data()
+    elif kind == 'experiment_new_users_retention_tab_impression':
+        experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
     else:
         pass
 
