@@ -7,16 +7,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from utils import constants
-from utils import ctr, ctr_people, new_users_retention_news_event, video_ctr
+from utils import ctr, ctr_people, new_users_retention_news_event, video_ctr, video_ctr_people
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 
+# 指标列表
 KIND = {
     "all": 1,   # 所有指标
     "ctr": 1,   # 新闻ctr
     "ctr_people": 1,  # 新闻 click_user_ratio
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
+    "video_ctr_people": 1,   # 视频 click_user_ratio
 }
 
 
@@ -126,6 +128,8 @@ if __name__ == "__main__":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
     elif kind == "video_ctr":
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr").compute_data()
+    elif kind == "video_ctr_people":
+        video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
     else:
         pass
 
