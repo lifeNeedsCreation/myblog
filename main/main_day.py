@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from utils import constants
-from utils import ctr, ctr_people, new_users_retention_news_event, video_ctr, video_ctr_people
+from utils import ctr, ctr_people, new_users_retention_news_event, video_ctr, video_ctr_people, retention_tab_impression
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 
@@ -131,6 +131,8 @@ if __name__ == "__main__":
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr").compute_data()
     elif kind == "video_ctr_people":
         video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
+    elif kind == '':
+        retention_tab_impression.RetentionTabImpression(start_time, end_time, country_code, 'retention_tab_impression')
     else:
         pass
 
