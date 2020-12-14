@@ -16,6 +16,7 @@ from utils import video_ctr_people
 from utils import new_users_retention_news_event
 from utils import new_users_retention_tab_impression
 from utils import experiment_new_users_retention_tab_impression
+from utils import partiko_experiment_average_of_invites
 
 # 指标列表
 KIND = {
@@ -27,6 +28,7 @@ KIND = {
     "video_ctr_people": 1,   # 视频 click_user_ratio
     "new_users_retention_tab_impression": 1,    # tab_impression 新用户留存
     "experiment_new_users_retention_tab_impression": 1,     # tab_impression 实验中新用户留存
+    "partiko_experiment_average_of_invites": 1,     # partiko.experiment 实验中的 平均邀请人数
 }
 
 
@@ -145,6 +147,8 @@ if __name__ == "__main__":
         new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, 'new_users_retention_tab_impression').compute_data()
     elif kind == 'experiment_new_users_retention_tab_impression':
         experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
+    elif kind == 'partiko_experiment_average_of_invites':
+        partiko_experiment_average_of_invites.PartikoExperimentAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_experiment_average_of_invites').compute_data()
     else:
         pass
 
