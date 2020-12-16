@@ -4,7 +4,7 @@ from utils.mysql import mysql_client
 import datetime
 
 
-class VideoCTRPeopleData(object):
+class NewUserVideoCTRPeopleData(object):
 
     # 构造函数， 初始化数据
     """
@@ -39,12 +39,13 @@ class VideoCTRPeopleData(object):
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
+        time_limit = datetime.datetime.utcnow()
         click_data = self.get_data("select placement, key, country_code, value,count(*) as num from "
                                    "(select distinct account_id,placement,country_code,key,value from "
                                    "(select click_accout_info.account_id, created_at, placement, country_code, key, value, updated_at from "
                                    "(select account_id, click_data.created_at, placement, country_code from "
-                                   "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_click where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as click_data "
-                                   " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as click_accout_info"
+                                   "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_click where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + time_limit.strftime("%Y-%m-%d %H:%M:%S") + "') as click_data "
+                                   " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ") and acounts.created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and acounts.created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as click_accout_info"
                                    " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON click_accout_info.account_id = memories.account_id where key is not null and value is not null) as result "
                                    "where created_at>=updated_at) as result1 group by placement, key, country_code, value")
 
@@ -52,8 +53,8 @@ class VideoCTRPeopleData(object):
                                         "(select distinct account_id,placement,country_code,key,value from "
                                         "(select impression_accout_info.account_id, created_at, placement, country_code, key, value, updated_at from "
                                         "(select account_id, impression_data.created_at, placement, country_code  from "
-                                        "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_impression where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as impression_data"
-                                        " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON impression_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as impression_accout_info"
+                                        "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_impression where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + time_limit.strftime("%Y-%m-%d %H:%M:%S") + "') as impression_data"
+                                        " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON impression_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ") and acounts.created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and acounts.created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as impression_accout_info"
                                         " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON impression_accout_info.account_id = memories.account_id where key is not null and value is not null) as result "
                                         "where created_at>=updated_at) as result1 group by placement, key, country_code, value")
 
@@ -61,15 +62,15 @@ class VideoCTRPeopleData(object):
                                               "(select distinct account_id, placement, country_code, key, value from "
                                               "(select impression_accout_info.account_id, created_at, placement, country_code, key, value, updated_at from "
                                               "(select account_id, impression_data.created_at, placement, country_code  from "
-                                              "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_impression where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as impression_data"
-                                              " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON impression_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as impression_accout_info"
+                                              "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_impression where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + time_limit.strftime("%Y-%m-%d %H:%M:%S") + "') as impression_data"
+                                              " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON impression_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ") and acounts.created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and acounts.created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as impression_accout_info"
                                               " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON impression_accout_info.account_id = memories.account_id where key is not null and value is not null) as result_data "
                                               "where created_at>=updated_at UNION DISTINCT "
                                               "select distinct account_id, placement, country_code, key, value from "
                                               "(select click_accout_info.account_id, created_at, placement, country_code, key, value, updated_at from "
                                               "(select account_id, click_data.created_at, placement, country_code from "
-                                              "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_click where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as click_data"
-                                              " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ")) as click_accout_info"
+                                              "(select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from buzzbreak-model-240306.stream_events.video_click where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + time_limit.strftime("%Y-%m-%d %H:%M:%S") + "') as click_data"
+                                              " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON click_data.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ") and placement in (" + self.placement + ") and acounts.created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and acounts.created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as click_accout_info"
                                               " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON click_accout_info.account_id = memories.account_id where key is not null and value is not null) as result_data1 "
                                               "where created_at>=updated_at) as result group by placement, key, country_code, value")
         # 结果数据存入数据库
