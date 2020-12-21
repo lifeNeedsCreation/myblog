@@ -23,6 +23,7 @@ class NewUsersRetentionNewsEvent:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         df_result = bigquery_client.query(sql).to_dataframe()
+        print(df_result)
         fields = [
             'country_code',
             'key',
@@ -99,7 +100,8 @@ class NewUsersRetentionNewsEvent:
             cursor.execute(insert_sql)
             # 提交到数据库执行
             mysql_client.commit()
-        except:
+        except Exception as e:
+            print(e)
             # 如果发生错误则回滚
             mysql_client.rollback()
         if cursor:
