@@ -20,6 +20,7 @@ from utils import partiko_experiment_average_of_invites
 from utils import partiko_memories_user_time_average_of_duration
 from utils import new_user_news_ctr_people
 from utils import new_user_video_ctr_people
+from utils import push_retention
 
 # 指标列表
 KIND = {
@@ -35,6 +36,7 @@ KIND = {
     "partiko_memories_user_time_average_of_duration": 1,     # partiko.memories 实验中 用户在各个页面的停留时间
     "new_user_news_ctr_people": 1,  # 新用户 新闻 click_user_ratio
     "new_user_video_ctr_people": 1,  # 新用户 视频 click_user_ratio
+    "push_tention": 1,
 }
 
 
@@ -165,6 +167,8 @@ if __name__ == "__main__":
         new_user_news_ctr_people.NewUserCTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_ctr_people").compute_data()
     elif kind == "new_user_video_ctr_people":
         new_user_video_ctr_people.NewUserVideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_ctr_people").compute_data()
+    elif kind == "push_tention":
+        push_retention.PushRetentionData(start_time, end_time, country_code, indicator_dimension, "push_tention").compute_data()
     else:
         pass
 
