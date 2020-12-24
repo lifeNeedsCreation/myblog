@@ -98,8 +98,6 @@ class NewsCtrNotificationOldUserData(object):
             values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(round(click_num/received_num, 5)) + "'," + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             insert_sql += values_sql
             flag = True
-        print("==========================")
-        print("insert_sql", insert_sql)
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
             try:
@@ -107,12 +105,10 @@ class NewsCtrNotificationOldUserData(object):
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
-                print("正确执行sql")
-            except Exception as msg:
+            except Exception as e:
                 # 如果发生错误则回滚
+                print("错误信息：", e)
                 mysql_client.rollback()
-                print(msg)
-                print("错误回滚sql")
 
         if cursor:
             cursor.close()

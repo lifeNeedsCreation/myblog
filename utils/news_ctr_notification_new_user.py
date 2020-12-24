@@ -43,8 +43,6 @@ class NewsCtrNotificationNewUserData(object):
             num = row["num"]
             if treatment_name and country_code and dimension:
                 res_num[treatment_name + "&&" + country_code + "&&" + dimension] =num
-        print("==========================")
-        print("res_num", res_num)
         return res_num
 
     # 组装查询 sql，并统计计算结果存入 mysql
@@ -90,28 +88,18 @@ class NewsCtrNotificationNewUserData(object):
         # 构造 sql
         for key in received_data.keys():
             click_num = click_data.get(key, 0)
-            print("==========================")
-            print("click_num", click_num)
             received_num = received_data.get(key, 0)
-            print("==========================")
-            print("received_num", received_num)
             
             if received_num < 0:
                 continue
             temp_data = key.split("&&")
-            print("==========================")
-            print("temp_data", temp_data)
             if len(temp_data) < 3:
                 continue
             # 拼接 sql values
             values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(round(click_num/received_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
-            print("==========================")
-            print("values_sql", values_sql)
             insert_sql += values_sql
             flag = True
 
-        print("==========================")
-        print("insert_sql", insert_sql)
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
             try:
@@ -119,12 +107,10 @@ class NewsCtrNotificationNewUserData(object):
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
-                print("正确执行sql")
-            except:
+            except Exception as e:
                 # 如果发生错误则回滚
+                print("错误信息：", e)
                 mysql_client.rollback()
-                print("错误回滚sql")
-
 
         if cursor:
             cursor.close()
