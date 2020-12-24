@@ -81,7 +81,7 @@ class NewsCtrNotificationOldUserData(object):
 
         ## 结果存入数据库
         cursor = mysql_client.cursor()
-        insert_sql = "INSERT INTO" + self.table_name + "(treatment_name, country_code, dimension, ctr, start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.table_name + "(treatment_name, country_code, dimension, ctr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         # sql 执行标识
         flag = False
