@@ -90,7 +90,12 @@ class NewsCtrNotificationNewUserData(object):
         # 构造 sql
         for key in received_data.keys():
             click_num = click_data.get(key, 0)
+            print("==========================")
+            print("click_num", click_num)
             received_num = received_data.get(key, 0)
+            print("==========================")
+            print("received_num", received_num)
+            
             if received_num < 0:
                 continue
             temp_data = key.split("&&")
