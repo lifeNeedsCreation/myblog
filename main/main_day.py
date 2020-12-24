@@ -105,6 +105,7 @@ if __name__ == "__main__":
         elif opt in ("-k", "--kind"):
             kind = arg
             if kind not in KIND:
+                print(kind)
                 print(params_msg)
                 print("option -k / --kind:该参数取值错误，请查看 -h / --help")
                 sys.exit(2)
