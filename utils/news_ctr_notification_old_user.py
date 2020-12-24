@@ -107,9 +107,11 @@ class NewsCtrNotificationOldUserData(object):
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
+                print("正确执行sql")
             except:
                 # 如果发生错误则回滚
                 mysql_client.rollback()
+                print("错误回滚sql")
 
         if cursor:
             cursor.close()
