@@ -43,6 +43,7 @@ class NewsCtrNotificationNewUserData(object):
             num = row["num"]
             if treatment_name and country_code and dimension:
                 res_num[treatment_name + "&&" + country_code + "&&" + dimension] =num
+        print("==========================")
         print("res_num", res_num)
         return res_num
 
@@ -82,7 +83,7 @@ class NewsCtrNotificationNewUserData(object):
 
         ## 结果存入数据库
         cursor = mysql_client.cursor()
-        insert_sql = "INSERT INTO" + self.table_name + "(treatment_name, country_code, dimension, ctr, start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.table_name + "(treatment_name, country_code, dimension, ctr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         # sql 执行标识
         flag = False
@@ -97,9 +98,12 @@ class NewsCtrNotificationNewUserData(object):
                 continue
             # 拼接 sql values
             values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + str(round(click_num/received_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            print("==========================")
+            print("values_sql", values_sql)
             insert_sql += values_sql
             flag = True
 
+        print("==========================")
         print("insert_sql", insert_sql)
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
