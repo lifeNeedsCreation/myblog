@@ -105,7 +105,6 @@ if __name__ == "__main__":
         elif opt in ("-k", "--kind"):
             kind = arg
             if kind not in KIND:
-                print(kind)
                 print(params_msg)
                 print("option -k / --kind:该参数取值错误，请查看 -h / --help")
                 sys.exit(2)
@@ -165,10 +164,10 @@ if __name__ == "__main__":
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr_people").compute_data()
     elif kind == "news_ctr_notification_new_user":
         print("进入 kind")
-        news_ctr_notification_new_user.NewsCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_new_user")
+        news_ctr_notification_new_user.NewsCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_new_user").compute_data()
         print("出来 kind")
     elif kind == "news_ctr_notification_old_user":
-        news_ctr_notification_old_user.NewsCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_old_user")
+        news_ctr_notification_old_user.NewsCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_old_user").compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
     elif kind == "video_ctr":
