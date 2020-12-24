@@ -43,6 +43,7 @@ class NewsCtrNotificationNewUserData(object):
             num = row["num"]
             if treatment_name and country_code and dimension:
                 res_num[treatment_name + "&&" + country_code + "&&" + dimension] =num
+        print("res_num", res_num)
         return res_num
 
     # 组装查询 sql，并统计计算结果存入 mysql
@@ -99,6 +100,7 @@ class NewsCtrNotificationNewUserData(object):
             insert_sql += values_sql
             flag = True
 
+        print("insert_sql", insert_sql)
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
             try:
@@ -106,9 +108,12 @@ class NewsCtrNotificationNewUserData(object):
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
+                print("正确执行sql")
             except:
                 # 如果发生错误则回滚
                 mysql_client.rollback()
+                print("错误回滚sql")
+
 
         if cursor:
             cursor.close()

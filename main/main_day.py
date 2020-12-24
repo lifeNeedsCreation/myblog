@@ -163,7 +163,9 @@ if __name__ == "__main__":
     elif kind == "ctr_people":
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr_people").compute_data()
     elif kind == "news_ctr_notification_new_user":
+        print("进入 kind")
         news_ctr_notification_new_user.NewsCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_new_user")
+        print("出来 kind")
     elif kind == "news_ctr_notification_old_user":
         news_ctr_notification_old_user.NewsCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_old_user")
     elif kind == "new_users_retention_news_event":
