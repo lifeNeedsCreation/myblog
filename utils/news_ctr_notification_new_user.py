@@ -99,6 +99,8 @@ class NewsCtrNotificationNewUserData(object):
             if received_num < 0:
                 continue
             temp_data = key.split("&&")
+            print("==========================")
+            print("temp_data", temp_data)
             if len(temp_data) < 4:
                 continue
             # 拼接 sql values
