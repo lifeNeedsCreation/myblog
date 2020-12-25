@@ -17,6 +17,7 @@ from utils import video_ctr
 from utils import video_ctr_people
 from utils import new_users_retention_news_event
 from utils import new_users_retention_tab_impression
+from utils import old_users_retention_tab_impression
 from utils import experiment_new_users_retention_tab_impression
 from utils import partiko_experiment_average_of_invites
 from utils import partiko_memories_average_of_invites
@@ -38,6 +39,7 @@ KIND = {
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
     "new_users_retention_tab_impression": 1,    # tab_impression 新用户留存
+    "old_users_retention_tab_impression": 1,    # tab_impression 老用户留存
     "experiment_new_users_retention_tab_impression": 1,     # tab_impression 实验中新用户留存
     "partiko_memories_average_of_invites": 1,     # partiko.memories 实验中的 平均邀请人数
     "new_users_partiko_memories_average_of_invites": 1,     # partiko.memories 实验中的 新用户平均邀请人数
@@ -176,6 +178,8 @@ if __name__ == "__main__":
         video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
     elif kind == 'new_users_retention_tab_impression':
         new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, 'new_users_retention_tab_impression').compute_data()
+    elif kind == 'old_users_retention_tab_impression':
+        old_users_retention_tab_impression.OldUsersRetentionTabImpression(start_time, end_time, 'old_users_retention_tab_impression').compute_data()
     elif kind == 'experiment_new_users_retention_tab_impression':
         experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
     elif kind == 'partiko_memories_average_of_invites':
