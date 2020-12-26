@@ -62,7 +62,7 @@ class VideoCtrNotificationNewUserData(object):
                     and accounts.created_at >= '{start_time}' and accounts.created_at < '{end_time}' and JSON_VALUE(data, '$.type') = 'video') as a    
                     LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories
                     on memories.account_id = a.account_id
-                    where key is not null and memories.updated_at < a.created_at) as result 
+                    where key is not null and memories.updated_at =< a.created_at) as result 
                     group by result.key, result.country_code, result.value
                     """
         click_data = self.get_data(click_sql)
