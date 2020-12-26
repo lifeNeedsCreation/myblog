@@ -13,6 +13,7 @@ from utils import ctr
 from utils import ctr_people
 from utils import news_ctr_notification_new_user
 from utils import news_ctr_notification_old_user
+from utils import video_ctr_notification_new_user
 from utils import video_ctr
 from utils import video_ctr_people
 from utils import new_users_retention_news_event
@@ -34,8 +35,9 @@ KIND = {
     "all": 1,   # 所有指标
     "ctr": 1,   # 新闻ctr
     "ctr_people": 1,  # 新闻 click_user_ratio
-    "news_ctr_notification_new_user": 1,  # 新用户新闻消息点击率
-    "news_ctr_notification_old_user": 1,  # 老用户新闻消息点击率
+    "news_ctr_notification_new_user": 1,  # 新用户新闻推送点击率
+    "news_ctr_notification_old_user": 1,  # 老用户新闻推送点击率
+    "video_ctr_notification_new_user": 1,   # 新用户视频推送点击率
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
@@ -172,6 +174,8 @@ if __name__ == "__main__":
         news_ctr_notification_new_user.NewsCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_new_user").compute_data()
     elif kind == "news_ctr_notification_old_user":
         news_ctr_notification_old_user.NewsCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_old_user").compute_data()
+    elif kind == "video_ctr_notification_new_user":
+        video_ctr_notification_new_user.VideoCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_new_user").compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
     elif kind == "video_ctr":
