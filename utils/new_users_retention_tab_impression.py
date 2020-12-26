@@ -65,22 +65,23 @@ class NewUsersRetentionTabImpression:
             select i.country_code,i.initial_date,retention_date,date_diff,i.initial_event,retention_event,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_event_count as i left join retention_event_count as r on i.country_code=r.country_code and i.initial_date=r.initial_date and i.initial_event=r.initial_event where date_diff is not null
             '''
         retention_data = self.get_data(query)
+        print("insert count", len(retention_data['country_code']))
         # 结果数据存入数据库
-        cursor = mysql_client.cursor()
-        values = "country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate,create_time"
-        insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
-        now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        for i in range(len(retention_data['country_code'])):
-            insert_sql += f"""('{retention_data["country_code"][i]}', '{retention_data["initial_date"][i]}', '{retention_data["retention_date"][i]}', '{retention_data["initial_event"][i]}', '{retention_data["retention_event"][i]}', '{retention_data["date_diff"][i]}', '{retention_data["initial_users"][i]}', '{retention_data["retention_users"][i]}', '{retention_data["retention_rate"][i]}', '{now_time_utc}'),"""
-        insert_sql = insert_sql[:-1]
-        try:
-            # 执行sql语句
-            cursor.execute(insert_sql)
-            # 提交到数据库执行
-            mysql_client.commit()
-        except Exception as e:
-            print(e)
-            # 如果发生错误则回滚
-            mysql_client.rollback()
-        if cursor:
-            cursor.close()
+        # cursor = mysql_client.cursor()
+        # values = "country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate,create_time"
+        # insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
+        # now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        # for i in range(len(retention_data['country_code'])):
+        #     insert_sql += f"""('{retention_data["country_code"][i]}', '{retention_data["initial_date"][i]}', '{retention_data["retention_date"][i]}', '{retention_data["initial_event"][i]}', '{retention_data["retention_event"][i]}', '{retention_data["date_diff"][i]}', '{retention_data["initial_users"][i]}', '{retention_data["retention_users"][i]}', '{retention_data["retention_rate"][i]}', '{now_time_utc}'),"""
+        # insert_sql = insert_sql[:-1]
+        # try:
+        #     # 执行sql语句
+        #     cursor.execute(insert_sql)
+        #     # 提交到数据库执行
+        #     mysql_client.commit()
+        # except Exception as e:
+        #     print(e)
+        #     # 如果发生错误则回滚
+        #     mysql_client.rollback()
+        # if cursor:
+        #     cursor.close()
