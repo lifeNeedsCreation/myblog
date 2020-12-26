@@ -89,14 +89,14 @@ class OldUsersRetentionTabImpression(object):
             insert_sql += f"""'{now_time_utc}'),"""
         insert_sql = insert_sql[:-1]
         print(insert_sql)
-        # try:
-        #     # 执行 sql 语句
-        #     cursor.execute(insert_sql)
-        #     # 提交到数据库
-        #     mysql_client.commit()
-        # except Exception as e:
-        #     # 如果发生错误则回滚
-        #     print("错误信息：", e)
-        #     mysql_client.rollback()
-        # if cursor:
-        #     cursor.close()
+        try:
+            # 执行 sql 语句
+            cursor.execute(insert_sql)
+            # 提交到数据库
+            mysql_client.commit()
+        except Exception as e:
+            # 如果发生错误则回滚
+            print("错误信息：", e)
+            mysql_client.rollback()
+        if cursor:
+            cursor.close()
