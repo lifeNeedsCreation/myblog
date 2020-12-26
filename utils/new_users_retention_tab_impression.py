@@ -65,6 +65,7 @@ class NewUsersRetentionTabImpression:
             select i.country_code,i.initial_date,retention_date,date_diff,i.initial_event,retention_event,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_event_count as i left join retention_event_count as r on i.country_code=r.country_code and i.initial_date=r.initial_date and i.initial_event=r.initial_event where date_diff is not null
             '''
         retention_data = self.get_data(query)
+        print("insert count", len(retention_data['country_code']))
         # 结果数据存入数据库
         cursor = mysql_client.cursor()
         values = "country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate,create_time"
