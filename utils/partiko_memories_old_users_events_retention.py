@@ -85,24 +85,24 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
             '''
         retention_data = self.get_data(query)
         # 结果数据存入数据库
-        # cursor = mysql_client.cursor()
-        # values = "treatment_name, dimension, country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate, create_time"
-        # insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
-        # now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        # for i in range(len(retention_data['country_code'])):
-        #     insert_sql += "("
-        #     for filed in fields:
-        #         insert_sql += f"""'{retention_data[filed][i]}', """
-        #     insert_sql += f"""'{now_time_utc}'),"""
-        # insert_sql = insert_sql[:-1]
-        # try:
-        #     # 执行 sql 语句
-        #     cursor.execute(insert_sql)
-        #     # 提交到数据库
-        #     mysql_client.commit()
-        # except Exception as e:
-        #     # 如果发生错误则回滚
-        #     print("错误信息：", e)
-        #     mysql_client.rollback()
-        # if cursor:
-        #     cursor.close()
+        cursor = mysql_client.cursor()
+        values = "treatment_name, dimension, country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate, create_time"
+        insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
+        now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        for i in range(len(retention_data['country_code'])):
+            insert_sql += "("
+            for filed in fields:
+                insert_sql += f"""'{retention_data[filed][i]}', """
+            insert_sql += f"""'{now_time_utc}'),"""
+        insert_sql = insert_sql[:-1]
+        try:
+            # 执行 sql 语句
+            cursor.execute(insert_sql)
+            # 提交到数据库
+            mysql_client.commit()
+        except Exception as e:
+            # 如果发生错误则回滚
+            print("错误信息：", e)
+            mysql_client.rollback()
+        if cursor:
+            cursor.close()
