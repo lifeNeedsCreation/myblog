@@ -36,7 +36,6 @@ class VideoCtrNotificationNewUserData(object):
         """
         res_num = {}
         result = bigquery_client.query(sql).to_dataframe()
-        print(result)
         for index, row in result.iterrows():
             treatment_name = row["treatment_name"]
             country_code = row["country_code"]
