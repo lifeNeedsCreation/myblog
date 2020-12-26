@@ -77,6 +77,7 @@ class OldUsersRetentionTabImpression(object):
             '''
         retention_data = self.get_data(query)
         print("retention_data", retention_data)
+        print("insert count", len(retention_data['country_code']))
         # 结果数据存入数据库
         # cursor = mysql_client.cursor()
         # values = "coutry_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate, create_time"
