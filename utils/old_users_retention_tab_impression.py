@@ -87,6 +87,7 @@ class OldUsersRetentionTabImpression(object):
                 insert_sql += f"""'{retention_data[filed][i]}', """
             insert_sql += f"""'{now_time_utc}'),"""
         insert_sql = insert_sql[:-1]
+        print(insert_sql)
         try:
             # 执行 sql 语句
             cursor.execute(insert_sql)
