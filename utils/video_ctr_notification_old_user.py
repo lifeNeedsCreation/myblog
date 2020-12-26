@@ -62,7 +62,7 @@ class VideoCtrNotificationOldUserData(object):
                     and accounts.created_at < '{start_time}' and JSON_VALUE(data, '$.type') = 'video') as a    
                     LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories
                     on memories.account_id = a.account_id
-                    where key is not null and memories.updated_at < a.created_at) as result 
+                    where key is not null and memories.updated_at <= a.created_at) as result 
                     group by result.key, result.country_code, result.value
                     """
         click_data = self.get_data(click_sql)
@@ -74,7 +74,7 @@ class VideoCtrNotificationOldUserData(object):
                       (select notification_received.account_id as account_id, notification_received.created_at as created_at, accounts.country_code as country_code from 
                       (select * from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and JSON_VAlUE(data, '$.type') = 'video' and JSON_VALUE(data, '$.push_id') like 'push%') as notification_received 
                       LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_received.account_id where accounts.name is not null and accounts.country_code in ({self.country_code}) and accounts.created_at < '{start_time}') as a 
-                      LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = a.account_id where key is not null and memories.updated_at =< a.created_at) as result 
+                      LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = a.account_id where key is not null and memories.updated_at <= a.created_at) as result 
                       group by result.key, result.country_code, result.value  
                       """
         received_data = self.get_data(received_sql)
