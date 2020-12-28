@@ -12,4 +12,4 @@ PLACEMENT = ['home_tab_for_you', 'news_detail_activity']
 VIDEO_PLACEMENT = ["videos_tab_popular", "home_tab_for_you", "home_tab_for_you_video"]
 
 
-INDICATOR_DIMENSION = ['control', 'treatment', 'treatment_1', 'treatment_2', 'video_multiple_features_v1', 'video_multiple_features']
+INDICATOR_DIMENSION = ['control', 'treatment', 'treatment_1', 'treatment_2', 'video_multiple_features_v1', 'video_multiple_features_v2', 'video_multiple_features']
