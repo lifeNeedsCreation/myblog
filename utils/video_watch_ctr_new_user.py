@@ -108,6 +108,7 @@ class VideoWatchCtrNewUserData(object):
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         flag = False
         for key in impression_union_data.keys():
+            print("key:", key)
             watch_num = video_watch_data.get(key, 0)
             print("watch_num:", watch_num)
             impression_num = impression_data.get(key, 0)
