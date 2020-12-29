@@ -191,7 +191,7 @@ if __name__ == "__main__":
     elif kind == "news_click_ctr_new_user":
         news_click_ctr_new_user.NewsClickCtrNewUserData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_click_ctr_new_user").compute_data()
     elif kind == "video_watch_ctr_new_user":
-        video_watch_ctr_new_user.VideoWatchCtrNewUserData(start_time, end_time, country_code, placement, indicator_dimension, "day_video_watch_ctr_new_user").compute_data()
+        video_watch_ctr_new_user.VideoWatchCtrNewUserData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_ctr_new_user").compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
     elif kind == "video_ctr":
