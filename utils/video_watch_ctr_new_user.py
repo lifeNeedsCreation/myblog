@@ -109,7 +109,9 @@ class VideoWatchCtrNewUserData(object):
         flag = False
         for key in impression_union_data.keys():
             watch_num = video_watch_data.get(key, 0)
+            print("watch_num:", watch_num)
             impression_num = impression_data.get(key, 0)
+            print("impression_num: "impression_num)
             if impression_num <= 0:
                 continue
             impression_union_num = impression_union_data.get(key, 0)
