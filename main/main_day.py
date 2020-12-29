@@ -41,7 +41,7 @@ KIND = {
     "news_ctr_notification_old_user": 1,  # 老用户新闻推送点击率
     "video_ctr_notification_new_user": 1,   # 新用户视频推送点击率
     "video_ctr_notification_old_user": 1,   # 新用户视频推送点击率
-    "new_click_ctr_new_user": 1,    # 新用户新闻点击率
+    "news_click_ctr_new_user": 1,    # 新用户新闻点击率
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
