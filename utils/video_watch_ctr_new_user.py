@@ -54,7 +54,7 @@ class VideoWatchCtrNewUserData(object):
             f"""
                 select result.country_code as country_code, result.placement as placement, result.key as key, result.value as value, count(result.video_id) as num from
                 (select distinct account_video_watch.account_id as account_id, account_video_watch.video_id as video_id, account_video_watch.country_code as country_code, account_video_watch.placement as placement, memories.key as key, memories.value as value from 
-                (select account_id, country_code, video_watch.created_at, video_watch.placement, video_watch.video_id from
+                (select account_id, country_code, video_watch.created_at as created_at, video_watch.placement as placement, video_watch.video_id as video_id from
                 (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement, json_extract_scalar(data, '$.id') as video_id from `stream_events.video_watch` as video_watch where video_watch.created_at > '{start_time}' and video_watch.created_at < '{end_time}' and safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) > 3 and json_extract_scalar(data, '$.placement') in ({self.placement})) as video_watch
                 left join input.accounts as accounts on accounts.id = video_watch.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_video_watch
                 left join 
@@ -121,16 +121,16 @@ class VideoWatchCtrNewUserData(object):
             values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "','" + str(watch_num) + "','" + str(impression_num) + "','" + str(impression_union_num) + "','" + str(round(watch_num/impression_num, 5)) + "','" + str(round(watch_num/impression_union_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
             insert_sql += values_sql
             flag = True
-        if flag:
-            insert_sql = insert_sql[:-1]
-            try:
-                # 执行 sql 语句
-                cursor.execute(insert_sql)
-                # 提交到数据库执行
-                mysql_client.commit()
-            except Exception as e:
-                # 如果发生错误则回滚
-                print("写入Mysql失败，错误信息：", e)
-                mysql_client.rollback()
-        if cursor:
-            cursor.close()
+        # if flag:
+        #     insert_sql = insert_sql[:-1]
+        #     try:
+        #         # 执行 sql 语句
+        #         cursor.execute(insert_sql)
+        #         # 提交到数据库执行
+        #         mysql_client.commit()
+        #     except Exception as e:
+        #         # 如果发生错误则回滚
+        #         print("写入Mysql失败，错误信息：", e)
+        #         mysql_client.rollback()
+        # if cursor:
+        #     cursor.close()
