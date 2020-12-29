@@ -94,7 +94,7 @@ class VideoWatchCtrNewUserData(object):
                 select distinct account_video_impression.account_id as account_id, account_video_impression.country_code as country_code, account_video_impression.placement as placement, memories.key as key, memories.value as value
                 from 
                 (select account_id, country_code, video_impression.created_at, video_impression.placement from
-                (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` as video_impression where video_impression.created_at > '{start_time}' and video_impression.created_at < '{end_time}' and json_extract_scalar(data, '$.placement') in ("home_tab_for_you", 'news_detail_activity')) as video_impression
+                (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` as video_impression where video_impression.created_at > '{start_time}' and video_impression.created_at < '{end_time}' and json_extract_scalar(data, '$.placement') in {self.placement}) as video_impression
                 left join input.accounts as accounts on accounts.id = video_impression.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_video_impression
                 left join 
                 (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at)
