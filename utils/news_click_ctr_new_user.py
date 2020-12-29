@@ -62,7 +62,7 @@ class NewsClickCtrNewUserData(object):
             ) as account_news_click
             left join 
             (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_news_click.account_id where key is not null and memories.updated_at <= account_news_click.created_at) as result
-            group by news_id, country_code, placement, key, value
+            group by country_code, placement, key, value
             """
         news_click_data = self.get_data(news_click_sql)
 
