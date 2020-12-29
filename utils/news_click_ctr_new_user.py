@@ -89,7 +89,7 @@ class NewsClickCtrNewUserData(object):
             (select account_id, created_at, json_extract(data, '$.placement') as placement from `stream_events.news_click` as news_click where news_click.created_at > '{start_time}' and news_click.created_at < '{end_time}' and json_value(data, '$.placement') in ("home_tab_for_you", 'news_detail_activity')) as news_click
             left join input.accounts as accounts on accounts.id = news_click.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_news_click
             left join 
-            (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension}) as memories on memories.account_id = account_news_click.account_id where key is not null and memories.updated_at <= account_news_click.created_at 
+            (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_news_click.account_id where key is not null and memories.updated_at <= account_news_click.created_at 
 
             union distinct
 
@@ -98,7 +98,7 @@ class NewsClickCtrNewUserData(object):
             (select account_id, created_at, json_extract(data, '$.placement') as placement from `stream_events.news_impression` as news_impression where news_impression.created_at > '{start_time}' and news_impression.created_at < '{end_time}' and json_value(data, '$.placement') in ("home_tab_for_you", 'news_detail_activity')) as news_impression
             left join input.accounts as accounts on accounts.id = news_impression.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_news_impression
             left join 
-            (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension}) as memories on memories.account_id = account_news_impression.account_id where key is not null and memories.updated_at <= account_news_impression.created_at)
+            (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_news_impression.account_id where key is not null and memories.updated_at <= account_news_impression.created_at)
             group by country_code, placement, key, value
             """
         impression_union_data = self.get_data(impression_union_sql)
