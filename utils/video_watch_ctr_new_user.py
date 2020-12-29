@@ -28,6 +28,7 @@ class VideoWatchCtrNewUserData(object):
         : param sql : sql语句
         : return result_num : 字典，{'country_code&&placement&&key&&value': num}
         """
+        print("sql:", sql)
         result = bigquery_client.query(sql).to_dataframe()
         print(result)
         result_num = {}
@@ -108,11 +109,11 @@ class VideoWatchCtrNewUserData(object):
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         flag = False
         for key in impression_union_data.keys():
-            print("key:", key)
+            # print("key:", key)
             watch_num = video_watch_data.get(key, 0)
-            print("watch_num:", watch_num)
+            # print("watch_num:", watch_num)
             impression_num = impression_data.get(key, 0)
-            print("impression_num: ", impression_num)
+            # print("impression_num: ", impression_num)
             if impression_num <= 0:
                 continue
             impression_union_num = impression_union_data.get(key, 0)
