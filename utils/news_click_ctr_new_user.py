@@ -105,7 +105,7 @@ class NewsClickCtrNewUserData(object):
 
         # 结果存入数据库
         cursor = mysql_client.cursor()
-        values = "country_code, placement, treatment_name, dimension, click_users, impression_users, impression_union_users, ctr, ctr_union, start_time, end_time, create_time"
+        values = "country_code, placement, treatment_name, dimension, click_num, impression_num, impression_union_num, ctr, ctr_union, start_time, end_time, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         flag = False
@@ -125,7 +125,6 @@ class NewsClickCtrNewUserData(object):
             flag = True
         if flag:
             insert_sql = insert_sql[:-1]
-            print(insert_sql)
             try:
                 # 执行 sql 语句
                 cursor.execute(insert_sql)
