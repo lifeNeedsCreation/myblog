@@ -187,7 +187,7 @@ if __name__ == "__main__":
     elif kind == "video_ctr_notification_old_user":
         video_ctr_notification_old_user.VideoCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_old_user").compute_data()
     elif kind == "news_click_ctr_new_user":
-        news_click_ctr_new_user.NewsClickCtrNewUserData(start_time, end_time, country_code, placement, indicator_dimension, "news_click_ctr_new_user").compute_data()
+        news_click_ctr_new_user.NewsClickCtrNewUserData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_click_ctr_new_user").compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
     elif kind == "video_ctr":
