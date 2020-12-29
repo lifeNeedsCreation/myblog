@@ -77,10 +77,6 @@ class VideoWatchCtrNewUserData(object):
                 group by country_code, placement, key, value
             """
         impression_data = self.get_data(impression_sql)
-        for i in impression_data:
-            if i in video_watch_data:
-                print(i)
-                break
 
         # 非曝光情况下用户观看数据
         impression_union_sql = \
@@ -104,7 +100,7 @@ class VideoWatchCtrNewUserData(object):
                 (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at)
                 group by country_code, placement, key, value
             """
-        # impression_union_data = self.get_data(impression_union_sql)
+        impression_union_data = self.get_data(impression_union_sql)
 
         # 结果存入数据库
         # cursor = mysql_client.cursor()
