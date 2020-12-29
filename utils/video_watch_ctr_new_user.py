@@ -54,10 +54,11 @@ class VideoWatchCtrNewUserData(object):
             f"""
                 select result.country_code as country_code, result.placement as placement, result.key as key, result.value as value, count(result.video_id) as num from
                 (select distinct account_video_watch.account_id as account_id, account_video_watch.video_id as video_id, account_video_watch.country_code as country_code, account_video_watch.placement as placement, memories.key as key, memories.value as value from 
-                (select account_id, country_code, video_watch.created_at, video_watch.placement, video_watch.video_id from (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement, json_extract_scalar(data, '$.id') as video_id from `stream_events.video_watch` as video_watch where video_watch.created_at > '{start_time}' and video_watch.created_at < '{end_time}' and safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) > 3 and json_extract_scalar(data, '$.placement') in ({self.placement})) as video_watch
-                left join input.accounts as accounts on accounts.id = video_watch.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_video_watch
+                (select account_id, country_code, video_watch.created_at, video_watch.placement, video_watch.video_id from
+                (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement, json_extract_scalar(data, '$.id') as video_id from `stream_events.video_watch` as video_watch where video_watch.created_at > '{start_time}' and video_watch.created_at < '{end_time}' and safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) > 3 and json_extract_scalar(data, '$.placement') in ({self.placement})) as video_watch
+                left join input.accounts as accounts on accounts.id = video_watch.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code}) as account_video_watch
                 left join 
-                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ('control','treatment')) as memories on memories.account_id = account_video_watch.account_id where key is not null and memories.updated_at <= account_video_watch.created_at) as result
+                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_watch.account_id where key is not null and memories.updated_at <= account_video_watch.created_at) as result
                 group by country_code, placement, key, value
             """
         video_watch_data = self.get_data(video_watch_sql)
@@ -71,7 +72,7 @@ class VideoWatchCtrNewUserData(object):
                 (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` as video_impression where video_impression.created_at > '{start_time}' and video_impression.created_at < '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.placement})) as video_impression
                 left join input.accounts as accounts on accounts.id = video_impression.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_video_impression
                 left join 
-                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ('control', 'treatment')) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at) as result
+                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at) as result
                 group by country_code, placement, key, value
             """
         impression_data = self.get_data(impression_sql)
@@ -85,7 +86,7 @@ class VideoWatchCtrNewUserData(object):
                 (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_watch` as video_watch where video_watch.created_at > '{start_time}' and video_watch.created_at < '{end_time}' and json_extract_scalar(data, '$.placement') in ("home_tab_for_you", 'news_detail_activity')) as video_watch
                 left join input.accounts as accounts on accounts.id = video_watch.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_video_watch
                 left join 
-                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ('control','treatment')) as memories on memories.account_id = account_video_watch.account_id where key is not null and memories.updated_at <= account_video_watch.created_at 
+                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_watch.account_id where key is not null and memories.updated_at <= account_video_watch.created_at 
 
                 union distinct
 
@@ -95,7 +96,7 @@ class VideoWatchCtrNewUserData(object):
                 (select account_id, created_at, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` as video_impression where video_impression.created_at > '{start_time}' and video_impression.created_at < '{end_time}' and json_extract_scalar(data, '$.placement') in ("home_tab_for_you", 'news_detail_activity')) as video_impression
                 left join input.accounts as accounts on accounts.id = video_impression.account_id where accounts.created_at > '{start_time}' and accounts.created_at < '{end_time}' and accounts.name is not null and accounts.country_code in ({self.country_code})) as account_video_impression
                 left join 
-                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ('control', 'treatment')) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at)
+                (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at)
                 group by country_code, placement, key, value
             """
         impression_union_data = self.get_data(impression_union_sql)
