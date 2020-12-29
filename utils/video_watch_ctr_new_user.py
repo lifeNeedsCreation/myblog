@@ -109,19 +109,19 @@ class VideoWatchCtrNewUserData(object):
         # now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         # flag = False
         # for key in impression_union_data.keys():
-            watch_num = video_watch_data.get(key, 0)
-            impression_num = impression_data.get(key, 0)
-            if impression_num <= 0:
-                continue
-            impression_union_num = impression_union_data.get(key, 0)
-            if impression_union_num <= 0:
-                continue
-            temp_data = key.split("&&")
-            if len(temp_data) < 4:
-                continue
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "','" + str(watch_num) + "','" + str(impression_num) + "','" + str(impression_union_num) + "','" + str(round(watch_num/impression_num, 5)) + "','" + str(round(watch_num/impression_union_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
-            insert_sql += values_sql
-            flag = True
+            # watch_num = video_watch_data.get(key, 0)
+            # impression_num = impression_data.get(key, 0)
+            # if impression_num <= 0:
+            #     continue
+            # impression_union_num = impression_union_data.get(key, 0)
+            # if impression_union_num <= 0:
+            #     continue
+            # temp_data = key.split("&&")
+            # if len(temp_data) < 4:
+            #     continue
+            # values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "','" + str(watch_num) + "','" + str(impression_num) + "','" + str(impression_union_num) + "','" + str(round(watch_num/impression_num, 5)) + "','" + str(round(watch_num/impression_union_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
+            # insert_sql += values_sql
+            # flag = True
         # if flag:
         #     insert_sql = insert_sql[:-1]
         #     try:
