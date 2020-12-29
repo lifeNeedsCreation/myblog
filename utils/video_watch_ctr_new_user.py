@@ -77,6 +77,10 @@ class VideoWatchCtrNewUserData(object):
                 group by country_code, placement, key, value
             """
         impression_data = self.get_data(impression_sql)
+        for i in impression_data:
+            if i in video_watch_data:
+                print(i)
+                break
 
         # 非曝光情况下用户观看数据
         impression_union_sql = \
@@ -100,41 +104,41 @@ class VideoWatchCtrNewUserData(object):
                 (select account_id, key, value, updated_at from partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = account_video_impression.account_id where key is not null and memories.updated_at <= account_video_impression.created_at)
                 group by country_code, placement, key, value
             """
-        impression_union_data = self.get_data(impression_union_sql)
+        # impression_union_data = self.get_data(impression_union_sql)
 
         # 结果存入数据库
-        cursor = mysql_client.cursor()
-        values = "country_code, placement, treatment_name, dimension, watch_num, impression_num, impression_union_num, ctr, ctr_union, start_time, end_time, create_time"
-        insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
-        now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        flag = False
-        for key in impression_union_data.keys():
-            # print("key:", key)
-            watch_num = video_watch_data.get(key, 0)
-            # print("watch_num:", watch_num)
-            impression_num = impression_data.get(key, 0)
-            # print("impression_num: ", impression_num)
-            if impression_num <= 0:
-                continue
-            impression_union_num = impression_union_data.get(key, 0)
-            if impression_union_num <= 0:
-                continue
-            temp_data = key.split("&&")
-            if len(temp_data) < 4:
-                continue
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "','" + str(watch_num) + "','" + str(impression_num) + "','" + str(impression_union_num) + "','" + str(round(watch_num/impression_num, 5)) + "','" + str(round(watch_num/impression_union_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
-            insert_sql += values_sql
-            flag = True
-        if flag:
-            insert_sql = insert_sql[:-1]
-            try:
-                # 执行 sql 语句
-                cursor.execute(insert_sql)
-                # 提交到数据库执行
-                mysql_client.commit()
-            except Exception as e:
-                # 如果发生错误则回滚
-                print("写入Mysql失败，错误信息：", e)
-                mysql_client.rollback()
-        if cursor:
-            cursor.close()
+        # cursor = mysql_client.cursor()
+        # values = "country_code, placement, treatment_name, dimension, watch_num, impression_num, impression_union_num, ctr, ctr_union, start_time, end_time, create_time"
+        # insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
+        # now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        # flag = False
+        # for key in impression_union_data.keys():
+        #     # print("key:", key)
+        #     watch_num = video_watch_data.get(key, 0)
+        #     # print("watch_num:", watch_num)
+        #     impression_num = impression_data.get(key, 0)
+        #     # print("impression_num: ", impression_num)
+        #     if impression_num <= 0:
+        #         continue
+        #     impression_union_num = impression_union_data.get(key, 0)
+        #     if impression_union_num <= 0:
+        #         continue
+        #     temp_data = key.split("&&")
+        #     if len(temp_data) < 4:
+        #         continue
+        #     values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "','" + str(watch_num) + "','" + str(impression_num) + "','" + str(impression_union_num) + "','" + str(round(watch_num/impression_num, 5)) + "','" + str(round(watch_num/impression_union_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
+        #     insert_sql += values_sql
+        #     flag = True
+        # if flag:
+        #     insert_sql = insert_sql[:-1]
+        #     try:
+        #         # 执行 sql 语句
+        #         cursor.execute(insert_sql)
+        #         # 提交到数据库执行
+        #         mysql_client.commit()
+        #     except Exception as e:
+        #         # 如果发生错误则回滚
+        #         print("写入Mysql失败，错误信息：", e)
+        #         mysql_client.rollback()
+        # if cursor:
+        #     cursor.close()
