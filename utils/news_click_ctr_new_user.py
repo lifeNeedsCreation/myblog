@@ -120,7 +120,7 @@ class NewsClickCtrNewUserData(object):
             temp_data = key.split("&&")
             if len(temp_data) < 4:
                 continue
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "," + str(click_num) + "," + str(impression_num) + "," + str(impression_union_num) + "," + str(round(click_num/impression_num, 5)) + "," + str(round(click_num/impression_union_num, 5)) + "," + start_time + "," + end_time + "," + now_time_utc + "),"
+            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "','" + str(click_num) + "','" + str(impression_num) + "','" + str(impression_union_num) + "','" + str(round(click_num/impression_num, 5)) + "','" + str(round(click_num/impression_union_num, 5)) + "','" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
             insert_sql += values_sql
             flag = True
         if flag:
