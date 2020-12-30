@@ -15,8 +15,8 @@ from utils import news_ctr_notification_new_user
 from utils import news_ctr_notification_old_user
 from utils import video_ctr_notification_new_user
 from utils import video_ctr_notification_old_user
-from utils import news_click_ctr_new_user
-from utils import video_watch_ctr_new_user
+from utils import new_user_news_click_average
+from utils import new_user_video_watch_average
 from utils import video_ctr
 from utils import video_ctr_people
 from utils import new_users_retention_news_event
@@ -42,8 +42,8 @@ KIND = {
     "news_ctr_notification_old_user": 1,  # 老用户新闻推送点击率
     "video_ctr_notification_new_user": 1,   # 新用户视频推送点击率
     "video_ctr_notification_old_user": 1,   # 新用户视频推送点击率
-    "news_click_ctr_new_user": 1,    # 新用户新闻点击率
-    "video_watch_ctr_new_user": 1,      # 新用户视频观看率
+    "new_user_news_click_average": 1,    # 新用户新闻平均点击率
+    "new_user_video_watch_average": 1,      # 新用户视频平均观看率
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
@@ -162,8 +162,8 @@ if __name__ == "__main__":
         news_ctr_notification_old_user.NewsCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_old_user").compute_data()
         video_ctr_notification_new_user.VideoCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_new_user").compute_data()
         video_ctr_notification_old_user.VideoCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_old_user").compute_data()
-        news_click_ctr_new_user.NewsClickCtrNewUserData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_click_ctr_new_user").compute_data()
-        video_watch_ctr_new_user.VideoWatchCtrNewUserData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_ctr_new_user").compute_data()
+        new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_click_average").compute_data()
+        new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average").compute_data()
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr").compute_data()
         video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
@@ -190,10 +190,10 @@ if __name__ == "__main__":
         video_ctr_notification_new_user.VideoCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_new_user").compute_data()
     elif kind == "video_ctr_notification_old_user":
         video_ctr_notification_old_user.VideoCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_old_user").compute_data()
-    elif kind == "news_click_ctr_new_user":
-        news_click_ctr_new_user.NewsClickCtrNewUserData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_click_ctr_new_user").compute_data()
-    elif kind == "video_watch_ctr_new_user":
-        video_watch_ctr_new_user.VideoWatchCtrNewUserData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_ctr_new_user").compute_data()
+    elif kind == "new_user_news_click_average":
+        new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_click_average").compute_data()
+    elif kind == "new_user_video_watch_average":
+        new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average").compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
     elif kind == "video_ctr":

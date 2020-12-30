@@ -3,7 +3,7 @@ from utils.mysql import mysql_client
 import datetime
 
 
-class NewsClickCtrNewUserData(object):
+class NewUserNewsClickAverageData(object):
     """
     :param start_time: 指标计算的开始时间
     :param end_time: 指标计算的结束时间
@@ -105,7 +105,7 @@ class NewsClickCtrNewUserData(object):
 
         # 结果存入数据库
         cursor = mysql_client.cursor()
-        values = "country_code, placement, treatment_name, dimension, click_num, impression_num, impression_union_num, ctr, ctr_union, start_time, end_time, create_time"
+        values = "country_code, placement, treatment_name, dimension, click_num, impression_num, impression_union_num, average, average_union, start_time, end_time, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         flag = False
