@@ -81,7 +81,7 @@ class VideoCtrNotificationNewUserData(object):
 
         ## 结果存入数据库
         cursor = mysql_client.cursor()
-        insert_sql = "INSERT INTO " + self.table_name + "(treatment_name, country_code, dimension, ctr, start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.table_name + "(treatment_name, country_code, dimension, click_num, received_num, ctr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         # sql 执行标识
         flag = False
@@ -96,7 +96,7 @@ class VideoCtrNotificationNewUserData(object):
             if len(temp_data) < 3:
                 continue
             # 拼接 sql values
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(round(click_num/received_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(click_num) + "'," + str(received_num) + "'," + str(round(click_num/received_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             insert_sql += values_sql
             flag = True
 
