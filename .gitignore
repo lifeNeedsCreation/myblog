@@ -163,4 +163,6 @@ desktop.ini
 data
 db.sqlite3
 
+# vscode
+.vscode
 
