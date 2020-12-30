@@ -100,17 +100,17 @@ class NewsCtrNotificationNewUserData(object):
             insert_sql += values_sql
             flag = True
 
-        # if flag:
-        #     insert_sql = insert_sql[:len(insert_sql)-1]
-        #     try:
-        #         # 执行sql语句
-        #         cursor.execute(insert_sql)
-        #         # 提交到数据库执行
-        #         mysql_client.commit()
-        #     except Exception as e:
-        #         # 如果发生错误则回滚
-        #         print("错误信息：", e)
-        #         mysql_client.rollback()
+        if flag:
+            insert_sql = insert_sql[:len(insert_sql)-1]
+            try:
+                # 执行sql语句
+                cursor.execute(insert_sql)
+                # 提交到数据库执行
+                mysql_client.commit()
+            except Exception as e:
+                # 如果发生错误则回滚
+                print("错误信息：", e)
+                mysql_client.rollback()
 
-        # if cursor:
-        #     cursor.close()
+        if cursor:
+            cursor.close()
