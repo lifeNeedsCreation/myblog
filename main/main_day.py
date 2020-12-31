@@ -24,6 +24,7 @@ from utils import new_users_retention_tab_impression
 from utils import new_users_events_retention
 from utils import old_users_events_retention
 from utils import experiment_new_users_retention_tab_impression
+from utils import partiko_memories_new_users_events_retention
 from utils import partiko_memories_old_users_events_retention
 from utils import partiko_experiment_average_of_invites
 from utils import partiko_memories_average_of_invites
@@ -52,6 +53,7 @@ KIND = {
     "new_users_events_retention": 1,    # 新用户在app_open与tab_impression下的留存
     "old_users_events_retention": 1,    # app_open与tab_impression 老用户留存
     "experiment_new_users_retention_tab_impression": 1,     # tab_impression 实验中新用户留存
+    "partiko_memories_new_users_events_retention": 1,       # app_open与tab_impression 实验中新用户留存
     "partiko_memories_old_users_events_retention": 1,       # app_open与tab_impression 实验中老用户留存
     "partiko_memories_average_of_invites": 1,     # partiko.memories 实验中的 平均邀请人数
     "new_users_partiko_memories_average_of_invites": 1,     # partiko.memories 实验中的 新用户平均邀请人数
@@ -210,6 +212,8 @@ if __name__ == "__main__":
         old_users_events_retention.OldUsersEventsRetention(start_time, end_time, 'old_users_events_retention').compute_data()
     elif kind == 'experiment_new_users_retention_tab_impression':
         experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
+    elif kind == 'partiko_memories_new_users_events_retention':
+        partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention').compute_data()
     elif kind == 'partiko_memories_old_users_events_retention':
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention').compute_data()
     elif kind == 'partiko_memories_average_of_invites':

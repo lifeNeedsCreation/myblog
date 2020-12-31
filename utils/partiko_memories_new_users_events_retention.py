@@ -3,7 +3,7 @@ from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 
 
-class PartikoExperimentNewUsersRetentionTabImpression:
+class PartikoMemoriesNewUsersRetentionTabImpression:
     """
         start_time:指标计算的开始时间
         end_time：指标计算的结束时间
