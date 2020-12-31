@@ -93,11 +93,11 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
         for i in range(1, len(retention_data['country_code'])+1):
             value_sql += "("
             for filed in fields:
-                value_sql += f"""'{retention_data[filed][i]}', """
+                value_sql += f"""'{retention_data[filed][i-1]}', """
             value_sql += f"""'{now_time_utc}'),"""
             if i % n == 0:
                 insert_sql1 = insert_sql + value_sql[:-1]
-                print(insert_sql1)
+                print(i)
                 try:
                     # 执行 sql 语句
                     cursor.execute(insert_sql1)
@@ -107,9 +107,10 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                     # 如果发生错误则回滚
                     print("错误信息：", e)
                     mysql_client.rollback()
+                    break
             elif (i - len(retention_data['country_code'])) == 0:
                 insert_sql2 = insert_sql + value_sql[:-1]
-                print(insert_sql2)
+                print(i)
                 try:
                     # 执行 sql 语句
                     cursor.execute(insert_sql2)
@@ -118,6 +119,7 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                 except Exception as e:
                     # 如果发生错误则回滚
                     print("错误信息：", e)
-                    mysql_client.rollback()           
+                    mysql_client.rollback()
+                    break          
         if cursor:
             cursor.close()
