@@ -20,7 +20,9 @@ class ExperimentNewUsersRetentionTabImpression:
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
+        print(111111)
         df_result = bigquery_client.query(sql).to_dataframe()
+        print(22222)
         fields = [
             'key',
             'value',
