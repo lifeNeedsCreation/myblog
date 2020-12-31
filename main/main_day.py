@@ -162,26 +162,74 @@ if __name__ == "__main__":
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr").compute_data()
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr_people").compute_data()
+        print(1)
+
         news_ctr_notification_new_user.NewsCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_new_user").compute_data()
+        print(2)
+
         news_ctr_notification_old_user.NewsCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_news_ctr_notification_old_user").compute_data()
+        print(3)
+
         video_ctr_notification_new_user.VideoCtrNotificationNewUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_new_user").compute_data()
+        print(4)
+
         video_ctr_notification_old_user.VideoCtrNotificationOldUserData(start_time, end_time, country_code, indicator_dimension, "day_video_ctr_notification_old_user").compute_data()
+        print(5)
+
         new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_click_average").compute_data()
+        print(6)
+
         new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average").compute_data()
+        print(7)
+
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event").compute_data()
+        print(8)
+
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr").compute_data()
+        print(9)
+
         video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr_people").compute_data()
+        print(10)
+
         new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, 'new_users_retention_tab_impression').compute_data()
+        print(11)
+
         experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
+        print(12)
+
+        new_users_events_retention.NewUsersEventsRetention(start_time, end_time, 'new_users_events_retention').compute_data()
+        print(13)
+
+        partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention').compute_data()
+        print(14)
+
         partiko_experiment_average_of_invites.PartikoExperimentAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_experiment_average_of_invites').compute_data()
+        print(15)
+
         partiko_memories_user_time_average_of_duration.PartikoMemoriesUserTimeAverageOfDuration(start_time, end_time, indicator_dimension, 'partiko_memories_user_time_average_of_duration').compute_data()
+        print(16)
+
         new_user_news_ctr_people.NewUserCTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_ctr_people").compute_data()
+        print(17)
+
         new_user_video_ctr_people.NewUserVideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_ctr_people").compute_data()
+        print(18)
+
         partiko_memories_average_of_invites.PartikoMemoriesAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_memories_average_of_invites').compute_data()
+        print(19)
+
         new_users_partiko_memories_average_of_invites.NewUsersPartikoMemoriesAverageOfInvites(start_time, end_time, indicator_dimension, 'new_users_partiko_memories_average_of_invites').compute_data()
+        print(20)
+
         partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression').compute_data()
+        print(21)
+
         old_users_events_retention.OldUsersEventsRetention(start_time, end_time, 'old_users_events_retention').compute_data()
+        print(22)
+
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention').compute_data()
+        print(23)
+
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr").compute_data()
     elif kind == "ctr_people":
