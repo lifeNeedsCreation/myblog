@@ -27,7 +27,6 @@ class OldUsersEventsRetention(object):
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
         result = bigquery_client.query(sql).to_dataframe()
-        print(result)
         fields = [
             'country_code',
             'initial_date',
