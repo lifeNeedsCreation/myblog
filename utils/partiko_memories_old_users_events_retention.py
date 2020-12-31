@@ -97,7 +97,6 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
             value_sql += f"""'{now_time_utc}'),"""
             if i % n == 0:
                 insert_sql1 = insert_sql + value_sql[:-1]
-                print(i)
                 try:
                     # 执行 sql 语句
                     cursor.execute(insert_sql1)
@@ -110,7 +109,6 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                     break
             elif (i - len(retention_data['country_code'])) == 0:
                 insert_sql2 = insert_sql + value_sql[:-1]
-                print(i)
                 try:
                     # 执行 sql 语句
                     cursor.execute(insert_sql2)
