@@ -21,7 +21,6 @@ class PartikoMemoriesAverageOfInvites:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         df_result = bigquery_client.query(sql).to_dataframe()
-        print(df_result)
         fields = [
             'country_code',
             'key',
