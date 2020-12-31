@@ -213,7 +213,7 @@ if __name__ == "__main__":
     elif kind == 'experiment_new_users_retention_tab_impression':
         experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression').compute_data()
     elif kind == 'partiko_memories_new_users_events_retention':
-        partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention').compute_data()
+        partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention').compute_data()
     elif kind == 'partiko_memories_old_users_events_retention':
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention').compute_data()
     elif kind == 'partiko_memories_average_of_invites':

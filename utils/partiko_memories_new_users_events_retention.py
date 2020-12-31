@@ -3,7 +3,7 @@ from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 
 
-class PartikoMemoriesNewUsersRetentionTabImpression:
+class PartikoMemoriesNewUsersEventsRetention:
     """
         start_time:指标计算的开始时间
         end_time：指标计算的结束时间
@@ -58,7 +58,7 @@ class PartikoMemoriesNewUsersRetentionTabImpression:
             accounts as (select * from input.accounts where name is not null),
             account_profiles as (select * from partiko.account_profiles where mac_address is not null),
 
-            memories as (select *,created_at as updated_at,group_field as value from partiko.experiments where group_field in ({self.indicator_dimension}) and created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
+            memories as (select *,created_at as updated_at,group_field as value from partiko.memories where group_field in ({self.indicator_dimension}) and created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
 
             app_open as (select * from stream_events.app_open where created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
 
