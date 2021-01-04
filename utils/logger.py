@@ -1,6 +1,7 @@
 import os
 import sys
 DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(DIR + '/../utils')
 
 import logging
@@ -109,7 +110,7 @@ class Logger():
 
     @staticmethod
     def clean_log(logger_file, sudopw):
-        dir_name = os.path.dirname(logger_file)
+        dir_name = os.path.join(BASE_DIR, os.path.dirname(logger_file))
         file_name = logger_file.split('/')[-1]
         files = os.listdir(dir_name)
         files = [file for file in files if re.findall(file_name + '.', file)]
