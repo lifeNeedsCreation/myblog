@@ -35,16 +35,16 @@ class ExperimentNewUsersRetentionTabImpression:
             'retention_rate'
         ]
         dict_info = {field: [] for field in fields}
-        # for index, row in df_result.iterrows():
-        #     for field in fields:
-        #         if field in ['initial_date', 'retention_date']:
-        #             dict_info[field].append(datetime.datetime.strptime(str(row[field]), '%Y-%m-%d'))
-        #         elif field in ['retention_rate']:
-        #             dict_info[field].append(float(row[field]))
-        #         elif field in ['date_diff', 'initial_users', 'retention_users']:
-        #             dict_info[field].append(int(row[field]))
-        #         else:
-        #             dict_info[field].append(row[field])
+        for index, row in df_result.iterrows():
+            for field in fields:
+                if field in ['initial_date', 'retention_date']:
+                    dict_info[field].append(datetime.datetime.strptime(str(row[field]), '%Y-%m-%d'))
+                elif field in ['retention_rate']:
+                    dict_info[field].append(float(row[field]))
+                elif field in ['date_diff', 'initial_users', 'retention_users']:
+                    dict_info[field].append(int(row[field]))
+                else:
+                    dict_info[field].append(row[field])
         return dict_info
 
     # 组装查询sql，并将统计计算结果存入mysql
