@@ -7,8 +7,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from utils import constants
-from upload_scripts.bigquery import bigquery_client
-from upload_scripts.mysql import mysql_client
+from utils.bigquery import bigquery_client
+from utils.mysql import mysql_client
 from upload_scripts import ctr
 from upload_scripts import ctr_people
 from upload_scripts import news_ctr_notification_new_user
