@@ -7,7 +7,7 @@ class BigQuery(object):
     # max is 100 per project
     BQ_THREAD_DRY_RUN_LIMIT = 20
     BQ_QUERY_SLEEP_SECONDS = 1
-    AUTH_JSON_FILE_PATH = BASE_DIR + '/bigquery_config.json'
+    AUTH_JSON_FILE_PATH = BASE_DIR + '/utils/bigquery_config.json'
 
     def __init__(self):
         pass

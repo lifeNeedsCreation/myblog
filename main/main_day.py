@@ -9,6 +9,7 @@ sys.path.append(BASE_DIR)
 from utils import constants
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
+from utils.logger import Logger
 from upload_scripts import ctr
 from upload_scripts import ctr_people
 from upload_scripts import news_ctr_notification_new_user
@@ -69,6 +70,7 @@ KIND = {
 # 周期：天
 
 if __name__ == "__main__":
+    logger = Logger("Main Day", os.path.join('../logs/main_day.log'))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  start!")
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
@@ -209,7 +211,7 @@ if __name__ == "__main__":
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention').compute_data()
 
     elif kind == "ctr":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr").compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
     elif kind == "ctr_people":
         ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr_people").compute_data()
     elif kind == "news_ctr_notification_new_user":

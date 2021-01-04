@@ -2,6 +2,9 @@
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 import datetime
+import os
+
+DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class CTRData(object):
@@ -15,18 +18,20 @@ class CTRData(object):
         indicator_dimension：需要计算的实验组的维度
         table_name：计算结果存的表
     """
-    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
         self.placement = placement
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         res_num = {}
         bq_job = bigquery_client.query(sql).to_dataframe()
+        self.logger.info('{} query result'.format('news_ctr'))
         for index, row in bq_job.iterrows():
             placement = row["placement"]
             key = row["key"]

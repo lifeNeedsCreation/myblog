@@ -13,7 +13,7 @@ class Logger():
 
     def __init__(self, logger_name, logger_file, for_testing=False, users=[], is_alert=False):
         if not for_testing:
-            sudopw = CONFIG['BUZZBREAK'].get('MACHINE_SUDO_PASSWORD', 'buzzbreak')
+            sudopw = CONFIG['BuzzBreak-Experiment-Platform'].get('MACHINE_SUDO_PASSWORD')
             self.create_log(logger_file, sudopw)
             self.clean_log(logger_file, sudopw)
         formatter = logging.Formatter(
