@@ -1,4 +1,8 @@
 import os
+import sys
+DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(DIR + '/../utils')
+
 import logging
 import inspect
 import requests
