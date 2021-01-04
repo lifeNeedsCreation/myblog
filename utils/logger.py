@@ -3,6 +3,7 @@ import sys
 DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(DIR + '/../utils')
+sys.path.append(DIR + '/../logs')
 
 import logging
 import inspect
