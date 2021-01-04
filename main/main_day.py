@@ -7,33 +7,33 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 from utils import constants
-from utils.bigquery import bigquery_client
-from utils.mysql import mysql_client
-from utils import ctr
-from utils import ctr_people
-from utils import news_ctr_notification_new_user
-from utils import news_ctr_notification_old_user
-from utils import video_ctr_notification_new_user
-from utils import video_ctr_notification_old_user
-from utils import new_user_news_click_average
-from utils import new_user_video_watch_average
-from utils import video_ctr
-from utils import video_ctr_people
-from utils import new_users_retention_news_event
-from utils import new_users_retention_tab_impression
-from utils import new_users_events_retention
-from utils import old_users_events_retention
-from utils import experiment_new_users_retention_tab_impression
-from utils import partiko_memories_new_users_events_retention
-from utils import partiko_memories_old_users_events_retention
-from utils import partiko_experiment_average_of_invites
-from utils import partiko_memories_average_of_invites
-from utils import new_users_partiko_memories_average_of_invites
-from utils import partiko_memories_user_time_average_of_duration
-from utils import new_user_news_ctr_people
-from utils import new_user_video_ctr_people
-from utils import push_retention
-from utils import partiko_experiment_new_users_retention_tab_impression
+from upload_scripts.bigquery import bigquery_client
+from upload_scripts.mysql import mysql_client
+from upload_scripts import ctr
+from upload_scripts import ctr_people
+from upload_scripts import news_ctr_notification_new_user
+from upload_scripts import news_ctr_notification_old_user
+from upload_scripts import video_ctr_notification_new_user
+from upload_scripts import video_ctr_notification_old_user
+from upload_scripts import new_user_news_click_average
+from upload_scripts import new_user_video_watch_average
+from upload_scripts import video_ctr
+from upload_scripts import video_ctr_people
+from upload_scripts import new_users_retention_news_event
+from upload_scripts import new_users_retention_tab_impression
+from upload_scripts import new_users_events_retention
+from upload_scripts import old_users_events_retention
+from upload_scripts import experiment_new_users_retention_tab_impression
+from upload_scripts import partiko_memories_new_users_events_retention
+from upload_scripts import partiko_memories_old_users_events_retention
+from upload_scripts import partiko_experiment_average_of_invites
+from upload_scripts import partiko_memories_average_of_invites
+from upload_scripts import new_users_partiko_memories_average_of_invites
+from upload_scripts import partiko_memories_user_time_average_of_duration
+from upload_scripts import new_user_news_ctr_people
+from upload_scripts import new_user_video_ctr_people
+from upload_scripts import push_retention
+from upload_scripts import partiko_experiment_new_users_retention_tab_impression
 
 # 指标列表
 KIND = {

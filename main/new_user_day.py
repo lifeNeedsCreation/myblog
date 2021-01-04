@@ -4,7 +4,7 @@ import datetime
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-from utils import new_user_indicator
+from upload_scripts import new_user_indicator
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 from utils import constants
