@@ -129,12 +129,5 @@ class Logger():
     @staticmethod
     def create_log(logger_file, sudopw):
         dir_name = os.path.dirname(logger_file)
-        if os.path.exists(dir_name):
-            os.system('echo {}|sudo -S {}'.format(sudopw,
-                                                  'chmod 777 {}'.format(dir_name)))
-        else:
-            os.system('echo {}|sudo -S {}'.format(sudopw,
-                                                  'mkdir -p -m 777 {}'.format(dir_name)))
-        if os.path.exists(logger_file):
-            os.system('echo {}|sudo -S {}'.format(sudopw,
-                                                  'chmod 777 {}'.format(logger_file)))
+        if not os.path.exists(dir_name):
+            os.mkdir(dir_name)
