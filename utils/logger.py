@@ -19,7 +19,6 @@ class Logger():
     def __init__(self, logger_name, logger_file, for_testing=False, users=[], is_alert=False):
         if not for_testing:
             sudopw = CONFIG['BuzzBreak-Experiment-Platform'].get('MACHINE_SUDO_PASSWORD')
-            print("logger_file", logger_file)
             self.create_log(logger_file, sudopw)
             self.clean_log(logger_file, sudopw)
         formatter = logging.Formatter(
@@ -113,7 +112,6 @@ class Logger():
     def clean_log(logger_file, sudopw):
         dir_name = os.path.join(BASE_DIR, os.path.dirname(logger_file))
         file_name = logger_file.split('/')[-1]
-        print("dir_name", dir_name)
         files = os.listdir(dir_name)
         files = [file for file in files if re.findall(file_name + '.', file)]
         files.sort()

@@ -15,7 +15,7 @@ class VideoCTRData(object):
         indicator_dimension：需要计算的实验组的维度
         table_name：计算结果存的表
     """
-    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name, logger):
+    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
