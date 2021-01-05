@@ -30,7 +30,6 @@ class CTRData(object):
     def get_data(self, sql):
         res_num = {}
         bq_job = bigquery_client.query(sql).to_dataframe()
-        self.logger.info('{} query result'.format('news_ctr'))
         for index, row in bq_job.iterrows():
             placement = row["placement"]
             key = row["key"]
