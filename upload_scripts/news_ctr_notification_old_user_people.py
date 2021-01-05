@@ -2,7 +2,8 @@ from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 import datetime
 
-class VideoCtrNotificationOldUserData(object):
+
+class NewsCtrNotificationOldUserPeopleData(object):
     """
     :param start_time: 指标计算的开始时间
     :param end_time: 指标计算的结束时间
@@ -27,14 +28,14 @@ class VideoCtrNotificationOldUserData(object):
         : return: 字典，筛选条件为key，统计的用户数量为value
         """
         res_num = {}
-        result = bigquery_client.query(sql).to_dataframe()
-        for index, row in result.iterrows():
+        bq_job = bigquery_client.query(sql).to_dataframe()
+        for index, row in bq_job.iterrows():
             treatment_name = row["treatment_name"]
             country_code = row["country_code"]
             dimension = row["dimension"]
             num = row["num"]
             if treatment_name and country_code and dimension:
-                res_num[treatment_name + "&&" + country_code + "&&" + dimension] = num
+                res_num[treatment_name + "&&" + country_code + "&&" + dimension] =num
         return res_num
 
     # 组装查询 sql，并统计计算结果存入 mysql
@@ -49,9 +50,9 @@ class VideoCtrNotificationOldUserData(object):
                     select result.key as treatment_name, result.country_code as country_code, result.value as dimension, count(result.account_id) as num from
                     (select distinct a.account_id as account_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
                     (select notification_click.account_id as account_id, notification_click.created_at as created_at, accounts.country_code as country_code from 
-                    (select * from buzzbreak-model-240306.stream_events.notification_click as click where click.created_at >= '{start_time}' and click.created_at < '{end_time}'  and json_extract_scalar(data, '$.type') = 'video' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_click  
+                    (select * from buzzbreak-model-240306.stream_events.notification_click as click where click.created_at >= '{start_time}' and click.created_at < '{end_time}'  and json_extract_scalar(data, '$.type') = 'news' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_click  
                     LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_click.account_id where accounts.name is not null and accounts.country_code in ({self.country_code})
-                    and accounts.created_at < '{start_time}' and json_extract_scalar(data, '$.type') = 'video') as a    
+                    and accounts.created_at < '{start_time}') as a    
                     LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories
                     on memories.account_id = a.account_id
                     where key is not null and memories.updated_at <= a.created_at) as result 
@@ -64,7 +65,7 @@ class VideoCtrNotificationOldUserData(object):
                       select result.key as treatment_name, result.country_code as country_code, result.value as dimension, count(result.account_id) as num from 
                       (select distinct a.account_id as account_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
                       (select notification_received.account_id as account_id, notification_received.created_at as created_at, accounts.country_code as country_code from 
-                      (select * from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'video' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_received 
+                      (select * from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'news' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_received 
                       LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_received.account_id where accounts.name is not null and accounts.country_code in ({self.country_code}) and accounts.created_at < '{start_time}') as a 
                       LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = a.account_id where key is not null and memories.updated_at <= a.created_at) as result 
                       group by result.key, result.country_code, result.value  
@@ -92,7 +93,6 @@ class VideoCtrNotificationOldUserData(object):
             values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(click_num) + "," + str(received_num) + "," + str(round(click_num/received_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             insert_sql += values_sql
             flag = True
-
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
             try:

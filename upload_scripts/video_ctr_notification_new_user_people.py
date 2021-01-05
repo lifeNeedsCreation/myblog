@@ -11,7 +11,7 @@ from utils.mysql import mysql_client
 import datetime
 
 
-class VideoCtrNotificationNewUserData(object):
+class VideoCtrNotificationNewUserPeopleData(object):
     """
     :param start_time: 指标计算的开始时间
     :param end_time: 指标计算的结束时间

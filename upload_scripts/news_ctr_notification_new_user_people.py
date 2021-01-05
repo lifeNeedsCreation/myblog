@@ -3,7 +3,7 @@ from utils.mysql import mysql_client
 import datetime
 
 
-class NewsCtrNotificationOldUserData(object):
+class NewsCtrNotificationNewUserPeopleData(object):
     """
     :param start_time: 指标计算的开始时间
     :param end_time: 指标计算的结束时间
@@ -52,7 +52,7 @@ class NewsCtrNotificationOldUserData(object):
                     (select notification_click.account_id as account_id, notification_click.created_at as created_at, accounts.country_code as country_code from 
                     (select * from buzzbreak-model-240306.stream_events.notification_click as click where click.created_at >= '{start_time}' and click.created_at < '{end_time}'  and json_extract_scalar(data, '$.type') = 'news' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_click  
                     LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_click.account_id where accounts.name is not null and accounts.country_code in ({self.country_code})
-                    and accounts.created_at < '{start_time}') as a    
+                    and accounts.created_at >= '{start_time}' and accounts.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'news') as a    
                     LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories
                     on memories.account_id = a.account_id
                     where key is not null and memories.updated_at <= a.created_at) as result 
@@ -66,7 +66,7 @@ class NewsCtrNotificationOldUserData(object):
                       (select distinct a.account_id as account_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
                       (select notification_received.account_id as account_id, notification_received.created_at as created_at, accounts.country_code as country_code from 
                       (select * from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'news' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_received 
-                      LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_received.account_id where accounts.name is not null and accounts.country_code in ({self.country_code}) and accounts.created_at < '{start_time}') as a 
+                      LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_received.account_id where accounts.name is not null and accounts.country_code in ({self.country_code}) and accounts.created_at >= '{start_time}' and accounts.created_at < '{end_time}') as a 
                       LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = a.account_id where key is not null and memories.updated_at <= a.created_at) as result 
                       group by result.key, result.country_code, result.value  
                       """
@@ -93,6 +93,7 @@ class NewsCtrNotificationOldUserData(object):
             values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(click_num) + "," + str(received_num) + "," + str(round(click_num/received_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             insert_sql += values_sql
             flag = True
+
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
             try:
