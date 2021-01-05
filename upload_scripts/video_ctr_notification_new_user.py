@@ -62,10 +62,10 @@ class VideoCtrNotificationNewUserData(object):
 
         # 收到推送的用户统计
         received_sql = f"""
-                      select result.key as treatment_name, result.country_code as country_code, result.value as dimension, count(result.account_id) as num from 
-                      (select distinct a.account_id as account_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
-                      (select notification_received.account_id as account_id, notification_received.created_at as created_at, accounts.country_code as country_code from 
-                      (select * from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'video' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_received 
+                      select result.key as treatment_name, result.country_code as country_code, result.value as dimension, count(result.video_id) as num from 
+                      (select distinct a.account_id as account_id, a.video_id as video_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
+                      (select notification_received.account_id as account_id, notification_received.video_id as video_id, notification_received.created_at as created_at, accounts.country_code as country_code from 
+                      (select account_id, json_extract_scalar(data, '$.id') as video_id, created_at from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'video' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_received 
                       LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_received.account_id where accounts.name is not null and accounts.country_code in ({self.country_code}) and accounts.created_at >= '{start_time}' and accounts.created_at < '{end_time}') as a 
                       LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in ({self.indicator_dimension})) as memories on memories.account_id = a.account_id where key is not null and memories.updated_at <= a.created_at) as result 
                       group by result.key, result.country_code, result.value  
