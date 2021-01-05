@@ -97,7 +97,7 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                     mysql_client.commit()
                     value_sql = ''
                 except:
-                    self.logger.exception("insert tabel {} err msg".format(self.table_name))
+                    self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
                     # 如果发生错误则回滚
                     mysql_client.rollback()
                     break
@@ -108,8 +108,9 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                     cursor.execute(insert_sql2)
                     # 提交到数据库
                     mysql_client.commit()
+                    self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
                 except:
-                    self.logger.exception("insert tabel {} err msg".format(self.table_name))
+                    self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
                     # 如果发生错误则回滚
                     mysql_client.rollback()
                     break          

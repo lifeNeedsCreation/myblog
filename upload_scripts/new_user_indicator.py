@@ -119,6 +119,7 @@ class NewUserIndicator(object):
                 cursor.execute(inser_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
+                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
             except:
                 # 如果发生错误则回滚
                 mysql_client.rollback()
