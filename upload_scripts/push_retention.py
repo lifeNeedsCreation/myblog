@@ -14,12 +14,13 @@ class PushRetentionData(object):
         indicator_dimension：需要计算的实验组的维度
         table_name：计算结果存的表
     """
-    def __init__(self, start_time, end_time, country_code, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, country_code, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
@@ -57,9 +58,6 @@ class PushRetentionData(object):
                                    " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and updated_at<='2020-12-21 00:00:00' and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
                                    " where created_at>=updated_at) as result1 group by key, country_code, value")
 
-
-
-
         open_app_num = self.get_data("select key, country_code, value,count(*) as num from "
                                      "(select distinct account_id,country_code,key,value from "
                                      "(select open_app_accout_info.account_id, created_at, country_code, key, value, updated_at from "
@@ -90,6 +88,7 @@ class PushRetentionData(object):
                 # 提交到数据库执行
                 mysql_client.commit()
             except:
+                self.logger.exception("insert tabel {} err msg".format(self.table_name))
                 # 如果发生错误则回滚
                 mysql_client.rollback()
         if cursor:

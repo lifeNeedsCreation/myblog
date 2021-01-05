@@ -15,13 +15,14 @@ class NewUserCTRPeopleData(object):
         indicator_dimension：需要计算的实验组的维度
         table_name：计算结果存的表
     """
-    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
         self.placement = placement
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
@@ -80,10 +81,13 @@ class NewUserCTRPeopleData(object):
         flag = False
         for key in impression_data_union.keys():
             click_num = click_data.get(key, 0)
+            self.logger.info("{}.click_num: {}".format(self.table_name, click_num))
             impression_num = impression_data.get(key, 0)
+            self.logger.info("{}.impression_num: {}".format(self.table_name, impression_num))
             if impression_num <= 0:
                 continue
             impression_num_union = impression_data_union.get(key)
+            self.logger.info("{}.impression_num_union: {}".format(self.table_name, impression_num_union))
             if impression_num_union <= 0:
                 continue
             temp_data = key.split("&&")
@@ -100,6 +104,7 @@ class NewUserCTRPeopleData(object):
                 # 提交到数据库执行
                 mysql_client.commit()
             except:
+                self.logger.exception("insert tabel {} err msg".format(self.table_name))
                 # 如果发生错误则回滚
                 mysql_client.rollback()
         if cursor:

@@ -1,11 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @module news_ctr_notification_old_user
-# @author: Teddy
-# @description: 计算老用户新闻推送点击率
-# @since: 2020-12-24 14:04:46
-# @version: Python3.7.4
-
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 import datetime
@@ -21,12 +13,13 @@ class NewsCtrNotificationOldUserData(object):
     return 
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, country_code, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, country_code, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code 
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
@@ -88,7 +81,9 @@ class NewsCtrNotificationOldUserData(object):
         # 构造 sql
         for key in received_data.keys():
             click_num = click_data.get(key, 0)
+            self.logger.info("{}.click_num: {}".format(self.table_name, click_num))
             received_num = received_data.get(key, 0)
+            self.logger.info("{}.received_num: {}".format(self.table_name, received_num))
             if received_num < 0:
                 continue
             temp_data = key.split("&&")
@@ -105,9 +100,9 @@ class NewsCtrNotificationOldUserData(object):
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
-            except Exception as e:
+            except:
+                self.logger.exception("insert tabel {} err msg".format(self.table_name))
                 # 如果发生错误则回滚
-                print("错误信息：", e)
                 mysql_client.rollback()
 
         if cursor:

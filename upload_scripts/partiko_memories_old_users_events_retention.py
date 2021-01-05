@@ -1,12 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @module partiko_experiment_old_users_retention_tab_impression
-# @author: Mr.In
-# @description: 
-# @since: 2020-12-26 15:15:30
-# @version: Python3.7.4
-
-
 import datetime
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
@@ -20,11 +11,12 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
@@ -80,6 +72,7 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
             retention_events as (select distinct id,country_code,key,value,initial_date,date as retention_date,initial_events.event as initial_event,events_target_time.event as retention_event,date_diff(date,initial_date,day) as date_diff from initial_events inner join events_target_time on id = account_id),
             initial_event_count as (select count(distinct id) as initial_users,country_code,key,value,initial_date,event as initial_event from initial_events group by country_code, initial_date, initial_event, key, value),
             retention_event_count as (select count(distinct id) as retention_users,country_code, key, value,initial_date,retention_date,initial_event,retention_event, date_diff from retention_events group by country_code,initial_date, retention_date, initial_event, retention_event, date_diff, key, value)
+
             select i.country_code, i.initial_date, i.key, i.value, retention_date, date_diff,i.initial_event, retention_event, initial_users, ifnull(retention_users, 0) as retention_users, round(ifnull(retention_users, 0)/initial_users, 4) as retention_rate from initial_event_count as i left join retention_event_count as r on i.country_code = r.country_code and i.initial_date = r.initial_date and i.initial_event = r.initial_event and i.key = r.key and i.value = r.value where date_diff is not null
             '''
         retention_data = self.get_data(query)
@@ -102,9 +95,10 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                     cursor.execute(insert_sql1)
                     # 提交到数据库
                     mysql_client.commit()
-                except Exception as e:
+                    value_sql = ''
+                except:
+                    self.logger.exception("insert tabel {} err msg".format(self.table_name))
                     # 如果发生错误则回滚
-                    print("错误信息：", e)
                     mysql_client.rollback()
                     break
             elif (i - len(retention_data['country_code'])) == 0:
@@ -114,9 +108,9 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
                     cursor.execute(insert_sql2)
                     # 提交到数据库
                     mysql_client.commit()
-                except Exception as e:
+                except:
+                    self.logger.exception("insert tabel {} err msg".format(self.table_name))
                     # 如果发生错误则回滚
-                    print("错误信息：", e)
                     mysql_client.rollback()
                     break          
         if cursor:

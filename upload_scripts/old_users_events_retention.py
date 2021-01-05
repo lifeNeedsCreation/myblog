@@ -1,12 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @module old_users_retention_tab_impression
-# @author: Mr.In
-# @description: 老用户在 tab_impression 下的留存分析(常规用户)
-# @since: 2020-12-25 20:11:58
-# @version: Python3.7.4
-
-
 import datetime
 from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
@@ -19,10 +10,11 @@ class OldUsersEventsRetention(object):
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, table_name):
+    def __init__(self, start_time, end_time, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.table_name = table_name
+        self.logger = logger
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
@@ -92,9 +84,9 @@ class OldUsersEventsRetention(object):
             cursor.execute(insert_sql)
             # 提交到数据库
             mysql_client.commit()
-        except Exception as e:
+        except:
+            self.logger.exception("insert tabel {} err msg".format(self.table_name))
             # 如果发生错误则回滚
-            print("错误信息：", e)
             mysql_client.rollback()
         if cursor:
             cursor.close()

@@ -12,11 +12,12 @@ class PartikoMemoriesUserTimeAverageOfDuration:
         table_name：计算结果存的表
     """
 
-    def __init__(self, start_time, end_time, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
@@ -73,8 +74,8 @@ class PartikoMemoriesUserTimeAverageOfDuration:
             cursor.execute(insert_sql)
             # 提交到数据库执行
             mysql_client.commit()
-        except Exception as e:
-            print(e)
+        except:
+            self.logger.exception("insert tabel {} err msg".format(self.table_name))
             # 如果发生错误则回滚
             mysql_client.rollback()
         if cursor:
