@@ -109,13 +109,13 @@ class NewUserVideoWatchAverageData(object):
         flag = False
         for key in impression_union_data.keys():
             watch_num = video_watch_data.get(key, 0)
-            self.logger.info("{}.watch_num: {}".format(self.table_name, watch_num))
+            
             impression_num = impression_data.get(key, 0)
-            self.logger.info("{}.impression_num: {}".format(self.table_name, impression_num))
+            
             if impression_num <= 0:
                 continue
             impression_num_union = impression_union_data.get(key, 0)
-            self.logger.info("{}.impression_num_union: {}".format(self.table_name, impression_num_union))
+            
             if impression_num_union <= 0:
                 continue
             temp_data = key.split("&&")

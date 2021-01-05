@@ -81,9 +81,9 @@ class NewsCtrNotificationOldUserData(object):
         # 构造 sql
         for key in received_data.keys():
             click_num = click_data.get(key, 0)
-            self.logger.info("{}.click_num: {}".format(self.table_name, click_num))
+            
             received_num = received_data.get(key, 0)
-            self.logger.info("{}.received_num: {}".format(self.table_name, received_num))
+            
             if received_num < 0:
                 continue
             temp_data = key.split("&&")

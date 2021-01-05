@@ -80,13 +80,13 @@ class VideoCTRPeopleData(object):
         flag = False
         for key in impression_data_union.keys():
             click_num = click_data.get(key, 0)
-            self.logger.info("{}.click_num: {}".format(self.table_name, click_num))
+            
             impression_num = impression_data.get(key, 0)
-            self.logger.info("{}.impression_num: {}".format(self.table_name, impression_num))
+            
             if impression_num <= 0:
                 continue
             impression_num_union = impression_data_union.get(key)
-            self.logger.info("{}.impression_num_union: {}".format(self.table_name, impression_num_union))
+            
             if impression_num_union <= 0:
                 continue
             temp_data = key.split("&&")

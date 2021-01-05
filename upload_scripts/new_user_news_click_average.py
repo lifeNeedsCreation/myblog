@@ -111,13 +111,13 @@ class NewUserNewsClickAverageData(object):
         flag = False
         for key in impression_union_data.keys():
             click_num = news_click_data.get(key, 0)
-            self.logger.info("{}.click_num: {}".format(self.table_name, click_num))
+            
             impression_num = impression_data.get(key, 0)
-            self.logger.info("{}.impression_num: {}".format(self.table_name, impression_num))
+            
             if impression_num <= 0:
                 continue
             impression_num_union = impression_union_data.get(key, 0)
-            self.logger.info("{}.impression_num_union: {}".format(self.table_name, impression_num_union))
+            
             if impression_num_union <= 0:
                 continue
             temp_data = key.split("&&")
