@@ -14,13 +14,14 @@ class NewUserNewsClickAverageData(object):
     return 
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, country_code, placement, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
         self.placement = placement
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
@@ -110,16 +111,19 @@ class NewUserNewsClickAverageData(object):
         flag = False
         for key in impression_union_data.keys():
             click_num = news_click_data.get(key, 0)
+            
             impression_num = impression_data.get(key, 0)
+            
             if impression_num <= 0:
                 continue
-            impression_union_num = impression_union_data.get(key, 0)
-            if impression_union_num <= 0:
+            impression_num_union = impression_union_data.get(key, 0)
+            
+            if impression_num_union <= 0:
                 continue
             temp_data = key.split("&&")
             if len(temp_data) < 4:
                 continue
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "'," + str(click_num) + "," + str(impression_num) + "," + str(impression_union_num) + "," + str(round(click_num/impression_num, 5)) + "," + str(round(click_num/impression_union_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
+            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "','" + temp_data[3] + "'," + str(click_num) + "," + str(impression_num) + "," + str(impression_num_union) + "," + str(round(click_num/impression_num, 5)) + "," + str(round(click_num/impression_num_union, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
             insert_sql += values_sql
             flag = True
         if flag:
@@ -129,9 +133,10 @@ class NewUserNewsClickAverageData(object):
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 mysql_client.commit()
-            except Exception as e:
+                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
+            except:
+                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
                 # 如果发生错误则回滚
-                print("写入Mysql失败，错误信息：", e)
                 mysql_client.rollback()
         if cursor:
             cursor.close()

@@ -166,3 +166,6 @@ db.sqlite3
 # vscode
 .vscode
 
+# .ini
+*.ini
+

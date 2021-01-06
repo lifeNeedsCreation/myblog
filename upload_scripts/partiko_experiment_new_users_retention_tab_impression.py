@@ -3,7 +3,7 @@ from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 
 
-class ExperimentNewUsersRetentionTabImpression:
+class PartikoExperimentNewUsersRetentionTabImpression:
     """
         start_time:指标计算的开始时间
         end_time：指标计算的结束时间
@@ -12,11 +12,12 @@ class ExperimentNewUsersRetentionTabImpression:
         table_name：计算结果存的表
     """
 
-    def __init__(self, start_time, end_time, indicator_dimension, table_name):
+    def __init__(self, start_time, end_time, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.indicator_dimension = indicator_dimension
         self.table_name = table_name
+        self.logger = logger
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
@@ -56,7 +57,7 @@ class ExperimentNewUsersRetentionTabImpression:
             with
             accounts as (select * from input.accounts where name is not null),
             account_profiles as (select * from partiko.account_profiles where mac_address is not null),
-            memories as (select * from partiko.memories where key like 'experiment_%' and value in ({self.indicator_dimension}) and updated_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and updated_at < '{end_time}'),
+            memories as (select *,created_at as updated_at,group_field as value from partiko.experiments where group_field in ({self.indicator_dimension}) and created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
             app_open as (select * from stream_events.app_open where created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
             tab_impression as (select * from stream_events.tab_impression where created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
             account as (select distinct id,country_code,key,value,extract(date from updated_at) as created_date from (select id,country_code,created_at from (select distinct id,country_code,created_at from accounts) inner join (select distinct account_id from (select mac_address,min(created_at) as created_at from account_profiles group by mac_address) as a inner join (select account_id,mac_address,created_at from account_profiles) as b on a.mac_address=b.mac_address and a.created_at=b.created_at) on id=account_id) inner join (select distinct account_id,key,value,updated_at from memories) on id=account_id and extract(date from created_at)=extract(date from updated_at)),
@@ -82,8 +83,8 @@ class ExperimentNewUsersRetentionTabImpression:
             cursor.execute(insert_sql)
             # 提交到数据库执行
             mysql_client.commit()
-        except Exception as e:
-            print(e)
+        except:
+            self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
             # 如果发生错误则回滚
             mysql_client.rollback()
         if cursor:
