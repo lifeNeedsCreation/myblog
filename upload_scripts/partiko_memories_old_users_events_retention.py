@@ -83,7 +83,7 @@ class PartikoMemoriesOldUsersRetentionTabImpression(object):
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         value_sql = ''
         n = 5000
-        logger.info("count {}".format(len(retention_data['country_code']))
+        self.logger.info("count {}".format(len(retention_data['country_code'])))
         for i in range(1, len(retention_data['country_code'])+1):
             value_sql += "("
             for filed in fields:
