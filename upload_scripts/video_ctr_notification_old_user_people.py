@@ -47,7 +47,7 @@ class VideoCtrNotificationOldUserPeopleData(object):
         # 点击推送的用户统计
         click_sql = f"""
                     select result.key as treatment_name, result.country_code as country_code, result.value as dimension, count(result.account_id) as num from
-                    (select distinct a.account_id as account_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
+                    (select distinct a.account_id as account_id, memories.key as key, memories.value as value, a.country_code as country_code from 
                     (select notification_click.account_id as account_id, notification_click.created_at as created_at, accounts.country_code as country_code from 
                     (select * from buzzbreak-model-240306.stream_events.notification_click as click where click.created_at >= '{start_time}' and click.created_at < '{end_time}'  and json_extract_scalar(data, '$.type') = 'video' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_click  
                     LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_click.account_id where accounts.name is not null and accounts.country_code in ({self.country_code})
@@ -62,7 +62,7 @@ class VideoCtrNotificationOldUserPeopleData(object):
         # 收到推送的用户统计
         received_sql = f"""
                       select result.key as treatment_name, result.country_code as country_code, result.value as dimension, count(result.account_id) as num from 
-                      (select distinct a.account_id as account_id, a.created_at as created_at, memories.key as key, memories.value as value, a.country_code as country_code from 
+                      (select distinct a.account_id as account_id, memories.key as key, memories.value as value, a.country_code as country_code from 
                       (select notification_received.account_id as account_id, notification_received.created_at as created_at, accounts.country_code as country_code from 
                       (select * from buzzbreak-model-240306.stream_events.notification_received as received where received.created_at >= '{start_time}' and received.created_at < '{end_time}' and json_extract_scalar(data, '$.type') = 'video' and json_extract_scalar(data, '$.push_id') like 'push%') as notification_received 
                       LEFT JOIN buzzbreak-model-240306.input.accounts as accounts on accounts.id = notification_received.account_id where accounts.name is not null and accounts.country_code in ({self.country_code}) and accounts.created_at < '{start_time}') as a 
