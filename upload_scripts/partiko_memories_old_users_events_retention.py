@@ -60,7 +60,7 @@ class PartikoMemoriesOldUsersEventsRetention(object):
         query = \
             f'''
             with
-            accounts as (select * from input.accounts where name is not null),
+            accounts as (select * from input.accounts where name is not null and created_at < '{start_time}'),
 
             account_profiles as (select * from partiko.account_profiles where mac_address is not null),
 
@@ -70,7 +70,7 @@ class PartikoMemoriesOldUsersEventsRetention(object):
 
             tab_impression as (select * from stream_events.tab_impression where created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
 
-            account as (select distinct id,country_code,key,value, extract(date from created_at) as created_date from (select id,country_code, created_at from (select distinct id, country_code, created_at from accounts) inner join (select distinct account_id from (select mac_address, min(created_at) as created_at from account_profiles group by mac_address) as a inner join (select account_id, mac_address, created_at from account_profiles) as b on a.mac_address = b.mac_address and a.created_at = b.created_at) on id = account_id) inner join (select distinct account_id, key, value, updated_at from memories) on id = account_id where created_at < '{start_time}'),
+            account as (select distinct id,country_code,key,value, extract(date from created_at) as created_date from (select id,country_code, created_at from (select distinct id, country_code, created_at from accounts) inner join (select distinct account_id from (select mac_address, min(created_at) as created_at from account_profiles group by mac_address) as a inner join (select account_id, mac_address, created_at from account_profiles) as b on a.mac_address = b.mac_address and a.created_at = b.created_at) on id = account_id) inner join (select distinct account_id, key, value, updated_at from memories) on id = account_id),
 
             events_target_time as (select * from ((select distinct account_id,extract(date from created_at) as date,json_extract_scalar(data,'$.tab') as event from tab_impression where created_at > '{start_time}' and created_at < '{end_time}') union all (select distinct account_id,extract(date from created_at) as date,'app_open' as event from app_open where created_at > '{start_time}' and created_at < '{end_time}'))),
 
