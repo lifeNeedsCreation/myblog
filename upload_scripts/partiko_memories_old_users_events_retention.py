@@ -60,7 +60,7 @@ class PartikoMemoriesOldUsersEventsRetention(object):
         query = \
             f'''
             with
-            accounts as (select * from input.accounts where name is not null and created_at < '{start_time}'),
+            accounts as (select * from input.accounts where name is not null and extract(date from created_at) < extract(date from '{start_time}')),
 
             account_profiles as (select * from partiko.account_profiles where mac_address is not null),
 
