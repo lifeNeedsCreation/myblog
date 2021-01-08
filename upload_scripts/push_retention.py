@@ -43,7 +43,7 @@ class PushRetentionData(object):
                                    "(select account_id, open_app.created_at, country_code from "
                                    "(select account_id,created_at from buzzbreak-model-240306.stream_events.app_open where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as open_app "
                                    " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON open_app.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ")) as open_app_accout_info"
-                                   " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and updated_at<='2020-12-21 00:00:00' and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
+                                   " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%'  and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
                                    " where created_at>=updated_at) as result1 group by key, country_code, value")
 
         y_start_time = self.start_time - datetime.timedelta(days=1)
@@ -55,7 +55,7 @@ class PushRetentionData(object):
                                    "(select account_id, open_app.created_at, country_code from "
                                    "(select account_id,created_at from buzzbreak-model-240306.stream_events.app_open where created_at>='" + y_start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + y_end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as open_app "
                                    " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON open_app.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ")) as open_app_accout_info"
-                                   " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and updated_at<='2020-12-21 00:00:00' and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
+                                   " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%'  and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
                                    " where created_at>=updated_at) as result1 group by key, country_code, value")
 
         open_app_num = self.get_data("select key, country_code, value,count(*) as num from "
@@ -65,7 +65,7 @@ class PushRetentionData(object):
                                      "(select open_app1.account_id,open_app1.created_at from (select account_id,created_at from buzzbreak-model-240306.stream_events.app_open where created_at>='" + y_start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + y_end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as open_app1 where EXISTS(select account_id,created_at from "
                                      "(select account_id,created_at from buzzbreak-model-240306.stream_events.app_open where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "') as open_app2 where open_app2.account_id=open_app1.account_id)) as open_app_res"
                                      " LEFT JOIN buzzbreak-model-240306.input.accounts as acounts ON open_app_res.account_id = acounts.id where name is not null and country_code in (" + self.country_code + ")) as open_app_accout_info"
-                                     " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and updated_at<='2020-12-21 00:00:00' and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
+                                     " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%'  and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
                                      " where created_at>=updated_at) as result1 group by key, country_code, value")
         # 结果数据存入数据库
         cursor = mysql_client.cursor()
