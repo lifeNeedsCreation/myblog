@@ -168,6 +168,7 @@ if __name__ == "__main__":
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
     placement = "'" + "','".join(constants.PLACEMENT) + "'"
     video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
+    video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
