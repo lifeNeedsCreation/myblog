@@ -22,7 +22,7 @@ class NewVideoClickCtrByType:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         result = bigquery_client.query(sql).to_dataframe()
-        self.logger(result)
+        self.logger.info(result)
         result_num = {}
         for index, row in result.iterrows():
             category = row["category"]
