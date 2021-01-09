@@ -41,7 +41,7 @@ class NewVideoClickCtrByType:
             with
             videos as (select * from partiko.videos where created_at between timestamp_sub(timestamp'{start_time}', interval 2 day) and timestamp_sub(timestamp'{end_time}', interval 2 day)),
 
-            video_click as (select json_extract_scalar(data, '$.id') as video_id, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_click` where created_at between '{start_time}' and '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.video_kind_placement})),
+            video_click as (select json_extract_scalar(data, '$.id') as video_id, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_click` where created_at between '{start_time}' and '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.video_kind_placement}))
 
             select vc.placement, videos.category, count(*) as num from video_click as vc inner join videos on safe_cast(vc.video_id as numeric) = videos.id group by videos.category 
             '''
@@ -52,7 +52,7 @@ class NewVideoClickCtrByType:
             with
             videos as (select * from partiko.videos where created_at between timestamp_sub(timestamp'{start_time}', interval 2 day) and timestamp_sub(timestamp'{end_time}', interval 2 day)),
 
-            video_impression as (select json_extract_scalar(data, '$.id') as video_id, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` where created_at between '{start_time}' and '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.video_kind_placement})),
+            video_impression as (select json_extract_scalar(data, '$.id') as video_id, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` where created_at between '{start_time}' and '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.video_kind_placement}))
 
             select vc.placement, videos.category, count(*) as num from video_impression as vi inner join videos on safe_cast(vi.video_id as numeric) = videos.id group by vi.placement, videos.category 
             '''
