@@ -43,7 +43,7 @@ class NewVideoClickCtrByType:
 
             video_click as (select json_extract_scalar(data, '$.id') as video_id, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_click` where created_at between '{start_time}' and '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.video_kind_placement}))
 
-            select vc.placement, videos.category, count(*) as num from video_click as vc inner join videos on safe_cast(vc.video_id as numeric) = videos.id group by videos.category 
+            select vc.placement, videos.category, count(*) as num from video_click as vc inner join videos on safe_cast(vc.video_id as numeric) = videos.id group by videos.category, vc.placement 
             '''
         click_data = self.get_data(click_sql)
 
