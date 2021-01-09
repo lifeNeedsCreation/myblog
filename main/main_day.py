@@ -39,6 +39,7 @@ from upload_scripts import new_user_news_ctr_people
 from upload_scripts import new_user_video_ctr_people
 from upload_scripts import push_retention
 from upload_scripts import partiko_experiment_new_users_retention_tab_impression
+from upload_scripts import new_video_click_ctr_by_type
 
 # 指标列表
 KIND = {
@@ -72,6 +73,7 @@ KIND = {
     "new_user_video_ctr_people": 1,  # 新用户 视频 click_user_ratio
     "push_tention": 1,
     "partiko_experiment_new_users_retention_tab_impression": 1,     # partiko.experiment 实验中 新用户在各个 tab 的留存
+    "new_video_click_ctr_by_type": 1,   # 各类新视频点击率、点击数及曝光数
 }
 
 
@@ -285,6 +287,8 @@ if __name__ == "__main__":
         push_retention.PushRetentionData(start_time, end_time, country_code, indicator_dimension, "push_tention", logger).compute_data()
     elif kind == 'partiko_experiment_new_users_retention_tab_impression':
         partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
+    elif kind == 'new_video_click_ctr_by_type':
+        new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
     else:
         pass
 

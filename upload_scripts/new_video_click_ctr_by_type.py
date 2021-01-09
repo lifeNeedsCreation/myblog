@@ -3,7 +3,7 @@ from utils.bigquery import bigquery_client
 from utils.mysql import mysql_client
 
 
-class NewUsersRetentionNewsEvent:
+class NewVideoClickCtrByType:
     # 构造函数， 初始化数据
     """
         start_time:指标计算的开始时间
