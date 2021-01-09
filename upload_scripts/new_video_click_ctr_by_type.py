@@ -73,7 +73,7 @@ class NewVideoClickCtrByType:
             if len(temp_data) < 2:
                 continue
             # 拼接 sql values
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] +  "'," + str(click_num) + "," + str(impression_num) + "," + str(round(click_num/impression_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            values_sql = "('" + temp_data[0] + "','" + temp_data[1] +  "'," + str(click_num) + "," + str(impression_num) + "," + str(round(click_num/impression_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc + "'),"
             insert_sql += values_sql
             flag = True
 
