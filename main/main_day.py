@@ -288,7 +288,7 @@ if __name__ == "__main__":
     elif kind == 'partiko_experiment_new_users_retention_tab_impression':
         partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
     elif kind == 'new_video_click_ctr_by_type':
-        new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
+        new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, 'new_video_click_ctr_by_type', logger).compute_data()
     else:
         pass
 
