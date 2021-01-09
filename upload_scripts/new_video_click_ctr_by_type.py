@@ -60,7 +60,7 @@ class NewVideoClickCtrByType:
 
         # 结果数据存入数据库
         cursor = mysql_client.cursor()
-        values = "category, placement, click_num, impression_num, ctr, create_time"
+        values = "category, placement, click_num, impression_num, ctr, start_time, end_time, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         # sql 执行标识
