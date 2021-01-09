@@ -54,7 +54,7 @@ class NewVideoClickCtrByType:
 
             video_impression as (select json_extract_scalar(data, '$.id') as video_id, json_extract_scalar(data, '$.placement') as placement from `stream_events.video_impression` where created_at between '{start_time}' and '{end_time}' and json_extract_scalar(data, '$.placement') in ({self.video_kind_placement}))
 
-            select vc.placement, videos.category, count(*) as num from video_impression as vi inner join videos on safe_cast(vi.video_id as numeric) = videos.id group by vi.placement, videos.category 
+            select vi.placement, videos.category, count(*) as num from video_impression as vi inner join videos on safe_cast(vi.video_id as numeric) = videos.id group by vi.placement, videos.category 
             '''
         impression_data = self.get_data(impression_sql)
 
