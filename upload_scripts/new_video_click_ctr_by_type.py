@@ -79,6 +79,7 @@ class NewVideoClickCtrByType:
 
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
+            self.logger.info(insert_sql)
             try:
                 # 执行sql语句
                 cursor.execute(insert_sql)
