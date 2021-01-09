@@ -22,7 +22,6 @@ class NewVideoClickCtrByType:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         result = bigquery_client.query(sql).to_dataframe()
-        self.logger.info(result)
         result_num = {}
         for index, row in result.iterrows():
             category = row["category"]
@@ -79,7 +78,6 @@ class NewVideoClickCtrByType:
 
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
-            self.logger.info(insert_sql)
             try:
                 # 执行sql语句
                 cursor.execute(insert_sql)
