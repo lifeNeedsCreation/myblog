@@ -23,16 +23,14 @@ class NewUsersRetentionNewsEvent:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         result = bigquery_client.query(sql).to_dataframe()
-        fields = [
-            'category',
-            'placement',
-            'num'
-        ]
-        dict_info = {field: [] for field in fields}
+        result_num = {}
         for index, row in result.iterrows():
-            for field in fields:
-                dict_info[field].append(row[field])
-        return dict_info
+            category = row["category"]
+            placement = row["placement"]
+            num = row["num"]
+            if category and placement:
+                result_num[category + "&&" + placement] = num
+        return result_num
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
@@ -71,13 +69,11 @@ class NewUsersRetentionNewsEvent:
         for key in impression_data.keys():
             click_num = click_data.get(key, 0)
             impression_num = impression_data.get(key, 0)
-            if impression_num < 0:
-                continue
             temp_data = key.split("&&")
-            if len(temp_data) < 3:
+            if len(temp_data) < 2:
                 continue
             # 拼接 sql values
-            values_sql = "('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(click_num) + "," + str(impression_num) + "," + str(round(click_num/impression_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            values_sql = "('" + temp_data[0] + "','" + temp_data[1] +  "'," + str(click_num) + "," + str(impression_num) + "," + str(round(click_num/impression_num, 5)) + ",'" + start_time + "','" + end_time + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             insert_sql += values_sql
             flag = True
 
