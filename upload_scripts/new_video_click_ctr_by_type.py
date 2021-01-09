@@ -8,8 +8,7 @@ class NewVideoClickCtrByType:
     """
         start_time:指标计算的开始时间
         end_time：指标计算的结束时间
-        country_code：需要计算的国家
-        indicator_dimension：需要计算的实验组的维度
+        video_kind_placement：新视频关注位置
         table_name：计算结果存的表
     """
 
@@ -23,6 +22,7 @@ class NewVideoClickCtrByType:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         result = bigquery_client.query(sql).to_dataframe()
+        self.logger(result)
         result_num = {}
         for index, row in result.iterrows():
             category = row["category"]
