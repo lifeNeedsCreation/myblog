@@ -22,6 +22,8 @@ from upload_scripts import video_ctr_notification_old_user
 from upload_scripts import video_ctr_notification_old_user_people
 from upload_scripts import new_user_news_click_average
 from upload_scripts import new_user_video_watch_average
+from upload_scripts import old_user_video_watch_average
+from upload_scripts import video_watch_average
 from upload_scripts import video_ctr
 from upload_scripts import video_ctr_people
 from upload_scripts import new_users_retention_news_event
@@ -55,7 +57,9 @@ KIND = {
     "video_ctr_notification_old_user": 1,   # 老用户视频push的ctr
     "video_ctr_notification_old_user_people": 1,   # 老用户视频push的ctr（人）
     "new_user_news_click_average": 1,    # 新用户新闻平均点击率
-    "new_user_video_watch_average": 1,      # 新用户视频平均观看率
+    "new_user_video_watch_average": 1,      # 新用户视频平均观看次数
+    "old_user_video_watch_average": 1,      # 老用户视频平均观看次数
+    "video_watch_average": 1,      # 所有用户视频平均观看次数
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
@@ -197,6 +201,11 @@ if __name__ == "__main__":
 
         new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average", logger).compute_data()
 
+        old_user_video_watch_average.OldUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_old_user_video_watch_average", logger).compute_data()
+
+        video_watch_average.VideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_average", logger).compute_data()
+
+
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event", logger).compute_data()
 
         video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_ctr", logger).compute_data()
@@ -253,6 +262,10 @@ if __name__ == "__main__":
         new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_click_average", logger).compute_data()
     elif kind == "new_user_video_watch_average":
         new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average", logger).compute_data()
+    elif kind == "old_user_video_watch_average":
+        old_user_video_watch_average.OldUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_old_user_video_watch_average", logger).compute_data()
+    elif kind == "video_watch_average":
+        video_watch_average.VideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_average", logger).compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event", logger).compute_data()
     elif kind == "video_ctr":
