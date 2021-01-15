@@ -169,3 +169,5 @@ db.sqlite3
 # .ini
 *.ini
 
+# config
+/config/*
