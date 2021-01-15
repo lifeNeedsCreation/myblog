@@ -1,4 +1,9 @@
+import os, sys
 import pymysql
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR + '/utils')
+
 from read_config import CONFIG
 
 
