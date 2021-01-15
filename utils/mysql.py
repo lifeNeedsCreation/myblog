@@ -2,7 +2,7 @@ import os, sys
 import pymysql
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR + '/utils')
+sys.path.append(BASE_DIR + "/utils")
 
 from read_config import CONFIG
 
@@ -20,7 +20,7 @@ class MySQL(object):
         return pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, port=self.port)
 
 
-buzzbreak_mysql_client = MySQL(CONFIG['MYSQL_BUZZBREAK']['URI'], CONFIG['MYSQL_BUZZBREAK']['PORT'], CONFIG['MYSQL_BUZZBREAK']['USER'], CONFIG['MYSQL_BUZZBREAK']['PASSWORD'], CONFIG['MYSQL_BUZZBREAK']['DATABASE']).get_client()
-katkat_mysql_client = MySQL(CONFIG['MYSQL_KATKAT']['URI'], CONFIG['MYSQL_KATKAT']['PORT'], CONFIG['MYSQL_KATKAT']['USER'], CONFIG['MYSQL_KATKAT']['PASSWORD'], CONFIG['MYSQL_KATKAT']['DATABASE']).get_client()
+buzzbreak_mysql_client = MySQL(CONFIG["MYSQL_BUZZBREAK"].get(["URI"]), CONFIG["MYSQL_BUZZBREAK"].get(["PORT"]), CONFIG["MYSQL_BUZZBREAK"].get(["USER"]), CONFIG["MYSQL_BUZZBREAK"].get(["PASSWORD"]), CONFIG["MYSQL_BUZZBREAK"].get(["DATABASE"])).get_client()
+katkat_mysql_client = MySQL(CONFIG["MYSQL_KATKAT"].get(["URI"]), CONFIG["MYSQL_KATKAT"].get(["PORT"]), CONFIG["MYSQL_KATKAT"].get(["USER"]), CONFIG["MYSQL_KATKAT"].get(["PASSWORD"]), CONFIG["MYSQL_KATKAT"].get(["DATABASE"])).get_client()
 
 
