@@ -5,7 +5,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR, DIR)
+sys.path.append(BASE_DIR)
+sys.path.append(DIR)
 
 from upload_scripts import new_user_indicator
 from utils.bigquery import bigquery_client

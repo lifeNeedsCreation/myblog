@@ -6,7 +6,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR, DIR)
+sys.path.append(BASE_DIR)
+sys.path.append(DIR)
 
 from utils.mysql import buzzbreak_mysql_client
 

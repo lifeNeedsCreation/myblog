@@ -5,7 +5,8 @@ import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR, DIR)
+sys.path.append(BASE_DIR)
+sys.path.append(DIR)
 
 from utils import constants
 from utils.bigquery import bigquery_client
