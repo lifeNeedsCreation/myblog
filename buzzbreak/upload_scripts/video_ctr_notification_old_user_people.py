@@ -1,4 +1,4 @@
-from utils.bigquery import bigquery_client
+from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 import datetime
 
@@ -27,7 +27,7 @@ class VideoCtrNotificationOldUserPeopleData(object):
         : return: 字典，筛选条件为key，统计的用户数量为value
         """
         res_num = {}
-        result = bigquery_client.query(sql).to_dataframe()
+        result = buzzbreak_bigquery_client.query(sql).to_dataframe()
         for index, row in result.iterrows():
             treatment_name = row["treatment_name"]
             country_code = row["country_code"]

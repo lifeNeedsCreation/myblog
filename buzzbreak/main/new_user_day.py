@@ -9,7 +9,7 @@ sys.path.append(BASE_DIR)
 sys.path.append(DIR)
 
 from upload_scripts import new_user_indicator
-from utils.bigquery import bigquery_client
+from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 from utils import constants
 
@@ -126,8 +126,8 @@ if __name__ == "__main__":
         new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
 
     # 关闭相关数据库的客户端
-    if bigquery_client:
-        bigquery_client.close()
+    if buzzbreak_bigquery_client:
+        buzzbreak_bigquery_client.close()
     if buzzbreak_mysql_client:
         buzzbreak_mysql_client.close()
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " new user day complete!")

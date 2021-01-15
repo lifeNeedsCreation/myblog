@@ -9,7 +9,7 @@ sys.path.append(BASE_DIR)
 sys.path.append(DIR)
 
 from upload_scripts import ctr, ctr_people, video_ctr, video_ctr_people
-from utils.bigquery import bigquery_client
+from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 from utils import constants
 
@@ -133,8 +133,8 @@ if __name__ == "__main__":
     else:
         pass
 
-    if bigquery_client:
-        bigquery_client.close()
+    if buzzbreak_bigquery_client:
+        buzzbreak_bigquery_client.close()
     if buzzbreak_mysql_client:
         buzzbreak_mysql_client.close()
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  hour complete!")

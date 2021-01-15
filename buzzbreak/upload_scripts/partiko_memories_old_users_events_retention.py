@@ -1,5 +1,5 @@
 import datetime
-from utils.bigquery import bigquery_client
+from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 
 
@@ -20,7 +20,7 @@ class PartikoMemoriesOldUsersEventsRetention(object):
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
-        result = bigquery_client.query(sql).to_dataframe()
+        result = buzzbreak_bigquery_client.query(sql).to_dataframe()
         fields = [
             'key',
             'value',

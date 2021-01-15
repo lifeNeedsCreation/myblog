@@ -1,4 +1,4 @@
-from utils.bigquery import bigquery_client
+from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 import datetime
 
@@ -29,7 +29,7 @@ class OldUserVideoWatchAverageData(object):
         : param sql : sql语句
         : return result_num : 字典，{'country_code&&placement&&key&&value': num}
         """
-        result = bigquery_client.query(sql).to_dataframe()
+        result = buzzbreak_bigquery_client.query(sql).to_dataframe()
         result_num = {}
         for index, row in result.iterrows():
             country_code = row['country_code']

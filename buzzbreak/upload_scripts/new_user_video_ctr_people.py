@@ -1,5 +1,5 @@
 
-from utils.bigquery import bigquery_client
+from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 import datetime
 
@@ -27,7 +27,7 @@ class NewUserVideoCTRPeopleData(object):
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         res_num = {}
-        bq_job = bigquery_client.query(sql).to_dataframe()
+        bq_job = buzzbreak_bigquery_client.query(sql).to_dataframe()
         for index, row in bq_job.iterrows():
             placement = row["placement"]
             key = row["key"]
