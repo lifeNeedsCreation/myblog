@@ -20,7 +20,7 @@ class MySQL(object):
         return pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, port=self.port)
 
 
-buzzbreak_mysql_client = MySQL(CONFIG["MYSQL_BUZZBREAK"]["URI"], CONFIG["MYSQL_BUZZBREAK"]["PORT"], CONFIG["MYSQL_BUZZBREAK"]["USER"], CONFIG["MYSQL_BUZZBREAK"]["PASSWORD"], CONFIG["MYSQL_BUZZBREAK"]["DATABASE"]).get_client()
-katkat_mysql_client = MySQL(CONFIG["MYSQL_KATKAT"]["URI"], CONFIG["MYSQL_KATKAT"]["PORT"], CONFIG["MYSQL_KATKAT"]["USER"], CONFIG["MYSQL_KATKAT"]["PASSWORD"], CONFIG["MYSQL_KATKAT"]["DATABASE"]).get_client()
+buzzbreak_mysql_client = MySQL(CONFIG['MYSQL_BUZZBREAK']['URI'], CONFIG['MYSQL_BUZZBREAK']['PORT'], CONFIG['MYSQL_BUZZBREAK']['USER'], CONFIG['MYSQL_BUZZBREAK']['PASSWORD'], CONFIG['MYSQL_BUZZBREAK']['DATABASE']).get_client()
+katkat_mysql_client = MySQL(CONFIG['MYSQL_KATKAT']['URI'], CONFIG['MYSQL_KATKAT']['PORT'], CONFIG['MYSQL_KATKAT']['USER'], CONFIG['MYSQL_KATKAT']['PASSWORD'], CONFIG['MYSQL_KATKAT']['DATABASE']).get_client()
 
 
