@@ -22,6 +22,8 @@ from upload_scripts import video_ctr_notification_old_user
 from upload_scripts import video_ctr_notification_old_user_people
 from upload_scripts import new_user_news_click_average
 from upload_scripts import new_user_video_watch_average
+from upload_scripts import old_user_video_watch_average
+from upload_scripts import video_watch_average
 from upload_scripts import video_ctr
 from upload_scripts import video_ctr_people
 from upload_scripts import new_users_retention_news_event
@@ -39,6 +41,7 @@ from upload_scripts import new_user_news_ctr_people
 from upload_scripts import new_user_video_ctr_people
 from upload_scripts import push_retention
 from upload_scripts import partiko_experiment_new_users_retention_tab_impression
+from upload_scripts import new_video_click_ctr_by_type
 
 # 指标列表
 KIND = {
@@ -54,7 +57,9 @@ KIND = {
     "video_ctr_notification_old_user": 1,   # 老用户视频push的ctr
     "video_ctr_notification_old_user_people": 1,   # 老用户视频push的ctr（人）
     "new_user_news_click_average": 1,    # 新用户新闻平均点击率
-    "new_user_video_watch_average": 1,      # 新用户视频平均观看率
+    "new_user_video_watch_average": 1,      # 新用户视频平均观看次数
+    "old_user_video_watch_average": 1,      # 老用户视频平均观看次数
+    "video_watch_average": 1,      # 所有用户视频平均观看次数
     "new_users_retention_news_event": 1,   # 新闻用户留存率
     "video_ctr": 1,   # 视频ctr
     "video_ctr_people": 1,   # 视频 click_user_ratio
@@ -72,6 +77,7 @@ KIND = {
     "new_user_video_ctr_people": 1,  # 新用户 视频 click_user_ratio
     "push_tention": 1,
     "partiko_experiment_new_users_retention_tab_impression": 1,     # partiko.experiment 实验中 新用户在各个 tab 的留存
+    "new_video_click_ctr_by_type": 1,   # 各类新视频点击率、点击数及曝光数
 }
 
 
@@ -168,6 +174,7 @@ if __name__ == "__main__":
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
     placement = "'" + "','".join(constants.PLACEMENT) + "'"
     video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
+    video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -193,6 +200,11 @@ if __name__ == "__main__":
         new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_click_average", logger).compute_data()
 
         new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average", logger).compute_data()
+
+        old_user_video_watch_average.OldUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_old_user_video_watch_average", logger).compute_data()
+
+        video_watch_average.VideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_average", logger).compute_data()
+
 
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event", logger).compute_data()
 
@@ -250,6 +262,10 @@ if __name__ == "__main__":
         new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_click_average", logger).compute_data()
     elif kind == "new_user_video_watch_average":
         new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_watch_average", logger).compute_data()
+    elif kind == "old_user_video_watch_average":
+        old_user_video_watch_average.OldUserVideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_old_user_video_watch_average", logger).compute_data()
+    elif kind == "video_watch_average":
+        video_watch_average.VideoWatchAverageData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_video_watch_average", logger).compute_data()
     elif kind == "new_users_retention_news_event":
         new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, country_code, indicator_dimension, "new_users_retention_news_event", logger).compute_data()
     elif kind == "video_ctr":
@@ -284,6 +300,8 @@ if __name__ == "__main__":
         push_retention.PushRetentionData(start_time, end_time, country_code, indicator_dimension, "push_tention", logger).compute_data()
     elif kind == 'partiko_experiment_new_users_retention_tab_impression':
         partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
+    elif kind == 'new_video_click_ctr_by_type':
+        new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, 'new_video_click_ctr_by_type', logger).compute_data()
     else:
         pass
 
