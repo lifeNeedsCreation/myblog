@@ -12,10 +12,10 @@ class BigQuery(object):
 
     def config(self):
         if self.bucket == "buzzbreak":
-            AUTH_JSON_FILE_PATH = BASE_DIR + "/config/buzzbreak_bigquery_config.json"
+            auth = BASE_DIR + "/config/buzzbreak_bigquery_config.json"
         elif self.bucket == "katkat":
-            AUTH_JSON_FILE_PATH = BASE_DIR + "/config/katkat_bigquery_config.json"
-        return AUTH_JSON_FILE_PATH
+            auth = BASE_DIR + "/config/katkat_bigquery_config.json"
+        return auth
 
     def get_client(self):
         return bigquery.Client.from_service_account_json(self.auth)
