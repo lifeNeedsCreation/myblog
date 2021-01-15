@@ -86,7 +86,7 @@ KIND = {
 # 周期：天
 
 if __name__ == "__main__":
-    logger = Logger("Main Day", os.path.join(DIR, 'logs/main_day.log'))
+    logger = Logger("Main Day", os.path.join(DIR, '../logs/main_day.log'))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  start!")
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
