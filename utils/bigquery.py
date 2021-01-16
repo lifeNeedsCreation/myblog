@@ -4,8 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class BigQuery(object):
-    def __init__(self, project, bucket):
-        self.project = project
+    def __init__(self, bucket):
         self.bucket = bucket
         self.auth = self.config()
         
@@ -21,8 +20,8 @@ class BigQuery(object):
         return bigquery.Client.from_service_account_json(self.auth)
 
 
-buzzbreak_bigquery_client = BigQuery("buzzbreak-model-240306", "buzzbreak").get_client()
-katkat_bigquery_client = BigQuery("katkat-model-240306", "katkat").get_client()
+buzzbreak_bigquery_client = BigQuery("buzzbreak").get_client()
+katkat_bigquery_client = BigQuery("katkat").get_client()
 
 
 

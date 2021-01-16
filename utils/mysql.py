@@ -9,17 +9,17 @@ from read_config import CONFIG
 
 class MySQL(object):
 
-    def __init__(self, config):
-        self.host = config.get("URI")
-        self.port = config.get("PORT")
-        self.user = config.get("USER")
-        self.password = config.get("PASSWORD")
-        self.db = config.get("DATABASE")
+    def __init__(self, section):
+        self.host = CONFIG[section].get("URI")
+        self.port = CONFIG[section].get("PORT")
+        self.user = CONFIG[section].get("USER")
+        self.password = CONFIG[section].get("PASSWORD")
+        self.db = CONFIG[section].get("DATABASE")
 
     def get_client(self):
         return pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.db, port=self.port)
 
-buzzbreak_mysql_client = MySQL(CONFIG["MYSQL_BUZZBREAK"]).get_client()
-katkat_mysql_client = MySQL(CONFIG["MYSQL_KATKAT"]).get_client()
+buzzbreak_mysql_client = MySQL("MYSQL_BUZZBREAK").get_client()
+katkat_mysql_client = MySQL("MYSQL_KATKAT").get_client()
 
 
