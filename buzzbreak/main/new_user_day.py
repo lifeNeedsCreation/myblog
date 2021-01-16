@@ -123,9 +123,9 @@ if __name__ == "__main__":
             if i == kind:
                 continue
             else:
-                new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(i)[0], KIND.get(i)[1]).compute_data()
+                new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(i)[0], KIND.get(i)[1], logger).compute_data()
     else:
-        new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1]).compute_data()
+        new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1], logger).compute_data()
 
     # 关闭相关数据库的客户端
     if buzzbreak_bigquery_client:
