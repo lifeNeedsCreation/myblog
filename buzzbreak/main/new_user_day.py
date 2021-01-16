@@ -12,6 +12,7 @@ from upload_scripts import new_user_indicator
 from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 from utils import constants
+from utils.logger import Logger
 
 
 KIND = {
@@ -27,6 +28,7 @@ KIND = {
 # 周期：天
 
 if __name__ == "__main__":
+    logger = Logger("New User Day", os.path.join(DIR, 'logs/new_user_day.log'))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " new user day start!")
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"

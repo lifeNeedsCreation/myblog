@@ -12,6 +12,7 @@ from upload_scripts import ctr, ctr_people, video_ctr, video_ctr_people
 from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 from utils import constants
+from utils.logger import Logger
 
 
 KIND = {
@@ -24,6 +25,7 @@ KIND = {
 
 # 周期：小时
 if __name__ == "__main__":
+    logger = Logger("Main Hour", os.path.join(DIR, 'logs/main_hour.log'))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  hour start!")
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
@@ -115,21 +117,21 @@ if __name__ == "__main__":
     video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr", logger).compute_data()
 
-        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people").compute_data()
+        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people", logger).compute_data()
 
-        video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr").compute_data()
+        video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr", logger).compute_data()
         
-        video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr_people").compute_data()
+        video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr_people", logger).compute_data()
     elif kind == "ctr_hour":
-        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr").compute_data()
+        ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr", logger).compute_data()
     elif kind == "ctr_people_hour":
-        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people").compute_data()
+        ctr_people.CTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "hour_news_ctr_people", logger).compute_data()
     elif kind == "video_ctr_hour":
-        video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr").compute_data()
+        video_ctr.VideoCTRData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr", logger).compute_data()
     elif kind == "video_ctr_people_hour":
-        video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr_people").compute_data()
+        video_ctr_people.VideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "hour_video_ctr_people", logger).compute_data()
     else:
         pass
 

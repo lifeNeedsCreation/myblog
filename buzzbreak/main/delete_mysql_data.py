@@ -10,10 +10,12 @@ sys.path.append(BASE_DIR)
 sys.path.append(DIR)
 
 from utils.mysql import buzzbreak_mysql_client
+from utils.logger import Logger
 
 
 # 定时删除mysql库中数据
 if __name__ == "__main__":
+    logger = Logger("Delete BuzzBreak Tables Data", os.path.join(DIR, 'logs/delete_buzzbreak_tables_data.log'))
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  delete data start!")
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-d] [--day]"
@@ -65,7 +67,9 @@ if __name__ == "__main__":
         try:
             cursor.execute(sql_str)
             buzzbreak_mysql_client.commit()
+            logger.exception("limit_time={} delete buzzbreak tabel {} success".format(limit_time, table_name))
         except Exception as e:
+            logger.exception("limit_time={} delete buzzbreak tabel {} err msg".format(limit_time, table_name))
             print(sql_str)
             print("delete table:" + table_name + " data,operate except")
             print(e)

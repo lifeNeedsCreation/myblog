@@ -16,13 +16,14 @@ class NewUserIndicator(object):
         behavior_table: 用户行为表
         indicator_table: 指标结果数据存储表
     """
-    def __init__(self, start_time, end_time, limit_time, country_code, behavior_table, indicator_table):
+    def __init__(self, start_time, end_time, limit_time, country_code, behavior_table, indicator_table, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.limit_time = limit_time
         self.country_code = country_code
         self.behavior_table = behavior_table
         self.indicator_table = indicator_table
+        self.logger = logger
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql, field):
@@ -119,8 +120,9 @@ class NewUserIndicator(object):
                 cursor.execute(inser_sql)
                 # 提交到数据库执行
                 buzzbreak_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
+                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.indicator_table))
             except:
+                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.indicator_table))
                 # 如果发生错误则回滚
                 buzzbreak_mysql_client.rollback()
             if cursor:
