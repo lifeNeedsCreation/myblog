@@ -4,16 +4,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class BigQuery(object):
-    # max is 100 per project
-    BQ_THREAD_DRY_RUN_LIMIT = 20
-    BQ_QUERY_SLEEP_SECONDS = 1
-    AUTH_JSON_FILE_PATH = BASE_DIR + '/utils/bigquery_config.json'
+    def __init__(self, bucket):
+        self.bucket = bucket
+        self.credential_path = self.config()
+        
 
-    def __init__(self):
-        pass
+    def config(self):
+        if self.bucket == "buzzbreak":
+            credential_path = BASE_DIR + "/config/buzzbreak_bigquery_config.json"
+        elif self.bucket == "katkat":
+            credential_path = BASE_DIR + "/config/katkat_bigquery_config.json"
+        return credential_path
 
     def get_client(self):
-        return bigquery.Client.from_service_account_json(self.AUTH_JSON_FILE_PATH)
+        return bigquery.Client.from_service_account_json(self.credential_path)
 
 
-bigquery_client = BigQuery().get_client()
+buzzbreak_bigquery_client = BigQuery("buzzbreak").get_client()
+katkat_bigquery_client = BigQuery("katkat").get_client()
+
+
+
+
