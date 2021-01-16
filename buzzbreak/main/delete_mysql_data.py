@@ -67,7 +67,7 @@ if __name__ == "__main__":
         try:
             cursor.execute(sql_str)
             buzzbreak_mysql_client.commit()
-            logger.exception("limit_time={} delete buzzbreak tabel {} success".format(limit_time, table_name))
+            logger.info("limit_time={} delete buzzbreak tabel {} success".format(limit_time, table_name))
         except Exception as e:
             logger.exception("limit_time={} delete buzzbreak tabel {} err msg".format(limit_time, table_name))
             print(sql_str)
