@@ -6,18 +6,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 class BigQuery(object):
     def __init__(self, bucket):
         self.bucket = bucket
-        self.auth = self.config()
+        self.credential_path = self.config()
         
 
     def config(self):
         if self.bucket == "buzzbreak":
-            auth = BASE_DIR + "/config/buzzbreak_bigquery_config.json"
+            credential_path = BASE_DIR + "/config/buzzbreak_bigquery_config.json"
         elif self.bucket == "katkat":
-            auth = BASE_DIR + "/config/katkat_bigquery_config.json"
-        return auth
+            credential_path = BASE_DIR + "/config/katkat_bigquery_config.json"
+        return credential_path
 
     def get_client(self):
-        return bigquery.Client.from_service_account_json(self.auth)
+        return bigquery.Client.from_service_account_json(self.credential_path)
 
 
 buzzbreak_bigquery_client = BigQuery("buzzbreak").get_client()
