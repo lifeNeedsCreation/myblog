@@ -11,7 +11,7 @@ class MySQL(object):
 
     def __init__(self, section):
         self.host = CONFIG[section].get("URI")
-        self.port = CONFIG[section].get("PORT")
+        self.port = int(CONFIG[section].get("PORT"))
         self.user = CONFIG[section].get("USER")
         self.password = CONFIG[section].get("PASSWORD")
         self.db = CONFIG[section].get("DATABASE")
