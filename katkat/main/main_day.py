@@ -17,7 +17,7 @@ from upload_scripts import different_channels_pr
 # 指标列表
 KIND = {
     "all": 1,   # 所有指标
-    "different_channels_pr": 1,   # 不同页面渗透率
+    "different_channels_pr": 1,   # 不同channel渗透率
 }
 
 
