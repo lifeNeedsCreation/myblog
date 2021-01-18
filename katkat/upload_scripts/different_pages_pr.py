@@ -66,6 +66,7 @@ class DIFFERENTPAGESPRData(object):
             
             inser_sql = inser_sql + " ('" + key + "'," + str(different_num) + "," + str(home_num) + "," + str(round(different_num/home_num, 5)) + "," + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             flag = True
+            print(inser_sql)
 
         if flag:
             inser_sql = inser_sql[:len(inser_sql)-1]
