@@ -59,6 +59,7 @@ class DIFFERENTPAGESPRData(object):
         cursor = katkat_mysql_client.cursor()
         inser_sql = "INSERT INTO " + self.table_name + " (placement, different_pages_num, home_pages_num, pr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
+        print("home_tab_for_you_and_home", home_tab_for_you_and_home)
         flag = False
         for key in different_pages_num.keys():
             different_num = different_pages_num.get(key, 0)
