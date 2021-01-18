@@ -23,4 +23,4 @@ INDICATOR_DIMENSION = ["control", "treatment", "treatment_1", "treatment_2", "vi
 
 # Katkat 指标
 
-KATKAT_VIDEO_CATEGORY = ["home_tab", "home_tab_funny", "home_tab_society", "home_tab_gaming", "home_tab_cute", "home_tab_food", "home_tab_home", "home_tab_for_you", ]
+KATKAT_VIDEO_CATEGORY = ["home_tab_funny", "home_tab_society", "home_tab_gaming", "home_tab_cute", "home_tab_food"]
