@@ -64,9 +64,8 @@ class DIFFERENTPAGESPRData(object):
             different_num = different_pages_num.get(key, 0)
             home_num = home_pages_num.get("home_tab_for_you_and_home")
             
-            inser_sql = inser_sql + " ('" + key + "'," + str(different_num) + "," + str(home_num) + "," + str(round(different_num/home_num, 5)) + "," + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            inser_sql = inser_sql + " ('" + key + "'," + str(different_num) + "," + str(home_num) + "," + str(round(different_num/home_num, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             flag = True
-            print(inser_sql)
 
         if flag:
             inser_sql = inser_sql[:len(inser_sql)-1]
