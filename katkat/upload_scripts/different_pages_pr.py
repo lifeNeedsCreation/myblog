@@ -37,7 +37,7 @@ class DIFFERENTPAGESPRData(object):
                 account_home_tab_for_you_and_home as (
                 select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "2021-01-10" and created_at < "2021-01-11" and json_extract_scalar(data, "$.placement") = "home_tab_for_you" 
                 union distinct
-                select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "2021-01-10" and created_at < "2021-01-11" and json_extract_scalar(data, "$.placement") = "home_tab_home"),
+                select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "2021-01-10" and created_at < "2021-01-11" and json_extract_scalar(data, "$.placement") = "home_tab_home")
 
                 select "home_tab_for_you_and_home" as placement, count(*) as num from account_home_tab_for_you_and_home
             """
