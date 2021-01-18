@@ -12,12 +12,12 @@ from utils import constants
 from utils.bigquery import katkat_bigquery_client
 from utils.mysql import katkat_mysql_client
 from utils.logger import Logger
-from upload_scripts import different_pages_pr
+from upload_scripts import different_channels_pr
 
 # 指标列表
 KIND = {
     "all": 1,   # 所有指标
-    "different_pages_pr": 1,   # 不同页面渗透率
+    "different_channels_pr": 1,   # 不同页面渗透率
 }
 
 
@@ -111,11 +111,11 @@ if __name__ == "__main__":
     #     print('参数 %s 为：%s' % (i + 1, args[i]))
 
     # 开始数据指标统计
-    category = "'" + "','".join(constants.KATKAT_VIDEO_CATEGORY) + "'"
+    channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
     if kind == "all":
-        different_pages_pr.DIFFERENTPAGESPRData(start_time, end_time, category, "different_pages_pr", logger).compute_data()
-    elif kind == "different_pages_pr":
-        different_pages_pr.DIFFERENTPAGESPRData(start_time, end_time, category, "different_pages_pr", logger).compute_data()
+        different_channels_pr.DIFFERENTCHANNELSPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
+    elif kind == "different_channels_pr":
+        different_channels_pr.DIFFERENTCHANNELSPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     else:
         pass
 
