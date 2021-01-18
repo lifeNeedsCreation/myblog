@@ -25,7 +25,7 @@ KIND = {
 
 if __name__ == "__main__":
     logger = Logger("Main Day", os.path.join(DIR, 'logs/main_day.log'))
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  start!")
+    logger.info("{} start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
     if len(argv) <= 0:
@@ -113,9 +113,9 @@ if __name__ == "__main__":
     # 开始数据指标统计
     channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
     if kind == "all":
-        different_channels_pr.DIFFERENTCHANNELSPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
+        different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     elif kind == "different_channels_pr":
-        different_channels_pr.DIFFERENTCHANNELSPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
+        different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     else:
         pass
 
@@ -123,6 +123,6 @@ if __name__ == "__main__":
         katkat_bigquery_client.close()
     if katkat_mysql_client:
         katkat_mysql_client.close()
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  complete!")
+    logger.info("{} complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 

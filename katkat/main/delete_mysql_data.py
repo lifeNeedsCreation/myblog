@@ -16,7 +16,7 @@ from utils.logger import Logger
 # 定时删除mysql库中数据
 if __name__ == "__main__":
     logger = Logger("Delete Katkat Tables Data", os.path.join(DIR, 'logs/delete_Katkat_tables_data.log'))
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  delete data start!")
+    logger.info("{} delete data start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-d] [--day]"
     if len(argv) <= 0:
@@ -77,6 +77,6 @@ if __name__ == "__main__":
         cursor.close()
     if katkat_mysql_client:
         katkat_mysql_client.close()
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " delete data complete!")
+    logger.info("{} delete data complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 

@@ -26,7 +26,7 @@ KIND = {
 # 周期：小时
 if __name__ == "__main__":
     logger = Logger("Main Hour", os.path.join(DIR, 'logs/main_hour.log'))
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  hour start!")
+    logger.info("{} hour start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
     if len(argv) <= 0:
@@ -139,6 +139,6 @@ if __name__ == "__main__":
         buzzbreak_bigquery_client.close()
     if buzzbreak_mysql_client:
         buzzbreak_mysql_client.close()
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "  hour complete!")
+    logger.info("{} hour complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 
