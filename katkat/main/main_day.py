@@ -111,11 +111,11 @@ if __name__ == "__main__":
     #     print('参数 %s 为：%s' % (i + 1, args[i]))
 
     # 开始数据指标统计
-    placement = "'" + "','".join(constants.KATKAT_VIDEO_PLACEMENT) + "'"
+    category = "'" + "','".join(constants.KATKAT_VIDEO_CATEGORY) + "'"
     if kind == "all":
-        different_pages_pr.DIFFERENTPAGESPRData(start_time, end_time, placement, "different_pages_pr", logger).compute_data()
+        different_pages_pr.DIFFERENTPAGESPRData(start_time, end_time, category, "different_pages_pr", logger).compute_data()
     elif kind == "different_pages_pr":
-        different_pages_pr.DIFFERENTPAGESPRData(start_time, end_time, placement, "different_pages_pr", logger).compute_data()
+        different_pages_pr.DIFFERENTPAGESPRData(start_time, end_time, category, "different_pages_pr", logger).compute_data()
     else:
         pass
 

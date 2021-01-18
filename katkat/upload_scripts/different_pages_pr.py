@@ -11,10 +11,10 @@ class DIFFERENTPAGESPRData(object):
         end_time：指标计算的结束时间
         table_name：计算结果存的表
     """
-    def __init__(self, start_time, end_time, placement, table_name, logger=None):
+    def __init__(self, start_time, end_time, category, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
-        self.placement = placement
+        self.category = category
         self.table_name = table_name
         self.logger = logger
 
@@ -31,13 +31,15 @@ class DIFFERENTPAGESPRData(object):
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
+        start_time = self.start_time.strftime("%Y-%m-%d %H:%M:%S")
+        end_time = self.end_time.strftime("%Y-%m-%d %H:%M:%S")
         home_pages_num_sql = \
             f"""
                 with 
                 account_home_tab_for_you_and_home as (
-                select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "2021-01-10" and created_at < "2021-01-11" and json_extract_scalar(data, "$.placement") = "home_tab_for_you" 
+                select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "{start_time}" and created_at < "{end_time}" and json_extract_scalar(data, "$.placement") = "home_tab_for_you" 
                 union distinct
-                select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "2021-01-10" and created_at < "2021-01-11" and json_extract_scalar(data, "$.placement") = "home_tab_home")
+                select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "{start_time}" and created_at < "{end_time}" and json_extract_scalar(data, "$.placement") = "home_tab_home")
 
                 select "home_tab_for_you_and_home" as placement, count(*) as num from account_home_tab_for_you_and_home
             """
@@ -47,7 +49,7 @@ class DIFFERENTPAGESPRData(object):
         different_pages_num_sql = \
             f"""
                 with
-                account_all_pages as (select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "2021-01-10" and created_at < "2021-01-11")
+                account_all_pages as (select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "{start_time}" and created_at < "{end_time}" and json_extract_scalar(data, "$.placement") = {self.category})
 
                 select placement, count(*) as num from account_all_pages group by placement
             """

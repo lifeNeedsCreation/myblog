@@ -23,4 +23,4 @@ INDICATOR_DIMENSION = ["control", "treatment", "treatment_1", "treatment_2", "vi
 
 # Katkat 指标
 
-KATKAT_VIDEO_PLACEMENT = ["home_tab", "immersive_videos_tab", "home_tab_funny", "home_tab_society", "immersive_videos_society", "home_tab_gaming", "home_tab_cute", "immersive_videos_home", "home_tab_food", "home_tab_home", "immersive_videos_gaming", "immersive_videos_cute", "immersive_videos_push", "home_tab_for_you", "immersive_videos_funny", "immersive_videos_food", "immersive_videos_tab_home", "videos_tab_hiphop", "videos_tab_popular", "immersive_videos_tab_gaming", "immersive_videos_tab_funny", "immersive_videos_tab_popular"]
+KATKAT_VIDEO_CATEGORY = ["home_tab", "home_tab_funny", "home_tab_society", "home_tab_gaming", "home_tab_cute", "home_tab_food", "home_tab_home", "immersive_videos_gaming", "home_tab_for_you", ]
