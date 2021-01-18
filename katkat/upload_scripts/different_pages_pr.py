@@ -49,7 +49,7 @@ class DIFFERENTPAGESPRData(object):
         different_pages_num_sql = \
             f"""
                 with
-                account_all_pages as (select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "{start_time}" and created_at < "{end_time}" and json_extract_scalar(data, "$.placement") = {self.category})
+                account_all_pages as (select distinct account_id, json_extract_scalar(data, "$.placement") as placement from katkat-298407.stream_events.video_impression where created_at >= "{start_time}" and created_at < "{end_time}" and json_extract_scalar(data, "$.placement") in {self.category})
 
                 select placement, count(*) as num from account_all_pages group by placement
             """
