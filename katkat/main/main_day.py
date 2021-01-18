@@ -1,35 +1,31 @@
+import os
 import sys
 import getopt
 import datetime
-import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 sys.path.append(DIR)
 
-from upload_scripts import new_user_indicator
-from utils.bigquery import buzzbreak_bigquery_client
-from utils.mysql import buzzbreak_mysql_client
 from utils import constants
+from utils.bigquery import katkat_bigquery_client
+from utils.mysql import katkat_mysql_client
 from utils.logger import Logger
+from upload_scripts import different_channels_pr
 
-
+# 指标列表
 KIND = {
-    "all": 1,    # 新用户所有指标
-    "is_click_video": ["buzzbreak-model-240306.stream_events.video_click", "new_user_day_click_video"],   # 新用户点击视频指标
-    "is_click_news": ["buzzbreak-model-240306.stream_events.news_click", "new_user_day_click_news"],     # 新用户点击新闻指标
-    "is_get_integral": ["buzzbreak-model-240306.partiko.point_transactions", "new_user_day_integral"],   # 新用户积分指标
-    "is_withdraw": ["buzzbreak-model-240306.partiko.withdraw_transactions", "new_user_day_withdraw"],   # 新用户提现指标
-    "is_invite_friends": ["buzzbreak-model-240306.partiko.referrals", "new_user_day_invite_friends"],   # 新用户邀请好友指标
+    "all": 1,   # 所有指标
+    "different_channels_pr": 1,   # 不同channel渗透率
 }
 
 
 # 周期：天
 
 if __name__ == "__main__":
-    logger = Logger("New User Day", os.path.join(DIR, 'logs/new_user_day.log'))
-    logger.info("{} new user day start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    logger = Logger("Main Day", os.path.join(DIR, 'logs/main_day.log'))
+    logger.info("{} start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-s] [-e] [-k] [--start_time] [--end_time] [--kind]"
     if len(argv) <= 0:
@@ -115,23 +111,18 @@ if __name__ == "__main__":
     #     print('参数 %s 为：%s' % (i + 1, args[i]))
 
     # 开始数据指标统计
-    country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
-    # 新用户行为的时间上限
-    limit_time = end_time + datetime.timedelta(hours=8)
+    channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
     if kind == "all":
-        for i in KIND.keys():
-            if i == kind:
-                continue
-            else:
-                new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(i)[0], KIND.get(i)[1], logger).compute_data()
+        different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
+    elif kind == "different_channels_pr":
+        different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     else:
-        new_user_indicator.NewUserIndicator(start_time, end_time, limit_time, country_code, KIND.get(kind)[0], KIND.get(kind)[1], logger).compute_data()
+        pass
 
-    # 关闭相关数据库的客户端
-    if buzzbreak_bigquery_client:
-        buzzbreak_bigquery_client.close()
-    if buzzbreak_mysql_client:
-        buzzbreak_mysql_client.close()
-    logger.info("{} new user day complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    if katkat_bigquery_client:
+        katkat_bigquery_client.close()
+    if katkat_mysql_client:
+        katkat_mysql_client.close()
+    logger.info("{} complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 

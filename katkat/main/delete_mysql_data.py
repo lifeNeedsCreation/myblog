@@ -9,14 +9,14 @@ DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 sys.path.append(DIR)
 
-from utils.mysql import buzzbreak_mysql_client
+from utils.mysql import katkat_mysql_client
 from utils.logger import Logger
 
 
 # 定时删除mysql库中数据
 if __name__ == "__main__":
-    logger = Logger("Delete BuzzBreak Tables Data", os.path.join(DIR, 'logs/delete_buzzbreak_tables_data.log'))
-    logger.info("{}  delete data start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    logger = Logger("Delete Katkat Tables Data", os.path.join(DIR, 'logs/delete_Katkat_tables_data.log'))
+    logger.info("{} delete data start!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     argv = sys.argv[1:]
     params_msg = "params: [-h] [--help] [-d] [--day]"
     if len(argv) <= 0:
@@ -49,8 +49,8 @@ if __name__ == "__main__":
     # 设置缺省值
     if not days:
         days = 60
-    query_sql = "show tables from indicator_data"
-    cursor = buzzbreak_mysql_client.cursor()
+    query_sql = "show tables from katkat_data"
+    cursor = katkat_mysql_client.cursor()
     table_list = list()
     try:
         # 执行sql语句
@@ -66,17 +66,17 @@ if __name__ == "__main__":
         sql_str = "DELETE FROM " + table_name + " where create_time<'" + limit_time.strftime("%Y-%m-%d %H:%M:%S") + "'"
         try:
             cursor.execute(sql_str)
-            buzzbreak_mysql_client.commit()
-            logger.info("limit_time={} delete buzzbreak tabel {} success".format(limit_time, table_name))
+            katkat_mysql_client.commit()
+            logger.info("limit_time={} delete katkat tabel {} success".format(limit_time, table_name))
         except Exception as e:
-            logger.exception("limit_time={} delete buzzbreak tabel {} err msg".format(limit_time, table_name))
+            logger.exception("limit_time={} delete katkat tabel {} err msg".format(limit_time, table_name))
             print(sql_str)
             print("delete table:" + table_name + " data,operate except")
             print(e)
     if cursor:
         cursor.close()
-    if buzzbreak_mysql_client:
-        buzzbreak_mysql_client.close()
+    if katkat_mysql_client:
+        katkat_mysql_client.close()
     logger.info("{} delete data complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 
