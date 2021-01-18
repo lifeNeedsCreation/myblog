@@ -58,6 +58,7 @@ class DIFFERENTPAGESPRData(object):
         inser_sql = "INSERT INTO " + self.table_name + " (placement, different_pages_num, home_pages_num, pr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         flag = False
+        print(different_pages_num)
         for key in different_pages_num.keys():
             different_pages_num = different_pages_num.get(key, 0)
             home_pages_num = home_pages_num.get("home_tab_for_you_and_home")
