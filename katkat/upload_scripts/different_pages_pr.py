@@ -59,8 +59,6 @@ class DIFFERENTPAGESPRData(object):
         cursor = katkat_mysql_client.cursor()
         inser_sql = "INSERT INTO " + self.table_name + " (placement, different_pages_num, home_pages_num, pr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
-        print("different_pages_num", different_pages_num)
-        print("home_pages_num", home_pages_num)
         flag = False
         for key in different_pages_num.keys():
             different_num = different_pages_num.get(key, 0)
@@ -69,20 +67,20 @@ class DIFFERENTPAGESPRData(object):
             inser_sql = inser_sql + " ('" + key + "'," + str(different_num) + "," + str(home_num) + "," + str(round(different_num/home_num, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             flag = True
 
-        # if flag:
-        #     inser_sql = inser_sql[:len(inser_sql)-1]
-        #     try:
-        #         # 执行sql语句
-        #         cursor.execute(inser_sql)
-        #         # 提交到数据库执行
-        #         katkat_mysql_client.commit()
-        #         self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-        #     except:
-        #         self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-        #         # 如果发生错误则回滚
-        #         katkat_mysql_client.rollback()
-        # if cursor:
-        #     cursor.close()
+        if flag:
+            inser_sql = inser_sql[:len(inser_sql)-1]
+            try:
+                # 执行sql语句
+                cursor.execute(inser_sql)
+                # 提交到数据库执行
+                katkat_mysql_client.commit()
+                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
+            except:
+                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
+                # 如果发生错误则回滚
+                katkat_mysql_client.rollback()
+        if cursor:
+            cursor.close()
 
 
 
