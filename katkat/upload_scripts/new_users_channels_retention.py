@@ -68,7 +68,7 @@ class NewUsersChannelsRetention(object):
 
             channel_one_month as (select distinct account_id, extract(date from created_at) as date, json_extract_scalar(data, "$.placement") as channel from watch_channels),
 
-            initial_channels as (select distinct id, country_code, date as initial_date, channel as initial_channel from account inner join channel_one_month on id = account_id where created_date = date, channel),
+            initial_channels as (select distinct id, country_code, date as initial_date, channel as initial_channel from account inner join channel_one_month on id = account_id where created_date = date),
 
             retention_channels as (select distinct id, country_code, initial_date, date as retention_date, initial_channels.initial_channel as initial_channel, channel_target_time.channel as retention_channel, date_diff(date, initial_date, day) as date_diff from initial_channels inner join channel_target_time on id = account_id),
 
