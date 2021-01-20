@@ -72,7 +72,7 @@ class NewUsersChannelsRetention(object):
 
             retention_channels as (select distinct id, country_code, initial_date, date as retention_date, initial_channels.initial_channel as initial_channel, channel_target_time.channel as retention_channel, date_diff(date, initial_date, day) as date_diff from initial_channels inner join channel_target_time on id = account_id),
 
-            initial_channels_count as (select count(distinct id) as initial_users, country_code, initial_date, initial_channel from initial_channels group by country_code, initial_date),
+            initial_channels_count as (select count(distinct id) as initial_users, country_code, initial_date, initial_channel from initial_channels group by country_code, initial_date, initial_channel),
 
             retention_channels_count as (select count(distinct id) as retention_users, country_code, initial_date, retention_date, initial_channel, retention_channel, date_diff from retention_channels group by country_code, initial_date, retention_date, initial_channel, retention_channel, date_diff)
 
