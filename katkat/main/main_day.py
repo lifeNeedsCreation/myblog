@@ -13,11 +13,15 @@ from utils.bigquery import katkat_bigquery_client
 from utils.mysql import katkat_mysql_client
 from utils.logger import Logger
 from upload_scripts import different_channels_pr
+from upload_scripts import new_users_channels_average_of_duration
+from upload_scripts import new_users_channels_retention
 
 # 指标列表
 KIND = {
     "all": 1,   # 所有指标
     "different_channels_pr": 1,   # 不同channel渗透率
+    "new_users_channels_average_of_duration": 1,    # 新用户不同channel的平均时长
+    "new_users_channels_retention": 1,  # 新用户不同channel的留存
 }
 
 
@@ -114,8 +118,17 @@ if __name__ == "__main__":
     channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
     if kind == "all":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
+
+        new_users_channels_average_of_duration.NewUsersChannelsAverageOfDuration(start_time, end_time, channel, "new_users_channels_average_of_duration", logger).compute_data()
+
+        new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, channel, "new_users_channels_retention", logger).compute_data()
+
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
+    elif kind == "new_users_channels_average_of_duration":
+        new_users_channels_average_of_duration.NewUsersChannelsAverageOfDuration(start_time, end_time, channel, "new_users_channels_average_of_duration", logger).compute_data()
+    elif kind == "new_users_channels_retention":
+        new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, channel, "new_users_channels_retention", logger).compute_data()
     else:
         pass
 
