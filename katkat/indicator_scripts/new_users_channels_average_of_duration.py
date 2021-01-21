@@ -64,6 +64,7 @@ class NewUsersChannelsAverageOfDuration:
                 insert_sql += f"'{channel_duration[field][i]}', "
             insert_sql += f"'{now_time_utc}'),"
         insert_sql = insert_sql[:-1]
+        print(insert_sql)
         try:
             # 执行sql语句
             cursor.execute(insert_sql)
