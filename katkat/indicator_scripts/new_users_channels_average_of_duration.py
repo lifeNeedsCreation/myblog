@@ -59,10 +59,15 @@ class NewUsersChannelsAverageOfDuration:
         print("values", values)
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         print("insert_sql", insert_sql)
-        # now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        # for i in range(len(user_time_data['country_code'])):
-        #     insert_sql += f"""('{user_time_data["country_code"][i]}', '{user_time_data["channel"][i]}', '{user_time_data["date"][i]}', '{user_time_data["channel_users_count"][i]}', '{user_time_data["channel_duration_sum"][i]}', '{user_time_data["channel_duration_avg"][i]}', '{now_time_utc}'),"""
-        # insert_sql = insert_sql[:-1]
+        now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        insert_sql = "("
+        for i in range(len(user_time_data.keys())):
+            for field in self.fields:
+                insert_sql += f"'{user_time_data[field][i]}', "
+            insert_sql += "'{now_time_utc}'),"
+        insert_sql = insert_sql[:-1]
+        print("insert_sql", insert_sql)
+
         # try:
         #     # 执行sql语句
         #     cursor.execute(insert_sql)
