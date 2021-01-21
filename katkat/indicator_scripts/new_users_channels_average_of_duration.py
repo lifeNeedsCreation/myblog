@@ -59,8 +59,9 @@ class NewUsersChannelsAverageOfDuration:
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         print("insert_sql", insert_sql)
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        insert_sql = "("
+        insert_sql = ""
         for i in range(len(user_time_data.keys())):
+            insert_sql += "("
             for field in self.fields:
                 insert_sql += f"'{user_time_data[field][i]}', "
             insert_sql += f"'{now_time_utc}'),"
