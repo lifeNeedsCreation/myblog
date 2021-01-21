@@ -8,7 +8,7 @@ class NewUsersChannelsAverageOfDuration:
     """
         start_time:指标计算的开始时间
         end_time：指标计算的结束时间
-        indicator_dimension：需要计算的实验组的维度
+        channel：指视频不同的频道
         table_name：计算结果存的表
     """
 
@@ -18,21 +18,14 @@ class NewUsersChannelsAverageOfDuration:
         self.channel = channel
         self.table_name = table_name
         self.logger = logger
+        self.fields = ["country_code", "channel", "date", "channel_users_count", "channel_duration_sum", "channel_duration_avg"]
 
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         df_result = katkat_bigquery_client.query(sql).to_dataframe()
-        fields = [
-            'country_code',
-            'channel',
-            'date',
-            'channel_users_count',
-            'channel_duration_sum',
-            'channel_duration_avg'
-        ]
-        dict_info = {field: [] for field in fields}
+        dict_info = {field: [] for field in self.fields}
         for index, row in df_result.iterrows():
-            for field in fields:
+            for field in self.fields:
                 dict_info[field].append(row[field])
         return dict_info
 
@@ -58,21 +51,27 @@ class NewUsersChannelsAverageOfDuration:
         user_time_data = self.get_data(query)
         # 结果数据存入数据库
         cursor = katkat_mysql_client.cursor()
+        values = ""
+        for field in self.fields:
+            values += field + ", "
+        values += "create_time"
         values = "country_code, channel, date, channel_users_count, channel_duration_sum, channel_duration_avg, create_time"
+        print("values", values)
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
-        now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        for i in range(len(user_time_data['country_code'])):
-            insert_sql += f"""('{user_time_data["country_code"][i]}', '{user_time_data["channel"][i]}', '{user_time_data["date"][i]}', '{user_time_data["channel_users_count"][i]}', '{user_time_data["channel_duration_sum"][i]}', '{user_time_data["channel_duration_avg"][i]}', '{now_time_utc}'),"""
-        insert_sql = insert_sql[:-1]
-        try:
-            # 执行sql语句
-            cursor.execute(insert_sql)
-            # 提交到数据库执行
-            katkat_mysql_client.commit()
-            self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-        except:
-            self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-            # 如果发生错误则回滚
-            katkat_mysql_client.rollback()
-        if cursor:
-            cursor.close()
+        print("insert_sql", insert_sql)
+        # now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        # for i in range(len(user_time_data['country_code'])):
+        #     insert_sql += f"""('{user_time_data["country_code"][i]}', '{user_time_data["channel"][i]}', '{user_time_data["date"][i]}', '{user_time_data["channel_users_count"][i]}', '{user_time_data["channel_duration_sum"][i]}', '{user_time_data["channel_duration_avg"][i]}', '{now_time_utc}'),"""
+        # insert_sql = insert_sql[:-1]
+        # try:
+        #     # 执行sql语句
+        #     cursor.execute(insert_sql)
+        #     # 提交到数据库执行
+        #     katkat_mysql_client.commit()
+        #     self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
+        # except:
+        #     self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
+        #     # 如果发生错误则回滚
+        #     katkat_mysql_client.rollback()
+        # if cursor:
+        #     cursor.close()
