@@ -64,7 +64,7 @@ class NewUsersChannelsAverageOfDuration:
         for i in range(len(user_time_data.keys())):
             for field in self.fields:
                 insert_sql += f"'{user_time_data[field][i]}', "
-            insert_sql += "'{now_time_utc}'),"
+            insert_sql += f"'{now_time_utc}'),"
         insert_sql = insert_sql[:-1]
         print("insert_sql", insert_sql)
 
