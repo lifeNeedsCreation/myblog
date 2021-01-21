@@ -8,7 +8,7 @@ DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 sys.path.append(DIR)
 
-from upload_scripts import ctr, ctr_people, video_ctr, video_ctr_people
+from indicator_scripts import ctr, ctr_people, video_ctr, video_ctr_people
 from utils.bigquery import buzzbreak_bigquery_client
 from utils.mysql import buzzbreak_mysql_client
 from utils import constants
