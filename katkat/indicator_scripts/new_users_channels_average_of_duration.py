@@ -34,12 +34,9 @@ class NewUsersChannelsAverageOfDuration:
     def compute_data(self, path):
         start_time = self.start_time.strftime("%Y-%m-%d %H:%M:%S")
         end_time = self.end_time.strftime("%Y-%m-%d %H:%M:%S")
-        print("path", path)
         sql = read_sql(path)
         params = {"start_time": start_time, "end_time": end_time, "channel": self.channel}
         query = sql.format(**params)
-        print("query", query)
-            
         channel_duration = self.get_data(query)
         if channel_duration[self.fields[0]]:
             # 结果数据存入数据库
@@ -56,7 +53,6 @@ class NewUsersChannelsAverageOfDuration:
                     insert_sql += f"'{channel_duration[field][i]}', "
                 insert_sql += f"'{now_time_utc}'),"
             insert_sql = insert_sql[:-1]
-            print(insert_sql)
             try:
                 # 执行sql语句
                 cursor.execute(insert_sql)
