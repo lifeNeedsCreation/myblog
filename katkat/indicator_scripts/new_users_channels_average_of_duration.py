@@ -55,9 +55,8 @@ class NewUsersChannelsAverageOfDuration:
         for field in self.fields:
             values += field + ", "
         values += "create_time"
-        insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
+        insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        insert_sql = ""
         for i in range(len(channel_duration.keys())):
             insert_sql += "("
             for field in self.fields:
