@@ -55,7 +55,6 @@ class NewUsersChannelsAverageOfDuration:
         for field in self.fields:
             values += field + ", "
         values += "create_time"
-        values = "country_code, channel, date, channel_users_count, channel_duration_sum, channel_duration_avg, create_time"
         print("values", values)
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         print("insert_sql", insert_sql)
