@@ -34,6 +34,7 @@ class NewUsersChannelsAverageOfDuration:
     def compute_data(self, path):
         start_time = self.start_time.strftime("%Y-%m-%d %H:%M:%S")
         end_time = self.end_time.strftime("%Y-%m-%d %H:%M:%S")
+        print("path", path)
         query = read_sql(path)
         print("query", query)
             
