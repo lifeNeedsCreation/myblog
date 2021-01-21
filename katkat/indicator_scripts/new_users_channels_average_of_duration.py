@@ -49,30 +49,33 @@ class NewUsersChannelsAverageOfDuration:
             select a.country_code, a.channel, a.date, channel_users_count, channel_duration_sum, round(ifnull(channel_duration_sum, 0) / channel_users_count, 4) as channel_duration_avg from account_count as a inner join duration_in_seconds_sum as d on a.country_code = d.country_code and a.channel = d.channel and a.date = d.date    
             '''
         channel_duration = self.get_data(query)
-        # 结果数据存入数据库
-        cursor = katkat_mysql_client.cursor()
-        values = ""
-        for field in self.fields:
-            values += field + ", "
-        values += "create_time"
-        insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
-        now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        for i in range(len(channel_duration[self.fields[0]])):
-            insert_sql += "("
+        if channel_duration.values():
+            # 结果数据存入数据库
+            cursor = katkat_mysql_client.cursor()
+            values = ""
             for field in self.fields:
-                insert_sql += f"'{channel_duration[field][i]}', "
-            insert_sql += f"'{now_time_utc}'),"
-        insert_sql = insert_sql[:-1]
-        print(insert_sql)
-        try:
-            # 执行sql语句
-            cursor.execute(insert_sql)
-            # 提交到数据库执行
-            # katkat_mysql_client.commit()
-            self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-        except:
-            self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-            # 如果发生错误则回滚
-            katkat_mysql_client.rollback()
-        if cursor:
-            cursor.close()
+                values += field + ", "
+            values += "create_time"
+            insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
+            now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+            for i in range(len(channel_duration[self.fields[0]])):
+                insert_sql += "("
+                for field in self.fields:
+                    insert_sql += f"'{channel_duration[field][i]}', "
+                insert_sql += f"'{now_time_utc}'),"
+            insert_sql = insert_sql[:-1]
+            print(insert_sql)
+            try:
+                # 执行sql语句
+                cursor.execute(insert_sql)
+                # 提交到数据库执行
+                # katkat_mysql_client.commit()
+                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
+            except:
+                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
+                # 如果发生错误则回滚
+                katkat_mysql_client.rollback()
+            if cursor:
+                cursor.close()
+        else:
+            self.logger.info("start_time={}, end_time={} insert tabel {} fail due to query result is empty".format(self.start_time, self.end_time, self.table_name))
