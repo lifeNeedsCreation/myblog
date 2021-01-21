@@ -12,9 +12,9 @@ from utils import constants
 from utils.bigquery import katkat_bigquery_client
 from utils.mysql import katkat_mysql_client
 from utils.logger import Logger
-from upload_scripts import different_channels_pr
-from upload_scripts import new_users_channels_average_of_duration
-from upload_scripts import new_users_channels_retention
+from indicator_scripts import different_channels_pr
+from indicator_scripts import new_users_channels_average_of_duration
+from indicator_scripts import new_users_channels_retention
 
 # 指标列表
 KIND = {
