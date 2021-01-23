@@ -40,7 +40,7 @@ class IndicatorDeadLine():
 
     # 查询
     def query(self, indicator_name):
-            query_sql = "SELECT indicator_name, dead_line FROM indicator_dead_line WHERE indicator_name = {}".format(indicator_name)
+            query_sql = "SELECT indicator_name, dead_line FROM indicator_dead_line WHERE indicator_name = '{}'".format(indicator_name)
             res = self.execute_sql("query", query_sql)
             if res["code"] == MYSQL_SUCCESS:
                 result = self.cursor.fetchone()
