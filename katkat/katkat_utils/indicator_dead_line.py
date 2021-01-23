@@ -90,7 +90,7 @@ if __name__ == "__main__":
         print("option  参数不能为空，请输入相关参数!")
         sys.exit(2)
     try:
-        opts, args = getopt.getopt(argv, "hi:d", ["help", "indicator_name", "dead_line"])
+        opts, args = getopt.getopt(argv, "hi:d", ["help", "indicator_name=", "dead_line="])
     except getopt.GetoptError as e:
         print(params_msg)
         print(e.msg)
