@@ -114,19 +114,23 @@ if __name__ == "__main__":
     choice = int(input("please choose 1 to update dead_line, choose 2 to insert a new indicator with dead_line and choose 3 to query a indicator"))
     logger = Logger("Indicator Dead Line", os.path.join(DIR, "logs/indicator_dead_line.log"))
     indicator = IndicatorDeadLine(logger)
-    if choice == 1:
-        res = indicator.update(indicator_name, dead_line)
-        print(res["msg"])
-        sys.exit(2)
-    elif choice == 2:
-        res = indicator.insert(indicator_name, dead_line)
-        print(res["msg"])
-    elif choice == 3:
+    if choice == 3:
         res = indicator.query(indicator_name)
         if res:
             print("{} has not been set, please checkout!".format(indicator_name))
         else:
             print(res)
+    else:
+        if dead_line:
+            if choice == 1:
+                res = indicator.update(indicator_name, dead_line)
+                print(res["msg"])
+                sys.exit(2)
+            elif choice == 2:
+                res = indicator.insert(indicator_name, dead_line)
+                print(res["msg"])
+        else:
+            print("You have not input dead_line, please checkout!")
     sys.exit(2)
 
 
