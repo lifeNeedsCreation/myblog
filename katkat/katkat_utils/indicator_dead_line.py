@@ -112,7 +112,8 @@ if __name__ == "__main__":
                 sys.exit(2)
     now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     choice = int(input("please choose 1 to update dead_line, choose 2 to insert a new indicator with dead_line and choose 3 to query a indicator"))
-    indicator = IndicatorDeadLine()
+    logger = Logger("Indicator Dead Line", os.path.join(DIR, "logs/indicator_dead_line.log"))
+    indicator = IndicatorDeadLine(logger)
     if choice == 1:
         res = indicator.update(indicator_name, dead_line)
         print(res["msg"])
