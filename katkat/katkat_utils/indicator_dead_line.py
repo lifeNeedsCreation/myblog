@@ -121,7 +121,7 @@ if __name__ == "__main__":
         else:
             print(res)
     else:
-        if dead_line:
+        if opt in ("-d", "--dead_line"):
             if choice == 1:
                 res = indicator.update(indicator_name, dead_line)
                 print(res["msg"])
