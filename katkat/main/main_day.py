@@ -125,6 +125,8 @@ if __name__ == "__main__":
 
         new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, channel, "new_users_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_channels_retention"))
 
+        new_users_same_channels_retention.NewUsersSameChannelsRetention(start_time, end_time, channel, "new_users_same_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_same_channels_retention"))
+
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     elif kind == "new_users_channels_average_of_duration":
