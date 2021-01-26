@@ -53,13 +53,12 @@ class NewUsersChannelsRetention(object):
                     insert_sql += f"'{retention_data[field][i]}', "
                 insert_sql += f"'{now_time_utc}'),"
             insert_sql = insert_sql[:-1]
-            print(insert_sql)
             try:
                 # 执行sql语句
                 cursor.execute(insert_sql)
                 # 提交到数据库执行
                 katkat_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
+                self.logger.info("start_time={}, end_time={} insert tabel {} success count {}".format(self.start_time, self.end_time, self.table_name, len(retention_data[self.fields[0]])))
             except:
                 self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
                 # 如果发生错误则回滚
