@@ -44,6 +44,7 @@ from indicator_scripts import new_user_video_ctr_people
 from indicator_scripts import push_retention
 from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
 from indicator_scripts import new_video_click_ctr_by_type
+from indicator_scripts import cash_out
 
 # 指标列表
 KIND = {
@@ -80,6 +81,7 @@ KIND = {
     "push_tention": 1,
     "partiko_experiment_new_users_retention_tab_impression": 1,     # partiko.experiment 实验中 新用户在各个 tab 的留存
     "new_video_click_ctr_by_type": 1,   # 各类新视频点击率、点击数及曝光数
+    "cash_out": 1, # 统计打钱，按国家和天
 }
 
 
@@ -240,6 +242,8 @@ if __name__ == "__main__":
 
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention', logger).compute_data()
 
+        cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
+
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
     elif kind == "ctr_people":
@@ -300,10 +304,12 @@ if __name__ == "__main__":
         new_user_video_ctr_people.NewUserVideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_ctr_people", logger).compute_data()
     elif kind == "push_tention":
         push_retention.PushRetentionData(start_time, end_time, country_code, indicator_dimension, "push_tention", logger).compute_data()
-    elif kind == 'partiko_experiment_new_users_retention_tab_impression':
-        partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
-    elif kind == 'new_video_click_ctr_by_type':
-        new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, 'new_video_click_ctr_by_type', logger).compute_data()
+    elif kind == "partiko_experiment_new_users_retention_tab_impression":
+        partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, "partiko_experiment_new_users_retention_tab_impression", logger).compute_data()
+    elif kind == "new_video_click_ctr_by_type":
+        new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, "new_video_click_ctr_by_type", logger).compute_data()
+    elif kind == "cash_out":
+        cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
     else:
         pass
 
