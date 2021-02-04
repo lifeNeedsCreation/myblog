@@ -16,6 +16,7 @@ from indicator_scripts import different_channels_pr
 from indicator_scripts import new_users_channels_average_of_duration
 from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
+from indicator_scripts import cash_out
 
 # 指标列表
 KIND = {
@@ -24,6 +25,7 @@ KIND = {
     "new_users_channels_average_of_duration": 1,    # 新用户不同channel的平均时长
     "new_users_channels_retention": 1,  # 新用户不同channel的留存
     "new_users_same_channels_retention": 1,  # 新用户相同channel的留存
+    "cash_out": 1,  # # 统计打钱，按国家和天
 }
 
 
@@ -127,6 +129,8 @@ if __name__ == "__main__":
 
         new_users_same_channels_retention.NewUsersSameChannelsRetention(start_time, end_time, channel, "new_users_same_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_same_channels_retention"))
 
+        cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
+
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     elif kind == "new_users_channels_average_of_duration":
@@ -135,6 +139,8 @@ if __name__ == "__main__":
         new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, channel, "new_users_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_channels_retention"))
     elif kind == "new_users_same_channels_retention":
         new_users_same_channels_retention.NewUsersSameChannelsRetention(start_time, end_time, channel, "new_users_same_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_same_channels_retention"))
+    elif kind == "cash_out":
+        cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
     else:
         pass
 
