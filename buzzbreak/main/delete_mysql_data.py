@@ -50,7 +50,7 @@ if __name__ == "__main__":
     if not days:
         days = 60
     query_sql = "show tables from indicator_data"
-    cursor = buzzbreak_mysql_client.cursor()
+    cursor = buzzbreak_mysql_client.cursor
     table_list = list()
     try:
         # 执行sql语句
@@ -73,10 +73,8 @@ if __name__ == "__main__":
             print(sql_str)
             print("delete table:" + table_name + " data,operate except")
             print(e)
-    if cursor:
-        cursor.close()
-    if buzzbreak_mysql_client:
-        buzzbreak_mysql_client.close()
+    buzzbreak_mysql_client.close_cursor()
+    buzzbreak_mysql_client.close_client()
     logger.info("{} delete data complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 

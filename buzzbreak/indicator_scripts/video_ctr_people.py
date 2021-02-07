@@ -74,8 +74,7 @@ class VideoCTRPeopleData(object):
                                               " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%' and value in (" + self.indicator_dimension + ")) as memories ON click_accout_info.account_id = memories.account_id where key is not null and value is not null) as result_data1 "
                                               "where created_at>=updated_at) as result group by placement, key, country_code, value")
         # 结果数据存入数据库
-        cursor = buzzbreak_mysql_client.cursor()
-        inser_sql = "INSERT INTO " + self.table_name + " (treatment_name, placement, country_code, dimension, click_num, impression_num, impression_union_num, ctr, ctr_union, start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.table_name + " (treatment_name, placement, country_code, dimension, click_num, impression_num, impression_union_num, ctr, ctr_union, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         flag = False
         for key in impression_data_union.keys():
@@ -92,23 +91,12 @@ class VideoCTRPeopleData(object):
             temp_data = key.split("&&")
             if len(temp_data) < 4:
                 continue
-            inser_sql = inser_sql + " ('" + temp_data[1] + "','" + temp_data[0] + "','" + temp_data[2] + "','" + temp_data[3] + "'," + str(click_num) + "," + str(impression_num) + "," + str(impression_num_union) + "," + str(round(click_num/impression_num, 5)) + "," + str(round(click_num/impression_num_union, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            insert_sql = insert_sql + " ('" + temp_data[1] + "','" + temp_data[0] + "','" + temp_data[2] + "','" + temp_data[3] + "'," + str(click_num) + "," + str(impression_num) + "," + str(impression_num_union) + "," + str(round(click_num/impression_num, 5)) + "," + str(round(click_num/impression_num_union, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             flag = True
 
         if flag:
-            inser_sql = inser_sql[:len(inser_sql)-1]
-            try:
-                # 执行sql语句
-                cursor.execute(inser_sql)
-                # 提交到数据库执行
-                buzzbreak_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-            except:
-                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-                # 如果发生错误则回滚
-                buzzbreak_mysql_client.rollback()
-        if cursor:
-            cursor.close()
+            insert_sql = insert_sql[:len(insert_sql)-1]
+            buzzbreak_mysql_client.execute_sql(insert_sql)
 
 
 

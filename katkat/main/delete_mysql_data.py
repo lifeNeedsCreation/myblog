@@ -50,7 +50,7 @@ if __name__ == "__main__":
     if not days:
         days = 60
     query_sql = "show tables from katkat_data"
-    cursor = katkat_mysql_client.cursor()
+    cursor = katkat_mysql_client.cursor
     table_list = list()
     try:
         # 执行sql语句
@@ -73,10 +73,8 @@ if __name__ == "__main__":
             print(sql_str)
             print("delete table:" + table_name + " data,operate except")
             print(e)
-    if cursor:
-        cursor.close()
-    if katkat_mysql_client:
-        katkat_mysql_client.close()
+    katkat_mysql_client.close_cursor()
+    katkat_mysql_client.close_client()
     logger.info("{} delete data complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 

@@ -57,34 +57,21 @@ class DifferentChannelsPRData(object):
         different_channels_num = self.get_data(different_channels_num_sql)
 
         # 结果数据存入数据库
-        cursor = katkat_mysql_client.cursor()
-        inser_sql = "INSERT INTO " + self.table_name + " (placement, different_channels_num, home_channels_num, pr, start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.table_name + " (placement, different_channels_num, home_channels_num, pr, start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         flag = False
         home_num = home_channels_num.get("home_tab_for_you_and_home", 0)
         if home_num != 0:
             for key in different_channels_num.keys():
                 different_num = different_channels_num.get(key, 0)           
-                inser_sql = inser_sql + " ('" + key + "'," + str(different_num) + "," + str(home_num) + "," + str(round(different_num/home_num, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+                insert_sql = insert_sql + " ('" + key + "'," + str(different_num) + "," + str(home_num) + "," + str(round(different_num/home_num, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
                 flag = True
 
             if flag:
-                inser_sql = inser_sql[:len(inser_sql)-1]
-                try:
-                    # 执行sql语句
-                    cursor.execute(inser_sql)
-                    # 提交到数据库执行
-                    katkat_mysql_client.commit()
-                    self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-                except:
-                    self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-                    # 如果发生错误则回滚
-                    katkat_mysql_client.rollback()
+                insert_sql = insert_sql[:len(insert_sql)-1]
+                katkat_mysql_client.execute_sql(insert_sql)
         else:
             self.logger.exception("err msg home_num = 0")
-        if cursor:
-            cursor.close()
-
 
 
 

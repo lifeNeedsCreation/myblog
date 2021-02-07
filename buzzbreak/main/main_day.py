@@ -319,10 +319,10 @@ if __name__ == "__main__":
     else:
         pass
 
+    
     if buzzbreak_bigquery_client:
         buzzbreak_bigquery_client.close()
-    if buzzbreak_mysql_client:
-        buzzbreak_mysql_client.close()
+    buzzbreak_mysql_client.close_client()
     logger.info("{} complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 

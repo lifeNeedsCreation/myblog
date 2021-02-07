@@ -146,8 +146,7 @@ if __name__ == "__main__":
 
     if katkat_bigquery_client:
         katkat_bigquery_client.close()
-    if katkat_mysql_client:
-        katkat_mysql_client.close()
+    katkat_mysql_client.close_client()
     logger.info("{} complete!".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 
