@@ -69,7 +69,7 @@ class NewUserIndicator(object):
             sql = "select distinct id,country_code," + field + " from (" + sql + ") as accounts_pro LEFT JOIN (select account_id, created_at from " + self.behavior_table + " where created_at>='" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "' and created_at<'" + self.limit_time.strftime("%Y-%m-%d %H:%M:%S") + "') as behavior on accounts_pro.id=behavior.account_id"
         return sql
 
-    def get_insert_sql(self, sql, field, flag, inser_sql):
+    def get_insert_sql(self, sql, field, flag, insert_sql):
         if self.behavior_table == "buzzbreak-model-240306.partiko.point_transactions":
             big_query_sql_yes = "select country_code," + field + ",count(*) as num from (" + sql + " where behavior.purpose in ('immersive_video','read_news')) as result group by country_code, " + field
             big_query_sql_no = "select country_code," + field + ",count(*) as num from (" + sql + " where behavior.purpose not in ('immersive_video','read_news')) as result group by country_code, " + field
@@ -89,44 +89,34 @@ class NewUserIndicator(object):
                 continue
             if len(temp_data) < 2:
                 continue
-            inser_sql = inser_sql + " ('" + temp_data[0] + "','" + temp_data[1] + "'," + str(total_num) + "," + str(data_yes.get(i, 0)) + "," + str(data_no.get(i)) + "," + str(round(data_yes.get(i, 0) / total_num, 5)) + "," + str(round(data_no.get(i) / total_num, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            insert_sql = insert_sql + " ('" + temp_data[0] + "','" + temp_data[1] + "'," + str(total_num) + "," + str(data_yes.get(i, 0)) + "," + str(data_no.get(i)) + "," + str(round(data_yes.get(i, 0) / total_num, 5)) + "," + str(round(data_no.get(i) / total_num, 5)) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             flag = True
-        return inser_sql, flag
+        return insert_sql, flag
 
     # 组装查询sql，并将统计计算结果存入mysql
     def compute_data(self):
         flag = False
-        inser_sql = "INSERT INTO " + self.indicator_table + " (country_code, dimension, total_num, people_num, no_people_num, people_percent, no_people_percent, start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.indicator_table + " (country_code, dimension, total_num, people_num, no_people_num, people_percent, no_people_percent, start_time, end_time, create_time) VALUES"
         # 维度:media source
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "media_source")
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "media_source")
-        inser_sql, flag = self.get_insert_sql(big_query_sql, "media_source", flag, inser_sql)
+        insert_sql, flag = self.get_insert_sql(big_query_sql, "media_source", flag, insert_sql)
         # 维度:gender_input
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.partiko.account_profiles", "gender_input")
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "gender_input")
-        inser_sql, flag = self.get_insert_sql(big_query_sql, "gender_input", flag, inser_sql)
+        insert_sql, flag = self.get_insert_sql(big_query_sql, "gender_input", flag, insert_sql)
         # 维度:login渠道
         big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "first_time_login_method")
         big_query_sql = self.get_big_query_sql_user_behavior(big_query_sql, "first_time_login_method")
-        inser_sql, flag = self.get_insert_sql(big_query_sql, "first_time_login_method", flag, inser_sql)
+        insert_sql, flag = self.get_insert_sql(big_query_sql, "first_time_login_method", flag, insert_sql)
         # 维度:有无phone number
         # big_query_sql = self.get_big_query_sql_user_profile("buzzbreak-model-240306.input.accounts", "phone_No")
         # 结果数据存入数据库
         if flag:
-            cursor = buzzbreak_mysql_client.cursor()
-            inser_sql = inser_sql[:len(inser_sql)-1]
-            try:
-                # 执行sql语句
-                cursor.execute(inser_sql)
-                # 提交到数据库执行
-                buzzbreak_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.indicator_table))
-            except:
-                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.indicator_table))
-                # 如果发生错误则回滚
-                buzzbreak_mysql_client.rollback()
-            if cursor:
-                cursor.close()
+            
+            insert_sql = insert_sql[:len(insert_sql)-1]
+            buzzbreak_mysql_client.execute_sql(insert_sql)
+        
 
 
 

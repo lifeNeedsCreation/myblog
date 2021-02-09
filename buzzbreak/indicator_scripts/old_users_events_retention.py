@@ -80,7 +80,6 @@ class OldUsersEventsRetention(object):
             '''
         retention_data = self.get_data(query)
         # 结果数据存入数据库
-        cursor = buzzbreak_mysql_client.cursor()
         values = "country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
@@ -90,15 +89,5 @@ class OldUsersEventsRetention(object):
                 insert_sql += f"""'{retention_data[filed][i]}', """
             insert_sql += f"""'{now_time_utc}'),"""
         insert_sql = insert_sql[:-1]
-        try:
-            # 执行 sql 语句
-            cursor.execute(insert_sql)
-            # 提交到数据库
-            buzzbreak_mysql_client.commit()
-            self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-        except:
-            self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-            # 如果发生错误则回滚
-            buzzbreak_mysql_client.rollback()
-        if cursor:
-            cursor.close()
+        buzzbreak_mysql_client.execute_sql(insert_sql)
+        

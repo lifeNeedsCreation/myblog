@@ -68,8 +68,7 @@ class PushRetentionData(object):
                                      " LEFT JOIN (select account_id, key, value, updated_at from buzzbreak-model-240306.partiko.memories where key like 'experiment%'  and value in (" + self.indicator_dimension + ")) as memories ON open_app_accout_info.account_id = memories.account_id where key is not null and value is not null) as result"
                                      " where created_at>=updated_at) as result1 group by key, country_code, value")
         # 结果数据存入数据库
-        cursor = buzzbreak_mysql_client.cursor()
-        inser_sql = "INSERT INTO " + self.table_name + " (treatment_name, country_code, dimension, retention, people_num,y_people_num , start_time, end_time, create_time) VALUES"
+        insert_sql = "INSERT INTO " + self.table_name + " (treatment_name, country_code, dimension, retention, people_num,y_people_num , start_time, end_time, create_time) VALUES"
         now_time_utc = datetime.datetime.utcnow()
         flag = False
         for key in open_app_num.keys():
@@ -77,23 +76,13 @@ class PushRetentionData(object):
             yesterday_num = yesterday_open_app_num.get(key, 0)
             open_num = open_app_num.get(key)
             temp_data = key.split("&&")
-            inser_sql = inser_sql + " ('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(round(open_num/yesterday_num, 5)) + "," + str(today_num) + "," + str(yesterday_num) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
+            insert_sql = insert_sql + " ('" + temp_data[0] + "','" + temp_data[1] + "','" + temp_data[2] + "'," + str(round(open_num/yesterday_num, 5)) + "," + str(today_num) + "," + str(yesterday_num) + ",'" + self.start_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + self.end_time.strftime("%Y-%m-%d %H:%M:%S") + "','" + now_time_utc.strftime("%Y-%m-%d %H:%M:%S") + "'),"
             flag = True
 
         if flag:
-            inser_sql = inser_sql[:len(inser_sql)-1]
-            try:
-                # 执行sql语句
-                cursor.execute(inser_sql)
-                # 提交到数据库执行
-                buzzbreak_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-            except:
-                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-                # 如果发生错误则回滚
-                buzzbreak_mysql_client.rollback()
-        if cursor:
-            cursor.close()
+            insert_sql = insert_sql[:len(insert_sql)-1]
+            buzzbreak_mysql_client.execute_sql(insert_sql)
+        
 
 
 

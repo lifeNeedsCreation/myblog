@@ -58,7 +58,6 @@ class NewVideoClickCtrByType:
         impression_data = self.get_data(impression_sql)
 
         # 结果数据存入数据库
-        cursor = buzzbreak_mysql_client.cursor()
         values = "category, placement, click_num, impression_num, ctr, start_time, end_time, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
@@ -78,16 +77,5 @@ class NewVideoClickCtrByType:
 
         if flag:
             insert_sql = insert_sql[:len(insert_sql)-1]
-            try:
-                # 执行sql语句
-                cursor.execute(insert_sql)
-                # 提交到数据库执行
-                buzzbreak_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-            except:
-                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-                # 如果发生错误则回滚
-                buzzbreak_mysql_client.rollback()
-
-        if cursor:
-            cursor.close()
+            buzzbreak_mysql_client.execute_sql(insert_sql)
+        

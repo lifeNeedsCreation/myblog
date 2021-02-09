@@ -62,22 +62,11 @@ class PartikoExperimentAverageOfInvites:
             '''
         referrals_data = self.get_data(query)
         # 结果数据存入数据库
-        cursor = buzzbreak_mysql_client.cursor()
         values = "country_code, treatment_name, dimension, date, open_users_count, referees_count, avg_referees_count, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         for i in range(len(referrals_data['country_code'])):
             insert_sql += f"""('{referrals_data["country_code"][i]}', '{referrals_data["key"][i]}', '{referrals_data["group_field"][i]}', '{referrals_data["date"][i]}', '{referrals_data["open_users_count"][i]}', '{referrals_data["referees_count"][i]}', '{referrals_data["avg_referees_count"][i]}', '{now_time_utc}'),"""
         insert_sql = insert_sql[:-1]
-        try:
-            # 执行sql语句
-            cursor.execute(insert_sql)
-            # 提交到数据库执行
-            buzzbreak_mysql_client.commit()
-            self.logger.info("start_time={}, end_time={} insert tabel {} success".format(self.start_time, self.end_time, self.table_name))
-        except:
-            self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-            # 如果发生错误则回滚
-            buzzbreak_mysql_client.rollback()
-        if cursor:
-            cursor.close()
+        buzzbreak_mysql_client.execute_sql(insert_sql)
+        

@@ -14,7 +14,6 @@ from read_config import CONFIG
 
 
 class Logger():
-
     def __init__(self, logger_name, logger_file, for_testing=False, users=[], is_alert=False):
         if not for_testing:
             sudopw = CONFIG['BuzzBreak-Experiment-Platform'].get('MACHINE_SUDO_PASSWORD')
