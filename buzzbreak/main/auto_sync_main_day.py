@@ -253,7 +253,7 @@ if __name__ == "__main__":
         end_time = get_today_start_time(now_time_utc)
         condition = 0
         date_diff_res = [i == 1 for i in date_diff]
-        print("date_diff_res: {}".format(date_diff_res))
+        logger.info("date_diff_res: {}".format(date_diff_res))
         if all(date_diff_res):
             condition = 1
         for i in date_diff:
@@ -270,7 +270,7 @@ if __name__ == "__main__":
             buzzbreak_mysql_client.insert_dict("main_day_involed_bigquery_tables", mongo_dic)
             sync_end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             logger.info("sync indicator scripts by day {} complete!".format(sync_end_time))
-            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 3600
+            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
         elif condition == 2:
             logger.info("sync indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
@@ -282,5 +282,6 @@ if __name__ == "__main__":
                 time.sleep(60*60*0.5)
             else:
                 logger.info("auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+                logger.alert("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
                 time.sleep(60*60*6)
 

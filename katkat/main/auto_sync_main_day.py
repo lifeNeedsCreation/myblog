@@ -79,14 +79,12 @@ if __name__ == "__main__":
     sync_tables = ["input.accounts", "partiko.memories", "partiko.account_profiles", "partiko.point_transactions", "partiko.withdraw_transactions", "partiko.referrals"]
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
-    print("start")
     while True:
         sql_mysql = "select table_name, max(updated_at) FROM {} group by table_name order by field(table_name, {})".format("main_day_involed_bigquery_tables", sync_tables_str)
         katkat_mysql_client.execute_sql(sql_mysql)
         mysql_res = katkat_mysql_client.cursor.fetchall()
-        print(mysql_res)
         if not mysql_res:
-            logger.alert("Sync buzzbreak indicator scripts by day fail due to mysql_res is None.")
+            logger.alert("Sync katkat indicator scripts by day fail due to mysql_res is None.")
             sys.exit(0)
         logger.info("mysql_res: {}".format(mysql_res))
         mongo_sql = [{"$match": {"project": "buzzbreak"}}, {"$match": {"bigquery_table": {"$in": sync_tables}}}, {"$match": {"status": "success"}}, {"$group": {"_id": "$bigquery_table", "created_at": {"$last": "$created_at"}}}, {"$sort":{"created_at":-1}}]
@@ -123,11 +121,11 @@ if __name__ == "__main__":
             katkat_mysql_client.insert_dict("main_day_involed_bigquery_tables", mongo_dic)
             sync_end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             logger.info("sync indicator scripts by day {} complete!".format(sync_end_time))
-            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 3600
+            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
         elif condition == 2:
             logger.info("sync indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
-            logger.alert("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
             if now_time_utc.hour < 2:
@@ -135,5 +133,6 @@ if __name__ == "__main__":
                 time.sleep(60*60*0.5)
             else:
                 logger.info("auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+                logger.alert("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
                 time.sleep(60*60*6)
 
