@@ -39,7 +39,6 @@ class PartikoMemoriesNewUserUserTimeAverageOfDuration(object):
         user_time_data = self.get_data(query)
         if user_time_data[self.fields[0]]:
             # 结果数据存入数据库
-            cursor = buzzbreak_mysql_client.cursor()
             values = ""
             for field in self.fields:
                 values += field + ", "
@@ -52,17 +51,4 @@ class PartikoMemoriesNewUserUserTimeAverageOfDuration(object):
                     insert_sql += f"'{user_time_data[field][i]}', "
                 insert_sql += f"'{now_time_utc}'),"
             insert_sql = insert_sql[:-1]
-            try:
-                # 执行sql语句
-                cursor.execute(insert_sql)
-                # 提交到数据库执行
-                buzzbreak_mysql_client.commit()
-                self.logger.info("start_time={}, end_time={} insert tabel {} success count {}".format(self.start_time, self.end_time, self.table_name, len(user_time_data[self.fields[0]])))
-            except:
-                self.logger.exception("start_time={}, end_time={} insert tabel {} err msg".format(self.start_time, self.end_time, self.table_name))
-                # 如果发生错误则回滚
-                buzzbreak_mysql_client.rollback()
-            if cursor:
-                cursor.close()
-        else:
-            self.logger.info("start_time={}, end_time={} insert tabel {} fail due to query result is empty".format(self.start_time, self.end_time, self.table_name))
+            buzzbreak_mysql_client.execute_sql(insert_sql)
