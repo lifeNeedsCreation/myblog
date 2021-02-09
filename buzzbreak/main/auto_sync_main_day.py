@@ -261,27 +261,33 @@ if __name__ == "__main__":
                 condition = 2
                 break
         logger.info("contion: {}".format(condition))
+        time_format = "%Y-%m-%d %H:%M:%S"
         if condition == 1:
-            sync_start_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            logger.info("sync indicator scripts by day {} start!".format(sync_start_time))
+            sync_start_time = datetime.datetime.now()
+            sync_start_time_str = sync_start_time.strftime(time_format)
+            logger.info("sync indicator scripts by day {} start!".format(sync_start_time_str))
             # 新用户行为的时间上限
             limit_time = end_time + datetime.timedelta(hours=8)
             AutoSyncMainDay(logger).work_on(start_time, end_time, limit_time)
             buzzbreak_mysql_client.insert_dict("main_day_involed_bigquery_tables", mongo_dic)
-            sync_end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            logger.info("sync indicator scripts by day {} complete!".format(sync_end_time))
+            sync_end_time = datetime.datetime.now()
+            sync_end_time_str = sync_end_time.strftime(time_format)
+            use_time = sync_end_time - sync_start_time
+            if use_time.hour > 1:
+                logger.alert("buzzbreak execute sync indicator scripts over one hour, please delay FinBI sync time")
+            logger.info("buzzbreak sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
         elif condition == 2:
-            logger.info("sync indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.info("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             logger.alert("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
             if now_time_utc.hour < 2:
-                logger.info("mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+                logger.info("mongo sync buzzbreak log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
                 time.sleep(60*60*0.5)
             else:
-                logger.info("auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+                logger.info("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
                 logger.alert("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
                 time.sleep(60*60*6)
 

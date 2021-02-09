@@ -87,7 +87,7 @@ if __name__ == "__main__":
             logger.alert("Sync katkat indicator scripts by day fail due to mysql_res is None.")
             sys.exit(0)
         logger.info("mysql_res: {}".format(mysql_res))
-        mongo_sql = [{"$match": {"project": "buzzbreak"}}, {"$match": {"bigquery_table": {"$in": sync_tables}}}, {"$match": {"status": "success"}}, {"$group": {"_id": "$bigquery_table", "created_at": {"$last": "$created_at"}}}, {"$sort":{"created_at":-1}}]
+        mongo_sql = [{"$match": {"project": "katkat"}}, {"$match": {"bigquery_table": {"$in": sync_tables}}}, {"$match": {"status": "success"}}, {"$group": {"_id": "$bigquery_table", "created_at": {"$last": "$created_at"}}}, {"$sort":{"created_at":-1}}]
         mongo_res = katkat_mongo_client.find_sync_tables(mongo_sql)
         mongo_dic = {}
         for doc in mongo_res:
@@ -114,25 +114,31 @@ if __name__ == "__main__":
                 condition = 2
                 break
         logger.info("contion: {}".format(condition))
+        time_format = "%Y-%m-%d %H:%M:%S"
         if condition == 1:
-            sync_start_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            logger.info("sync indicator scripts by day {} start!".format(sync_start_time))
+            sync_start_time = datetime.datetime.now()
+            sync_start_time_str = sync_start_time.strftime(time_format)
+            logger.info("katkat sync indicator scripts by day {} start!".format(sync_start_time_str))
             AutoSyncMainDay(logger).work_on(start_time, end_time)
             katkat_mysql_client.insert_dict("main_day_involed_bigquery_tables", mongo_dic)
-            sync_end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            logger.info("sync indicator scripts by day {} complete!".format(sync_end_time))
+            sync_end_time = datetime.datetime.now()
+            sync_end_time_str = sync_end_time.strftime(time_format)
+            use_time = sync_end_time - sync_start_time
+            if use_time.hour > 1:
+                logger.alert("katkat execute sync indicator scripts over one hour, please delay FinBI sync time")
+            logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
         elif condition == 2:
-            logger.info("sync indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.info("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
             if now_time_utc.hour < 2:
-                logger.info("mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+                logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
                 time.sleep(60*60*0.5)
             else:
-                logger.info("auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
-                logger.alert("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+                logger.info("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
+                logger.alert("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
                 time.sleep(60*60*6)
 
