@@ -7,4 +7,3 @@ pymongo
 dnspython
 requests
 pymongo
-dnspython
