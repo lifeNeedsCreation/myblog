@@ -38,7 +38,7 @@ class MySQL(object):
         """
         try:
             self.cursor.execute(sql)
-            # self.client.commit()
+            self.client.commit()
             self.logger.info("execute sql {} success".format(sql))
         except:
             self.logger.exception("execute sql {} fail".format(sql))

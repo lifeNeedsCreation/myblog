@@ -6,3 +6,4 @@ pymysql
 pymongo
 dnspython
 requests
+pymongo
