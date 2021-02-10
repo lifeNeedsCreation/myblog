@@ -102,6 +102,7 @@ class PartikoMemoriesOldUsersEventsRetention(object):
             if i % n == 0:
                 insert_sql1 = insert_sql + value_sql[:-1]
                 buzzbreak_mysql_client.execute_sql(insert_sql1)
+                value_sql = ''
             elif (i - len(retention_data['country_code'])) == 0:
                 insert_sql2 = insert_sql + value_sql[:-1]
                 buzzbreak_mysql_client.execute_sql(insert_sql2)         
