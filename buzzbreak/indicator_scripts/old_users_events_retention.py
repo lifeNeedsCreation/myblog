@@ -83,11 +83,19 @@ class OldUsersEventsRetention(object):
         values = "country_code, initial_date, retention_date, initial_event, retention_event, date_diff, initial_users, retention_users, retention_rate, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        for i in range(len(retention_data['country_code'])):
-            insert_sql += "("
+        value_sql = ''
+        n = 5000
+        self.logger.info("count {}".format(len(retention_data['country_code'])))
+        for i in range(1, len(retention_data['country_code'])+1):
+            value_sql += "("
             for filed in fields:
-                insert_sql += f"""'{retention_data[filed][i]}', """
-            insert_sql += f"""'{now_time_utc}'),"""
-        insert_sql = insert_sql[:-1]
-        buzzbreak_mysql_client.execute_sql(insert_sql)
+                value_sql += f"""'{retention_data[filed][i-1]}', """
+            value_sql += f"""'{now_time_utc}'),"""
+            if i % n == 0:
+                insert_sql1 = insert_sql + value_sql[:-1]
+                buzzbreak_mysql_client.execute_sql(insert_sql1)
+                value_sql = ''
+            elif (i - len(retention_data['country_code'])) == 0:
+                insert_sql2 = insert_sql + value_sql[:-1]
+                buzzbreak_mysql_client.execute_sql(insert_sql2) 
         
