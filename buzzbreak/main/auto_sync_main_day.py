@@ -273,7 +273,7 @@ if __name__ == "__main__":
             sync_end_time = datetime.datetime.now()
             sync_end_time_str = sync_end_time.strftime(time_format)
             use_time = sync_end_time - sync_start_time
-            if use_time.hour > 1:
+            if use_time.hours > 1:
                 logger.alert("buzzbreak execute sync indicator scripts over one hour, please delay FinBI sync time")
             logger.info("buzzbreak sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
