@@ -118,8 +118,8 @@ class AutoSyncMainDay:
             self.logger.info("sync new user {} indicator end use {} seconds".format(i, use_time))
 
         # 常规指标
+        indicator_start_time = datetime.datetime.now()
         for key, value in KIND.items():
-            indicator_start_time = datetime.datetime.now()
             self.logger.info("sync {} indicator start".format(key))
             if key == "ctr":
                 ctr.CTRData(start_time, end_time, self.country_code, self.placement, self.indicator_dimension, value, self.logger).compute_data()

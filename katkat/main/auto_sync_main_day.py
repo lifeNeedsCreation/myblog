@@ -50,8 +50,8 @@ class AutoSyncMainDay:
     def work_on(self, start_time, end_time):
 
         # 常规指标
-        for key, value in KIND.items():
-            indicator_start_time = datetime.datetime.now()
+        indicator_start_time = datetime.datetime.now()
+        for key, value in KIND.items(): 
             self.logger.info("sync {} indicator start".format(key))
             if key == "different_channels_pr":
                 different_channels_pr.DifferentChannelsPRData(start_time, end_time, self.channel, value, logger).compute_data()
