@@ -14,6 +14,8 @@ from utils.mysql import katkat_mysql_client
 from utils.logger import Logger
 from indicator_scripts import different_channels_pr
 from indicator_scripts import new_users_channels_average_of_duration
+from indicator_scripts import new_users_video_watch_different_placement_average_of_duration
+from indicator_scripts import new_users_video_watch_average
 from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
 from indicator_scripts import cash_out
@@ -23,6 +25,8 @@ KIND = {
     "all": 1,   # 所有指标
     "different_channels_pr": 1,   # 不同channel渗透率
     "new_users_channels_average_of_duration": 1,    # 新用户不同channel的平均时长
+    "new_users_video_watch_different_placement_average_of_duration": 1, # 新用户不同placement的平均观看时长
+    "new_users_video_watch_average": 1, # 新用户视频不同位置平均观看次数
     "new_users_channels_retention": 1,  # 新用户不同channel的留存
     "new_users_same_channels_retention": 1,  # 新用户相同channel的留存
     "cash_out": 1,  # # 统计打钱，按国家和天
@@ -120,10 +124,15 @@ if __name__ == "__main__":
 
     # 开始数据指标统计
     channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
+    video_placement = "'" + "','".join(constants.KATKAT_VIDEO_PLACEMENT) + "'"
     if kind == "all":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
 
         new_users_channels_average_of_duration.NewUsersChannelsAverageOfDuration(start_time, end_time, channel, "new_users_channels_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_channels_average_of_duration"))
+
+        new_users_video_watch_different_placement_average_of_duration.NewUsersVideoWatchDifferentPlacementsAverageOfDuration(start_time, end_time, video_placement, "new_users_video_watch_different_placement_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_video_watch_different_placement_average_of_duration"))
+
+        new_users_video_watch_average.NewUsersVideoWatchAverage(start_time, end_time, video_placement, "new_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_video_watch_average"))
 
         new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, channel, "new_users_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_channels_retention"))
 
@@ -135,6 +144,10 @@ if __name__ == "__main__":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     elif kind == "new_users_channels_average_of_duration":
         new_users_channels_average_of_duration.NewUsersChannelsAverageOfDuration(start_time, end_time, channel, "new_users_channels_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_channels_average_of_duration"))
+    elif kind == "new_users_video_watch_different_placement_average_of_duration":
+        new_users_video_watch_different_placement_average_of_duration.NewUsersVideoWatchDifferentPlacementsAverageOfDuration(start_time, end_time, video_placement, "new_users_video_watch_different_placement_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_video_watch_different_placement_average_of_duration"))
+    elif kind == "new_users_video_watch_average":
+        new_users_video_watch_average.NewUsersVideoWatchAverage(start_time, end_time, video_placement, "new_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_video_watch_average"))
     elif kind == "new_users_channels_retention":
         new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, channel, "new_users_channels_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_channels_retention"))
     elif kind == "new_users_same_channels_retention":

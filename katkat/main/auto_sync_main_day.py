@@ -20,6 +20,8 @@ from utils.constants import MYSQL_INSERT_SUCCCESS, MYSQL_INSERT_FAIL
 # 常规指标
 from indicator_scripts import different_channels_pr
 from indicator_scripts import new_users_channels_average_of_duration
+from indicator_scripts import new_users_video_watch_different_placement_average_of_duration
+from indicator_scripts import new_users_video_watch_average
 from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
 from indicator_scripts import cash_out
@@ -32,6 +34,8 @@ NEW_USER_KIND = {
 KIND = {    
     "different_channels_pr": "different_channels_pr",   # 不同channel渗透率
     "new_users_channels_average_of_duration": "new_users_channels_average_of_duration",    # 新用户不同channel的平均时长
+    "new_users_video_watch_different_placement_average_of_duration": "new_users_video_watch_different_placement_average_of_duration",     # 新用户不同placement的平均观看时长(video_watch)
+    "new_users_video_watch_average": "new_users_video_watch_average",    # 新用户不同位置的平均观看次数
     "new_users_channels_retention": "new_users_channels_retention",  # 新用户不同channel的留存
     "new_users_same_channels_retention": "new_users_same_channels_retention",  # 新用户相同channel的留存
     "cash_out": "cash_out",  # # 统计打钱，按国家和天
@@ -39,11 +43,7 @@ KIND = {
 
 class AutoSyncMainDay:
     def __init__(self, logger):
-        self.country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
-        self.placement = "'" + "','".join(constants.PLACEMENT) + "'"
-        self.video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
-        self.video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
-        self.indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
+        self.video_placement = "'" + "','".join(constants.KATKAT_VIDEO_PLACEMENT) + "'"
         self.channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
         self.logger = logger
 
@@ -58,6 +58,12 @@ class AutoSyncMainDay:
                 
             elif key == "new_users_channels_average_of_duration":
                 new_users_channels_average_of_duration.NewUsersChannelsAverageOfDuration(start_time, end_time, self.channel, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "new_users_video_watch_different_placement_average_of_duration":
+                new_users_video_watch_different_placement_average_of_duration.NewUsersVideoWatchDifferentPlacementsAverageOfDuration(start_time, end_time, self.video_placement, "new_users_video_watch_different_placement_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_video_watch_different_placement_average_of_duration"))
+
+            elif key == "new_users_video_watch_average":
+                new_users_video_watch_average.NewUsersVideoWatchAverage(start_time, end_time, self.video_placement, "new_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_users_video_watch_average"))
                 
             elif key == "new_users_channels_retention":
                 new_users_channels_retention.NewUsersChannelsRetention(start_time, end_time, self.channel, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
