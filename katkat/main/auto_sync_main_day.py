@@ -124,7 +124,7 @@ if __name__ == "__main__":
             sync_end_time_str = sync_end_time.strftime(time_format)
             use_time = sync_end_time - sync_start_time
             logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
-            if use_time.total_seconds > 60*60:
+            if use_time.total_seconds() > 60*60:
                 logger.alert("katkat execute sync indicator scripts over one hour, please delay FinBI sync time")
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
