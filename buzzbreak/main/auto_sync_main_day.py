@@ -118,8 +118,8 @@ class AutoSyncMainDay:
             self.logger.info("sync new user {} indicator end use {} seconds".format(i, use_time))
 
         # 常规指标
-        indicator_start_time = datetime.datetime.now()
         for key, value in KIND.items():
+            indicator_start_time = datetime.datetime.now()
             self.logger.info("sync {} indicator start".format(key))
             if key == "ctr":
                 ctr.CTRData(start_time, end_time, self.country_code, self.placement, self.indicator_dimension, value, self.logger).compute_data()
@@ -217,9 +217,9 @@ class AutoSyncMainDay:
             elif key == "cash_out":
                 cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
 
-        indicator_end_time = datetime.datetime.now()
-        use_time = indicator_end_time - indicator_start_time
-        self.logger.info("sync {} indicator end use {} seconds".format(key, use_time))
+            indicator_end_time = datetime.datetime.now()
+            indicator_use_time = indicator_end_time - indicator_start_time
+            self.logger.info("sync {} indicator end use {} seconds".format(key, indicator_use_time))
 
 if __name__ == "__main__":
     logger = Logger("BuzzBreak Auto Sync Main Day", os.path.join(DIR, 'logs/auto_sync_main_day.log'), users=["teddy"])
@@ -273,9 +273,9 @@ if __name__ == "__main__":
             sync_end_time = datetime.datetime.now()
             sync_end_time_str = sync_end_time.strftime(time_format)
             use_time = sync_end_time - sync_start_time
+            logger.info("buzzbreak sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             if use_time.hours > 1:
                 logger.alert("buzzbreak execute sync indicator scripts over one hour, please delay FinBI sync time")
-            logger.info("buzzbreak sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
         elif condition == 2:

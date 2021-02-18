@@ -50,8 +50,8 @@ class AutoSyncMainDay:
     def work_on(self, start_time, end_time):
 
         # 常规指标
-        indicator_start_time = datetime.datetime.now()
-        for key, value in KIND.items(): 
+        for key, value in KIND.items():
+            indicator_start_time = datetime.datetime.now()
             self.logger.info("sync {} indicator start".format(key))
             if key == "different_channels_pr":
                 different_channels_pr.DifferentChannelsPRData(start_time, end_time, self.channel, value, logger).compute_data()
@@ -68,11 +68,10 @@ class AutoSyncMainDay:
 
             elif key == "cash_out":
                 cash_out.CashOut(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
-            
 
-        indicator_end_time = datetime.datetime.now()
-        use_time = indicator_end_time - indicator_start_time
-        self.logger.info("sync {} indicator end use {} seconds".format(key, use_time))
+            indicator_end_time = datetime.datetime.now()
+            indicator_use_time = indicator_end_time - indicator_start_time
+            self.logger.info("sync {} indicator end use {} seconds".format(key, indicator_use_time))
 
 if __name__ == "__main__":
     logger = Logger("KatKat Auto Sync Main Day", os.path.join(DIR, 'logs/auto_sync_main_day.log'), users=["teddy"])
@@ -124,9 +123,9 @@ if __name__ == "__main__":
             sync_end_time = datetime.datetime.now()
             sync_end_time_str = sync_end_time.strftime(time_format)
             use_time = sync_end_time - sync_start_time
+            logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             if use_time.hour > 1:
                 logger.alert("katkat execute sync indicator scripts over one hour, please delay FinBI sync time")
-            logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
             time.sleep(sleep_time)
         elif condition == 2:
