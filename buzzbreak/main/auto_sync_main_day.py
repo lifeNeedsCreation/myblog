@@ -289,5 +289,5 @@ if __name__ == "__main__":
             else:
                 logger.info("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
                 logger.alert("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
-                time.sleep(60*60*6)
+                time.sleep(60*60*3)
 

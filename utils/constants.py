@@ -27,6 +27,7 @@ KATKAT_VIDEO_CHANNEL = ["home_tab_funny", "home_tab_society", "home_tab_gaming",
 
 KATKAT_VIDEO_PLACEMENT = ["immersive_videos_home", "immersive_vertical_videos_home"]
 
+KATKAT_AD_PLACEMENT = ["video_feed", "immersive_video_feed", "immersive_vertical_video_feed"]
 
 # mysql响应码
 MYSQL_INSERT_FAIL = 10
