@@ -283,11 +283,6 @@ if __name__ == "__main__":
             logger.alert("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
-            if now_time_utc.hour < 2:
-                logger.info("mongo sync buzzbreak log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
-                time.sleep(60*60*0.5)
-            else:
-                logger.info("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
-                logger.alert("buzzbreak auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
-                time.sleep(60*60*6)
+            logger.info("mongo sync buzzbreak log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+            time.sleep(60*60*1)
 

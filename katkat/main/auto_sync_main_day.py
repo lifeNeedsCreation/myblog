@@ -148,18 +148,13 @@ if __name__ == "__main__":
             logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             if use_time.total_seconds() > 60*60:
                 logger.alert("katkat execute sync indicator scripts over one hour, please delay FinBI sync time")
-            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
+            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1 + 60*3
             time.sleep(sleep_time)
         elif condition == 2:
             logger.info("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
-            if now_time_utc.hour < 2:
-                logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                time.sleep(60*60*0.5)
-            else:
-                logger.info("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                logger.alert("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                time.sleep(60*60*6)
+            logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
+            time.sleep(60*60*1)
 
