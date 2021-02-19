@@ -25,6 +25,9 @@ from indicator_scripts import new_users_video_watch_average
 from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
 from indicator_scripts import cash_out
+from indicator_scripts import all_users_ad_impression_avg
+from indicator_scripts import all_users_video_watch_average
+from indicator_scripts import all_users_video_watch_average_of_duration
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -38,12 +41,16 @@ KIND = {
     "new_users_video_watch_average": "new_users_video_watch_average",    # 新用户不同位置的平均观看次数
     "new_users_channels_retention": "new_users_channels_retention",  # 新用户不同channel的留存
     "new_users_same_channels_retention": "new_users_same_channels_retention",  # 新用户相同channel的留存
-    "cash_out": "cash_out",  # # 统计打钱，按国家和天
+    "cash_out": "cash_out",  # 统计打钱，按国家和天
+    "all_users_all_users_ad_impression_avg": "all_users_ad_impression_avg",   # 所有用户不同位置广告的平均曝光次数
+    "all_users_video_watch_average": "all_users_video_watch_average",    # 所有用户不同位置的平均观看次数
+    "all_users_video_watch_average_of_duration": "all_users_video_watch_average_of_duration",     # 新用户不同placement的平均观看时长(video_watch)
 }
 
 class AutoSyncMainDay:
     def __init__(self, logger):
         self.video_placement = "'" + "','".join(constants.KATKAT_VIDEO_PLACEMENT) + "'"
+        self.ad_placement = "'" + "','".join(constants.KATKAT_AD_PLACEMENT) + "'"
         self.channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
         self.logger = logger
 
@@ -74,6 +81,15 @@ class AutoSyncMainDay:
 
             elif key == "cash_out":
                 cash_out.CashOut(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "all_users_ad_impression_avg":
+                all_users_ad_impression_avg.AdImpressionAvg(start_time, end_time, self.ad_placement, "all_users_ad_impression_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_ad_impression_avg"))
+
+            elif key == "all_users_video_watch_average":
+                all_users_video_watch_average.AllUsersVideoWatchAverage(start_time, end_time, self.video_placement, "all_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average"))
+
+            elif key == "all_users_video_watch_average_of_duration":
+                all_users_video_watch_average_of_duration.AllUsersVideoWatchAverageOfDuration(start_time, end_time, self.video_placement, "all_users_video_watch_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average_of_duration"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
@@ -132,18 +148,13 @@ if __name__ == "__main__":
             logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
             if use_time.total_seconds() > 60*60:
                 logger.alert("katkat execute sync indicator scripts over one hour, please delay FinBI sync time")
-            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
+            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1 + 60*3
             time.sleep(sleep_time)
         elif condition == 2:
             logger.info("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
-            if now_time_utc.hour < 2:
-                logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                time.sleep(60*60*0.5)
-            else:
-                logger.info("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                logger.alert("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                time.sleep(60*60*6)
+            logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
+            time.sleep(60*60*1)
 
