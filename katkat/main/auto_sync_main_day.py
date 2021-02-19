@@ -161,5 +161,5 @@ if __name__ == "__main__":
             else:
                 logger.info("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
                 logger.alert("katkat auto_sync fail due to mongo sync log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
-                time.sleep(60*60*3)
+                time.sleep(60*60*6)
 
