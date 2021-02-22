@@ -97,11 +97,11 @@ class AutoSyncMainDay:
 
 if __name__ == "__main__":
     logger = Logger("KatKat Auto Sync Main Day", os.path.join(DIR, 'logs/auto_sync_main_day.log'), users=["teddy"])
-    sync_tables = ["input.accounts", "partiko.account_profiles", "partiko.withdraw_transactions", "partiko.referrals"]
+    sync_tables = ["input.accounts", "partiko.account_profiles", "partiko.withdraw_transactions", "partiko.referrals", "partiko.point_transactions"]
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
     while True:
-        sql_mysql = "select table_name, max(updated_at) FROM {} group by table_name order by field(table_name, {})".format("main_day_involed_bigquery_tables", sync_tables_str)
+        sql_mysql = "select table_name, max(updated_at) FROM {} group by table_name".format("main_day_involed_bigquery_tables")
         katkat_mysql_client.execute_sql(sql_mysql)
         mysql_res = katkat_mysql_client.cursor.fetchall()
         if not mysql_res:

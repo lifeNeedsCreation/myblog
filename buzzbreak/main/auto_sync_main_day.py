@@ -227,7 +227,7 @@ if __name__ == "__main__":
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
     while True:
-        sql_mysql = "select table_name, max(updated_at) FROM {} group by table_name order by field(table_name, {})".format("main_day_involed_bigquery_tables", sync_tables_str)
+        sql_mysql = "select table_name, max(updated_at) FROM {} group by table_name".format("main_day_involed_bigquery_tables")
         buzzbreak_mysql_client.execute_sql(sql_mysql)
         mysql_res = buzzbreak_mysql_client.cursor.fetchall()
         if not mysql_res:
