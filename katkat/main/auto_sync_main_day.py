@@ -97,7 +97,7 @@ class AutoSyncMainDay:
 
 if __name__ == "__main__":
     logger = Logger("KatKat Auto Sync Main Day", os.path.join(DIR, 'logs/auto_sync_main_day.log'), users=["teddy"])
-    sync_tables = ["input.accounts", "partiko.account_profiles", "partiko.withdraw_transactions", "partiko.referrals", "partiko.point_transactions"]
+    sync_tables = ["input.accounts", "partiko.account_profiles", "partiko.withdraw_transactions", "partiko.point_transactions"]
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
     while True:
