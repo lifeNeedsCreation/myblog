@@ -57,6 +57,8 @@ from indicator_scripts import video_ctr_recall
 from indicator_scripts import video_ctr_recall_data_index0
 from indicator_scripts import video_ctr_people_recall
 from indicator_scripts import video_ctr_people_recall_data_index0
+from indicator_scripts import video_ctr_rank
+from indicator_scripts import video_ctr_people_rank
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -104,6 +106,8 @@ KIND = {
     "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
     "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
+    "video_ctr_rank": "video_ctr_rank",  # Rank实验的视频ctr
+    "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
 }
 
 class AutoSyncMainDay:
@@ -236,6 +240,12 @@ class AutoSyncMainDay:
 
             elif key == "video_ctr_people_recall_data_index0":
                 video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
+
+            elif key == "video_ctr_rank":
+                video_ctr_rank.VideoCtrRank(start_time, end_time, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
+
+            elif key == "video_ctr_people_rank":
+                video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, "video_ctr_people_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rank"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
