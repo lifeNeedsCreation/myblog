@@ -7,9 +7,9 @@ ONE_DAY = 86400
 
 COUNTRY_CODE = ["ID", "PH", "TH", "AR", "BR"]
 # 新闻实验关注的位置
-PLACEMENT = ["home_tab_for_you", "news_detail_activity"]
+PLACEMENT = ["home_tab_for_you", "news_detail_activity", "home_tab_home"]
 # 视频实验关注的位置
-VIDEO_PLACEMENT = ["videos_tab_popular", "home_tab_for_you", "home_tab_for_you_video", "immersive_videos_tab_popular", "videos_tab_hiphop", "immersive_videos_tab_hiphop", "video_activity"]
+VIDEO_PLACEMENT = ["videos_tab_popular", "home_tab_for_you", "home_tab_for_you_video", "immersive_videos_tab_popular", "videos_tab_hiphop", "immersive_videos_tab_hiphop", "video_activity", "home_tab_home_video"]
 
 # 新视频按类型统计关注的位置
 VIDEO_KIND_PLACEMENT = ["videos_tab_popular", "home_tab_for_you"]
