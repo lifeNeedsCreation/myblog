@@ -54,7 +54,9 @@ from indicator_scripts import new_user_video_ctr_people
 from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
 from indicator_scripts import cash_out
 from indicator_scripts import video_ctr_recall
+from indicator_scripts import video_ctr_recall_data_index0
 from indicator_scripts import video_ctr_people_recall
+from indicator_scripts import video_ctr_people_recall_data_index0
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -99,7 +101,9 @@ KIND = {
     "partiko_experiment_new_users_retention_tab_impression": "partiko_experiment_new_users_retention_tab_impression",     # partiko.experiment 实验中 新用户在各个 tab 的留存
     "cash_out": "cash_out", # 统计打钱，按国家和天
     "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
+    "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
+    "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
 }
 
 class AutoSyncMainDay:
@@ -223,9 +227,15 @@ class AutoSyncMainDay:
 
             elif key == "video_ctr_recall":
                 video_ctr_recall.VideoCtrRecall(start_time, end_time, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
+
+            elif key == "video_ctr_recall_data_index0":
+                video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
             
             elif key == "video_ctr_people_recall":
                 video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
+
+            elif key == "video_ctr_people_recall_data_index0":
+                video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
