@@ -19,12 +19,12 @@ with
 
     accounts_video_impression as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression inner join accounts on account_id = id where experiment not like "%video_recall%"),
 
-    video_impression_group as (select country_code, placement, experiment, strategy, count(*) as impression_num from accounts_video_impression group by country_code,  experiment,placement, strategy),
+    video_impression_group as (select country_code, placement, experiment, strategy, count(*) as impression_num from accounts_video_impression group by country_code, experiment, placement, strategy),
 
     video_impression_union as (select * from video_click union distinct select * from video_impression),
 
     accounts_video_impression_union as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression_union inner join accounts on account_id = id where experiment not like "%video_recall%"),
 
-    video_impression_union_group as (select country_code, placement, experiment, strategy, count(*) as impression_union_num from accounts_video_impression_union group by co experiment,untry_code, placement, strategy)
+    video_impression_union_group as (select country_code, placement, experiment, strategy, count(*) as impression_union_num from accounts_video_impression_union group by country_code, placement, experiment, strategy)
 
     select a.country_code as country_code, a.placement as placement, a.experiment as experiment, a.strategy as strategy, extract(date from timestamp("{start_time}")) as date, ifnull(click_num, 0) as click_num, impression_num, impression_union_num, round(ifnull(click_num, 0) / impression_num, 4) as ctr, round(ifnull(click_num, 0) / impression_union_num, 4) as ctr_union from (select up.country_code as country_code, up.placement as placement, up.experiment as experiment, up.strategy as strategy, impression_num, impression_union_num from video_impression_union_group as up left join video_impression_group as ip on up.country_code = ip.country_code and up.placement = ip.placement and up.experiment = ip.experiment and up.strategy = ip.strategy) as a left join video_click_group as cp on a.country_code = cp.country_code and a.placement = cp.placement and a.experiment = cp.experiment and a.strategy = cp.strategy
