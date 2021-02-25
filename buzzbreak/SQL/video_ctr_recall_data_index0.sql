@@ -7,7 +7,7 @@ with
     cross join unnest(v.experiments) as experiment 
     cross join unnest(v.strategies) as strategy),
 
-    accounts_video_click as (select account_id, country_code, placement, video_id, experiment, strategy from video_click inner join accounts on account_id = id),
+    accounts_video_click as (select account_id, country_code, placement, video_id, experiment, strategy from video_click inner join accounts on account_id = id where experiment like "%video_recall%"),
 
     video_click_group as (select country_code, placement, experiment, strategy, count(*) as click_num from accounts_video_click group by country_code, placement, experiment, strategy),
 
@@ -17,13 +17,13 @@ with
     cross join unnest(v.experiments) as experiment 
     cross join unnest(v.strategies) as strategy),
 
-    accounts_video_impression as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression inner join accounts on account_id = id),
+    accounts_video_impression as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression inner join accounts on account_id = id where experiment like "%video_recall%"),
 
     video_impression_group as (select country_code, placement, experiment, strategy, count(*) as impression_num from accounts_video_impression group by country_code, placement, experiment, strategy),
 
     video_impression_union as (select * from video_click union distinct select * from video_impression),
 
-    accounts_video_impression_union as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression_union inner join accounts on account_id = id),
+    accounts_video_impression_union as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression_union inner join accounts on account_id = id where experiment like "%video_recall%"),
 
     video_impression_union_group as (select country_code, placement, experiment, strategy, count(*) as impression_union_num from accounts_video_impression_union group by country_code, placement, experiment, strategy)
 
