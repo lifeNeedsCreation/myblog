@@ -49,6 +49,7 @@ from indicator_scripts import partiko_memories_average_of_invites
 from indicator_scripts import new_users_partiko_memories_average_of_invites
 from indicator_scripts import partiko_memories_user_time_average_of_duration
 from indicator_scripts import partiko_memories_new_user_user_time_average_of_duration
+from indicator_scripts import experiment_immersive_page_duration_avg
 from indicator_scripts import new_user_news_ctr_people
 from indicator_scripts import new_user_video_ctr_people
 from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
@@ -100,6 +101,7 @@ KIND = {
     "new_users_partiko_memories_average_of_invites": "new_users_partiko_memories_average_of_invites",     # partiko.memories 实验中的 新用户平均邀请人数
     "partiko_memories_user_time_average_of_duration": "partiko_memories_user_time_average_of_duration",     # partiko.memories 实验中 用户在各个页面的停留时间
     "partiko_memories_new_user_user_time_average_of_duration":  "partiko_memories_new_user_user_time_average_of_duration",  # partiko.memories 实验中新用户在各个页面的停留时间
+    "experiment_immersive_page_duration_avg":"experiment_immersive_page_duration_avg"   # 沉浸流页面用户平局停留时长
     "new_user_news_ctr_people": "day_new_user_news_ctr_people",  # 新用户 新闻 click_user_ratio
     "new_user_video_ctr_people": "day_new_user_video_ctr_people",  # 新用户 视频 click_user_ratio
     "partiko_experiment_new_users_retention_tab_impression": "partiko_experiment_new_users_retention_tab_impression",     # partiko.experiment 实验中 新用户在各个 tab 的留存
@@ -220,6 +222,9 @@ class AutoSyncMainDay:
                 
             elif key == "partiko_memories_new_user_user_time_average_of_duration":
                 partiko_memories_new_user_user_time_average_of_duration.PartikoMemoriesNewUserUserTimeAverageOfDuration(start_time, end_time, self.indicator_dimension, 'partiko_memories_new_user_user_time_average_of_duration', logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_user_user_time_average_of_duration"))
+
+            elif key == "experiment_immersive_page_duration_avg":
+                experiment_immersive_page_duration_avg.ExperimentImmersivePageDurationAvg(start_time, end_time, self.country_code, 'experiment_immersive_page_duration_avg', logger).compute_data("{}/SQL/{}.sql".format(DIR, "experiment_immersive_page_duration_avg"))
 
             elif key == "new_user_news_ctr_people":
                 new_user_news_ctr_people.NewUserCTRPeopleData(start_time, end_time, self.country_code, self.placement, self.indicator_dimension, value, self.logger).compute_data()
