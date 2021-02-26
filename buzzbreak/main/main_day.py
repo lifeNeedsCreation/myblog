@@ -55,6 +55,8 @@ from indicator_scripts import video_ctr_people_rank
 from indicator_scripts import video_watch_average_of_duration_recall
 from indicator_scripts import video_watch_average_of_duration_rank
 from indicator_scripts import experiment_immersive_page_duration_avg
+from indicator_scripts import immersive_retention_recall
+from indicator_scripts import immersive_retention_rank
 
 # 指标列表
 KIND = {
@@ -102,6 +104,8 @@ KIND = {
     "video_ctr_people_rank": 1,    # Rank实验的视频ctr(人)
     "video_watch_average_of_duration_recall": 1,    # 召回实验下所有用户的平均观看时长
     "video_watch_average_of_duration_rank": 1,    # Rank实验下所有用户的平均观看时长
+    "immersive_retention_recall": 1,    # 沉浸流召回实验留存
+    "immersive_retention_rank": 1,    # 沉浸流Rank实验留存
 }
 
 
@@ -284,6 +288,10 @@ if __name__ == "__main__":
 
         video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
 
+        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+
+        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
+
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
     elif kind == "ctr_people":
@@ -370,6 +378,10 @@ if __name__ == "__main__":
         video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
     elif kind == "video_watch_average_of_duration_rank":
         video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+    elif kind == "immersive_retention_recall":
+        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+    elif kind == "immersive_retention_rank":
+        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
     else:
         pass
 

@@ -62,6 +62,8 @@ from indicator_scripts import video_ctr_rank
 from indicator_scripts import video_ctr_people_rank
 from indicator_scripts import video_watch_average_of_duration_recall
 from indicator_scripts import video_watch_average_of_duration_rank
+from indicator_scripts import immersive_retention_recall
+from indicator_scripts import immersive_retention_rank
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -114,6 +116,8 @@ KIND = {
     "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
     "video_watch_average_of_duration_recall": "video_watch_average_of_duration_recall", # 召回实验下所有用户的平均观看时长
     "video_watch_average_of_duration_rank": "video_watch_average_of_duration_rank", # Rank实验下所有用户的平均观看时长
+    "immersive_retention_recall": "immersive_retention_recall",    # 沉浸流召回实验留存
+    "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
 }
 
 class AutoSyncMainDay:
@@ -261,6 +265,12 @@ class AutoSyncMainDay:
 
             elif key == "video_watch_average_of_duration_rank":
                 video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+
+            elif key == "immersive_retention_recall":
+                immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+            
+            elif key == "immersive_retention_rank":
+                immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
