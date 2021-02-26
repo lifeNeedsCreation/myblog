@@ -23,9 +23,11 @@ with
 
     impression_event_list as (select * from impression_event_infos where experiment in ("video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall")),
 
-    event_target_time as (select * from impression_event_list where date = "{start_time}"),
+    impression_event_list_update as (select account_id, experiment, strategy, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else placement end) as placement from impression_event_list),
 
-    event_one_month as (select * from impression_event_list),
+    event_target_time as (select * from impression_event_list_update where date = "{start_time}"),
+
+    event_one_month as (select * from impression_event_list_update),
     
     initial_events as (select account_id, country_code, placement, experiment, strategy, date as initial_date from account inner join event_one_month as e on account.id = e.account_id),
 

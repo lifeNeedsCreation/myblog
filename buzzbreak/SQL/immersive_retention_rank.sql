@@ -15,17 +15,19 @@ with
 
     immersive_event as (select * from stream_events.video_impression where created_at >= timestamp_sub(timestamp"{start_time}", interval 30 day) and created_at < "{end_time}" and json_extract_scalar(data, "$.placement") like "immersive%" and json_extract_scalar(data, "$.meta_tag") is not null),
 
-    impression_event_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, json_extract_array(meta_tag, "$.experiment") as experiments, json_extract_array(meta_tag, "$.recall_strategy") as strategies, created_at from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from immersive_event)),
+    impression_event_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, json_extract_array(meta_tag, "$.experiment") as experiments, json_extract_array(meta_tag, "$.ranking_strategy") as strategies, created_at from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from immersive_event)),
 
     impression_event_infos as (select distinct account_id, placement, replace(experiment, '"', '') as experiment, replace(strategy, '"', '') as strategy, extract(date from created_at) as date from impression_event_info as i 
     cross join unnest(i.experiments) as experiment 
     cross join unnest(i.strategies) as strategy),
 
-    impression_event_list as (select * from impression_event_infos where experiment in ("video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall")),
+    impression_event_list as (select * from impression_event_infos where experiment in ("video_multiple_recommendation_model_v4")),
 
-    event_target_time as (select * from impression_event_list where date = "{start_time}"),
+    impression_event_list_update as (select account_id, experiment, strategy, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else placement end) as placement from impression_event_list),
 
-    event_one_month as (select * from impression_event_list),
+    event_target_time as (select * from impression_event_list_update where date = "{start_time}"),
+
+    event_one_month as (select * from impression_event_list_update),
     
     initial_events as (select account_id, country_code, placement, experiment, strategy, date as initial_date from account inner join event_one_month as e on account.id = e.account_id),
 
