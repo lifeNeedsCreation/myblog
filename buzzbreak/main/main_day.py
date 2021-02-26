@@ -55,11 +55,8 @@ from indicator_scripts import video_ctr_people_rank
 from indicator_scripts import video_watch_average_of_duration_recall
 from indicator_scripts import video_watch_average_of_duration_rank
 from indicator_scripts import experiment_immersive_page_duration_avg
-<<<<<<< HEAD
 from indicator_scripts import immersive_retention_recall
 from indicator_scripts import immersive_retention_rank
-=======
->>>>>>> e213665ae3c78182820ea9ed52ccd0638ad0545e
 
 # 指标列表
 KIND = {
