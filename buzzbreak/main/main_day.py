@@ -54,6 +54,9 @@ from indicator_scripts import video_ctr_rank
 from indicator_scripts import video_ctr_people_rank
 from indicator_scripts import video_watch_average_of_duration_recall
 from indicator_scripts import video_watch_average_of_duration_rank
+from indicator_scripts import experiment_immersive_page_duration_avg
+from indicator_scripts import immersive_retention_recall
+from indicator_scripts import immersive_retention_rank
 
 # 指标列表
 KIND = {
@@ -86,6 +89,7 @@ KIND = {
     "partiko_experiment_average_of_invites": 1,     # partiko.experiment 实验中的 平均邀请人数
     "partiko_memories_user_time_average_of_duration": 1,     # partiko.memories 实验中 用户在各个页面的停留时间
     "partiko_memories_new_user_user_time_average_of_duration": 1, # partiko.memories 实验中新用户在各个页面的停留时间
+    "experiment_immersive_page_duration_avg": 1,     # 沉浸流页面用户平局停留时长
     "new_user_news_ctr_people": 1,  # 新用户 新闻 click_user_ratio
     "new_user_video_ctr_people": 1,  # 新用户 视频 click_user_ratio
     "push_tention": 1,
@@ -100,6 +104,8 @@ KIND = {
     "video_ctr_people_rank": 1,    # Rank实验的视频ctr(人)
     "video_watch_average_of_duration_recall": 1,    # 召回实验下所有用户的平均观看时长
     "video_watch_average_of_duration_rank": 1,    # Rank实验下所有用户的平均观看时长
+    "immersive_retention_recall": 1,    # 沉浸流召回实验留存
+    "immersive_retention_rank": 1,    # 沉浸流Rank实验留存
 }
 
 
@@ -247,6 +253,8 @@ if __name__ == "__main__":
         partiko_memories_user_time_average_of_duration.PartikoMemoriesUserTimeAverageOfDuration(start_time, end_time, indicator_dimension, 'partiko_memories_user_time_average_of_duration', logger).compute_data()
 
         partiko_memories_new_user_user_time_average_of_duration.PartikoMemoriesNewUserUserTimeAverageOfDuration(start_time, end_time, indicator_dimension, 'partiko_memories_new_user_user_time_average_of_duration', logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_user_user_time_average_of_duration"))
+
+        experiment_immersive_page_duration_avg.ExperimentImmersivePageDurationAvg(start_time, end_time, country_code, 'experiment_immersive_page_duration_avg', logger).compute_data("{}/SQL/{}.sql".format(DIR, "experiment_immersive_page_duration_avg"))
         
         new_user_news_ctr_people.NewUserCTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_ctr_people", logger).compute_data()
 
@@ -279,6 +287,10 @@ if __name__ == "__main__":
         video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
 
         video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+
+        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+
+        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -336,6 +348,8 @@ if __name__ == "__main__":
         partiko_memories_user_time_average_of_duration.PartikoMemoriesUserTimeAverageOfDuration(start_time, end_time, indicator_dimension, 'partiko_memories_user_time_average_of_duration', logger).compute_data()
     elif kind == 'partiko_memories_new_user_user_time_average_of_duration':
         partiko_memories_new_user_user_time_average_of_duration.PartikoMemoriesNewUserUserTimeAverageOfDuration(start_time, end_time, indicator_dimension, 'partiko_memories_new_user_user_time_average_of_duration', logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_user_user_time_average_of_duration"))
+    elif kind == "experiment_immersive_page_duration_avg":
+        experiment_immersive_page_duration_avg.ExperimentImmersivePageDurationAvg(start_time, end_time, country_code, 'experiment_immersive_page_duration_avg', logger).compute_data("{}/SQL/{}.sql".format(DIR, "experiment_immersive_page_duration_avg"))
     elif kind == "new_user_news_ctr_people":
         new_user_news_ctr_people.NewUserCTRPeopleData(start_time, end_time, country_code, placement, indicator_dimension, "day_new_user_news_ctr_people", logger).compute_data()
     elif kind == "new_user_video_ctr_people":
@@ -364,6 +378,10 @@ if __name__ == "__main__":
         video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
     elif kind == "video_watch_average_of_duration_rank":
         video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+    elif kind == "immersive_retention_recall":
+        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+    elif kind == "immersive_retention_rank":
+        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
     else:
         pass
 
