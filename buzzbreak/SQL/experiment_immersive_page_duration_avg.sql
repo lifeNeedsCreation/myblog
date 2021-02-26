@@ -15,6 +15,6 @@ with
 
     total_duration as (select country_code, key, value, page, sum(duration_in_seconds) as duration_sum from valid_experiment_user_time group by country_code, key, value, page order by country_code, key, value, page, duration_sum desc),
 
-    user_count as (select country_code, key, value, page, count(distinct id) as user_count from experiment_user_time group by country_code, key, value, page order by country_code, key, value, page, user_count desc)
+    user_count as (select country_code, key, value, page, count(distinct id) as user_count from valid_experiment_user_time group by country_code, key, value, page order by country_code, key, value, page, user_count desc)
 
     select t.country_code as country_code, t.key as treatment_name, t.value as indimension, t.page as page, extract(date from timestamp("{start_time}")) as date, duration_sum, user_count, round(duration_sum / user_count, 2) as duration_avg from total_duration as t inner join user_count as u on t.country_code = u.country_code and t.key = u.key and t.value = u.value and t.page = u.page order by page, indimension
