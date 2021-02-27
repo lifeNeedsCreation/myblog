@@ -3,7 +3,7 @@ with
     
     video_watch_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, safe_cast(json_extract_scalar(data, "$.duration_in_seconds") as numeric) as duration_in_seconds, json_extract_array(meta_tag, "$.experiment") as experiment, json_extract_array(meta_tag, "$.ranking_strategy") as ranking_strategies from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from `stream_events.video_watch` where created_at >= "{start_time}" and created_at < "{end_time}") where meta_tag is not null),
     
-    video_watch as (select account_id, placement, duration_in_seconds, experiment, strategy from video_watch_info as v
+    video_watch as (select account_id, placement, duration_in_seconds, replace(experiment, '"', '') as experiment, replace(strategy, '"', '') as strategy from video_watch_info as v
     cross join unnest(v.experiment) as experiment
     cross join unnest(v.ranking_strategies) as strategy),
     

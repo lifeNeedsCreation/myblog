@@ -7,7 +7,7 @@ with
     cross join unnest(v.experiment) as experiment
     cross join unnest(v.recall_strategies) as strategy),
     
-    account_video_watch as (select account_id, country_code, placement, duration_in_seconds, experiment, strategy from video_watch inner join accounts on account_id = id where experiment like "%video_recall%"),
+    account_video_watch as (select account_id, country_code, placement, duration_in_seconds, replace(experiment, '"', '') as experiment, replace(strategy, '"', '') as strategy from video_watch inner join accounts on account_id = id where experiment like "%video_recall%"),
 
     duration_group as (select country_code, placement, experiment, strategy, sum(duration_in_seconds) as duration_sum from account_video_watch group by country_code, placement, experiment, strategy),
 
