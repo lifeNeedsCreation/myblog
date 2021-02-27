@@ -8,12 +8,16 @@ class VideoCtrRecallDataIndex0(object):
     """
     : param start_time: 指标计算的开始时间
     : param end_time：指标计算的结束时间
+    : param country_code: 指标计算的国家
+    : param experiments: 指标计算的实验名称
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, table_name, logger=None):
+    def __init__(self, start_time, end_time, country_code, experiments, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
+        self.country_code = country_code
+        self.experiments = experiments
         self.table_name = table_name
         self.logger = logger
         self.fields = ["country_code", "placement", "experiment", "strategy", "date", "click_num", "impression_num", "impression_union_num", "ctr", "ctr_union"]
@@ -32,7 +36,7 @@ class VideoCtrRecallDataIndex0(object):
         start_time = self.start_time.strftime("%Y-%m-%d")
         end_time = self.end_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
-        params = {"start_time": start_time, "end_time": end_time}
+        params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code, "experiments": self.experiments}
         query = sql.format(**params)
         video_ctr_recall_data = self.get_data(query)
         if video_ctr_recall_data[self.fields[0]]:

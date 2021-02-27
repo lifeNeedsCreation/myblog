@@ -1,5 +1,5 @@
 with
-    accounts as (select id, country_code from input.accounts where name is not null and country_code in ("ID")),
+    accounts as (select id, country_code from input.accounts where name is not null and country_code in ({country_code})),
 
     video_click_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, json_extract_scalar(data, "$.id") as video_id, json_extract_array(meta_tag, "$.experiment") as experiments, json_extract_array(meta_tag, "$.recall_strategy") as strategies from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from stream_events.video_click where created_at >= "{start_time}" and created_at < "{end_time}")),
 
@@ -7,7 +7,7 @@ with
     cross join unnest(v.experiments) as experiment 
     cross join unnest(v.strategies) as strategy),
 
-    accounts_video_click as (select account_id, country_code, placement, video_id, experiment, strategy from video_click inner join accounts on account_id = id where experiment like "%video_recall%"),
+    accounts_video_click as (select account_id, country_code, placement, video_id, experiment, strategy from video_click inner join accounts on account_id = id where experiment in ({experiments})),
 
     video_click_group as (select country_code, placement, experiment, strategy, count(distinct account_id) as click_num from accounts_video_click group by country_code, placement, experiment, strategy),
 
@@ -17,13 +17,13 @@ with
     cross join unnest(v.experiments) as experiment 
     cross join unnest(v.strategies) as strategy),
 
-    accounts_video_impression as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression inner join accounts on account_id = id where experiment like "%video_recall%"),
+    accounts_video_impression as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression inner join accounts on account_id = id where experiment in ({experiments})),
 
     video_impression_group as (select country_code, placement, experiment, strategy, count(distinct account_id) as impression_num from accounts_video_impression group by country_code, placement, experiment, strategy),
 
     video_impression_union as (select * from video_click union distinct select * from video_impression),
 
-    accounts_video_impression_union as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression_union inner join accounts on account_id = id where experiment like "%video_recall%"),
+    accounts_video_impression_union as (select account_id, country_code, placement, video_id, experiment, strategy from video_impression_union inner join accounts on account_id = id where experiment in ({experiments})),
 
     video_impression_union_group as (select country_code, placement, experiment, strategy, count(distinct account_id) as impression_union_num from accounts_video_impression_union group by country_code, placement, experiment, strategy)
 
