@@ -204,6 +204,8 @@ if __name__ == "__main__":
     video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
     video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
+    recall_experiment = "'" + "','".join(constants.RECALL_EXPERIMENT) + "'"
+    rank_experiment = "'" + "','".join(constants.RECALL_EXPERIMENT) + "'"
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
 
@@ -272,25 +274,25 @@ if __name__ == "__main__":
 
         cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
 
-        video_ctr_recall.VideoCtrRecall(start_time, end_time, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
+        video_ctr_recall.VideoCtrRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
 
-        video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
+        video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
 
-        video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
+        video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
 
-        video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
+        video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
 
-        video_ctr_rank.VideoCtrRank(start_time, end_time, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
+        video_ctr_rank.VideoCtrRank(start_time, end_time, country_code, rank_experiment, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
 
-        video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, "video_ctr_people_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rank"))
+        video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, country_code, rank_experiment, "video_ctr_people_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rank"))
 
-        video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
+        video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, country_code, recall_experiment, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
 
-        video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+        video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, country_code, rank_experiment, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
 
-        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, recall_experiment, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
 
-        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
+        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, rank_experiment, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -363,25 +365,25 @@ if __name__ == "__main__":
     elif kind == "cash_out":
         cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
     elif kind == "video_ctr_recall":
-        video_ctr_recall.VideoCtrRecall(start_time, end_time, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
+        video_ctr_recall.VideoCtrRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
     elif kind == "video_ctr_recall_data_index0":
-        video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
+        video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
     elif kind == "video_ctr_people_recall":
-        video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
+        video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
     elif kind == "video_ctr_people_recall_data_index0":
-        video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
+        video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
     elif kind == "video_ctr_rank":
-        video_ctr_rank.VideoCtrRank(start_time, end_time, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
+        video_ctr_rank.VideoCtrRank(start_time, end_time, country_code, rank_experiment, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
     elif kind == "video_ctr_people_rank":
-        video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, "video_ctr_people_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rank"))
+        video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, country_code, rank_experiment, "video_ctr_people_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rank"))
     elif kind == "video_watch_average_of_duration_recall":
-        video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
+        video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, country_code, recall_experiment, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
     elif kind == "video_watch_average_of_duration_rank":
-        video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+        video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, country_code, recall_experiment, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
     elif kind == "immersive_retention_recall":
-        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+        immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, recall_experiment, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
     elif kind == "immersive_retention_rank":
-        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
+        immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, rank_experiment, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
     else:
         pass
 

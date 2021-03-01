@@ -21,7 +21,7 @@ with
     cross join unnest(i.experiments) as experiment 
     cross join unnest(i.strategies) as strategy),
 
-    impression_event_list as (select * from impression_event_infos where experiment in ("video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall")),
+    impression_event_list as (select * from impression_event_infos where experiment in ({experiments})),
 
     impression_event_list_update as (select account_id, experiment, strategy, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else placement end) as placement from impression_event_list),
 
