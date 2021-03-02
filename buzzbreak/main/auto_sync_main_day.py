@@ -64,6 +64,8 @@ from indicator_scripts import video_watch_average_of_duration_recall
 from indicator_scripts import video_watch_average_of_duration_rank
 from indicator_scripts import immersive_retention_recall
 from indicator_scripts import immersive_retention_rank
+from indicator_scripts import video_ctr_with_device_model_recall
+from indicator_scripts import video_ctr_with_device_model_rank
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -118,6 +120,8 @@ KIND = {
     "video_watch_average_of_duration_rank": "video_watch_average_of_duration_rank", # Rank实验下所有用户的平均观看时长
     "immersive_retention_recall": "immersive_retention_recall",    # 沉浸流召回实验留存
     "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
+    "video_ctr_with_device_model_recall": "video_ctr_with_device_model_recall",  # 召回实验视频ctr（按机型）
+    "video_ctr_with_device_model_rank": "video_ctr_with_device_model_rank",  # 召回实验视频ctr（按机型）
 }
 
 class AutoSyncMainDay:
@@ -128,7 +132,7 @@ class AutoSyncMainDay:
         self.video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
         self.indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
         self.recall_experiment = "'" + "','".join(constants.RECALL_EXPERIMENT) + "'"
-        self.rank_experiment = "'" + "','".join(constants.RECALL_EXPERIMENT) + "'"
+        self.rank_experiment = "'" + "','".join(constants.RANK_EXPERIMENT) + "'"
         self.logger = logger
 
     def work_on(self, start_time, end_time, limit_time):
@@ -273,6 +277,12 @@ class AutoSyncMainDay:
             
             elif key == "immersive_retention_rank":
                 immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, self.rank_experiment, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
+
+            elif key == "video_ctr_with_device_model_recall":
+                video_ctr_with_device_model_recall.VideoCtrWithDeviceModelRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_with_device_model_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_device_model_recall"))
+
+            elif key == "video_ctr_with_device_model_rank":
+                video_ctr_with_device_model_rank.VideoCtrWithDeviceModelRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_with_device_model_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_device_model_rank"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

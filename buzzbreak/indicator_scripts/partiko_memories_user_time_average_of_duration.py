@@ -28,6 +28,7 @@ class PartikoMemoriesUserTimeAverageOfDuration:
             'value',
             'date',
             'page',
+            'duration_sum',
             'open_users_count',
             'avg_duration'
         ]
@@ -39,6 +40,8 @@ class PartikoMemoriesUserTimeAverageOfDuration:
                 elif field in ['avg_duration']:
                     dict_info[field].append(float(row[field]))
                 elif field in ['open_users_count']:
+                    dict_info[field].append(int(row[field]))
+                elif field in ['duration_sum']:
                     dict_info[field].append(int(row[field]))
                 else:
                     dict_info[field].append(row[field])
@@ -52,21 +55,29 @@ class PartikoMemoriesUserTimeAverageOfDuration:
             f'''
             with
             memories as (select * from partiko.memories where value in ({self.indicator_dimension})),
+
             accounts as (select * from input.accounts where name is not null),
             user_time as (select * from stream_events.user_time where created_at>'{start_time}' and created_at<'{end_time}'),
+
             app_open as (select * from stream_events.app_open where created_at>'{start_time}' and created_at<'{end_time}'),
+
             experiment_accounts as (select distinct id,country_code,key,value,updated_at from accounts inner join memories on id=account_id),
+
             experiment_user_time as (select id,country_code,key,value,json_extract_scalar(data,'$.page') as page,safe_cast(json_extract_scalar(data,'$.duration_in_seconds') as numeric) as duration_in_seconds,created_at from experiment_accounts inner join user_time on id=account_id where extract(date from created_at)>=extract(date from updated_at)),
+
+            experiment_user_time_update as (select id, country_code, key, value, duration_in_seconds, created_at, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else page end) as page from experiment_user_time),
+
             experiment_app_open as (select distinct id,country_code,key,value,extract(date from created_at) as date from experiment_accounts inner join app_open on id=account_id where extract(date from created_at)>=extract(date from updated_at))
-            select a.country_code,a.key,a.value,a.date,page,open_users_count,round(ifnull(duration_sum,0)/open_users_count,4) as avg_duration from (select country_code,key,value,date,count(distinct id) as open_users_count from experiment_app_open group by country_code,key,value,date) as a left join (select country_code,key,value,page,extract(date from created_at) as date,sum(duration_in_seconds) as duration_sum from experiment_user_time group by country_code,key,value,page,date) as u on a.country_code=u.country_code and a.key=u.key and a.value=u.value and a.date=u.date
+
+            select a.country_code,a.key,a.value,a.date,page,open_users_count, ifnull(duration_sum,0) as duration_sum, round(ifnull(duration_sum,0)/open_users_count,4) as avg_duration from (select country_code,key,value,date,count(distinct id) as open_users_count from experiment_app_open group by country_code,key,value,date) as a left join (select country_code,key,value,page,extract(date from created_at) as date,sum(duration_in_seconds) as duration_sum from experiment_user_time_update group by country_code,key,value,page,date) as u on a.country_code=u.country_code and a.key=u.key and a.value=u.value and a.date=u.date
             '''
         user_time_data = self.get_data(query)
         # 结果数据存入数据库
-        values = "country_code, treatment_name, dimension, date, page, open_users_count, avg_duration, create_time"
+        values = "country_code, treatment_name, dimension, date, page, duration_sum, open_users_count, avg_duration, create_time"
         insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES"
         now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         for i in range(len(user_time_data['country_code'])):
-            insert_sql += f"""('{user_time_data["country_code"][i]}', '{user_time_data["key"][i]}', '{user_time_data["value"][i]}', '{user_time_data["date"][i]}', '{user_time_data["page"][i]}', '{user_time_data["open_users_count"][i]}', '{user_time_data["avg_duration"][i]}', '{now_time_utc}'),"""
+            insert_sql += f"""('{user_time_data["country_code"][i]}', '{user_time_data["key"][i]}', '{user_time_data["value"][i]}', '{user_time_data["date"][i]}', '{user_time_data["page"][i]}', '{user_time_data["duration_sum"][i]}', '{user_time_data["open_users_count"][i]}', '{user_time_data["avg_duration"][i]}', '{now_time_utc}'),"""
         insert_sql = insert_sql[:-1]
         buzzbreak_mysql_client.execute_sql(insert_sql)
         

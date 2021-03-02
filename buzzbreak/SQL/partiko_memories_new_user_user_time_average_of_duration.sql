@@ -11,10 +11,12 @@ with
     
     experiment_accounts_user_time as (select id, country_code, key, value, page, duration_in_seconds, created_date from experiment_accounts as a inner join user_time on id = account_id  where created_date >= update_date),
 
+    experiment_accounts_user_time_update as (select id, country_code, key, value, duration_in_seconds, created_date, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else page end) as page from experiment_accounts_user_time),
+
     experiment_account_app_open as (select distinct id, country_code, key, value, created_date from experiment_accounts as a inner join app_open on id = account_id  where created_date >= update_date),
 
-    page_duration_sum as (select country_code, key, value, page, created_date, sum(duration_in_seconds) as duration_sum from experiment_accounts_user_time as u group by country_code, key, value, page, created_date),
+    page_duration_sum as (select country_code, key, value, page, created_date, sum(duration_in_seconds) as duration_sum from experiment_accounts_user_time_update as u group by country_code, key, value, page, created_date),
 
     app_open_count as (select country_code, key, value, created_date, count(distinct id) as user_count from experiment_account_app_open as a group by country_code, key, value, created_date)
 
-    select a.country_code as country_code, a.key as treatment_name, a.value as indicator_dimension, a.created_date as created_date, page, user_count, round(ifnull(duration_sum, 0)/user_count, 4) as duration_avg from app_open_count as a left join page_duration_sum as p on a.country_code = p.country_code and a.key = p.key and a.value = p.value and a.created_date = p.created_date
+    select a.country_code as country_code, a.key as treatment_name, a.value as indicator_dimension, a.created_date as created_date, page, ifnull(duration_sum, 0) as duration_sum, user_count, round(ifnull(duration_sum, 0)/user_count, 4) as duration_avg from app_open_count as a left join page_duration_sum as p on a.country_code = p.country_code and a.key = p.key and a.value = p.value and a.created_date = p.created_date
