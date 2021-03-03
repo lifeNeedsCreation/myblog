@@ -66,6 +66,8 @@ from indicator_scripts import immersive_retention_recall
 from indicator_scripts import immersive_retention_rank
 from indicator_scripts import video_ctr_with_device_model_recall
 from indicator_scripts import video_ctr_with_device_model_rank
+from indicator_scripts import video_ctr_with_brand_recall
+from indicator_scripts import video_ctr_with_brand_rank
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -122,6 +124,9 @@ KIND = {
     "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
     "video_ctr_with_device_model_recall": "video_ctr_with_device_model_recall",  # 召回实验视频ctr（按机型）
     "video_ctr_with_device_model_rank": "video_ctr_with_device_model_rank",  # 召回实验视频ctr（按机型）
+    "video_ctr_with_brand_recall": "video_ctr_with_brand_recall",  # 召回实验视频ctr（按品牌）
+    "video_ctr_with_brand_rank": "video_ctr_with_brand_rank",  # Rank实验视频ctr（按品牌）
+
 }
 
 class AutoSyncMainDay:
@@ -283,6 +288,12 @@ class AutoSyncMainDay:
 
             elif key == "video_ctr_with_device_model_rank":
                 video_ctr_with_device_model_rank.VideoCtrWithDeviceModelRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_with_device_model_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_device_model_rank"))
+
+            elif key == "video_ctr_with_brand_recall":
+                video_ctr_with_brand_recall.VideoCtrWithBrandRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_with_brand_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_recall"))
+
+            elif key == "video_ctr_with_brand_rank":
+                video_ctr_with_brand_rank.VideoCtrWithBrandRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_with_brand_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_rank"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
