@@ -18,7 +18,7 @@ VIDEO_KIND_PLACEMENT = ["videos_tab_popular", "home_tab_for_you"]
 INDICATOR_DIMENSION = ["control", "treatment", "treatment_1", "treatment_2", "video_multiple_features_v1", "video_multiple_features_v2", "video_multiple_features", "news_actions", "news_multiple_features", "news_multiple_features_v1", "news_multiple_features_v2"]
 
 # 召回实验名称
-RECALL_EXPERIMENT = ["video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall", "immersive_video_recall_v1"]
+RECALL_EXPERIMENT = ["video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall", "immersive_video_recall_v1", "category_funny_video_recall", "category_cute_video_recall", "category_gaming_video_recall"]
 
 # Rank实验名称
 RANK_EXPERIMENT = ["immersive_video_multiple_recommendation_model_v1", "video_multiple_recommendation_model_v4"]
