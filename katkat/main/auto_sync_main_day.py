@@ -11,8 +11,8 @@ sys.path.append(DIR)
 
 from utils import constants
 from utils.bigquery import katkat_bigquery_client
-from utils.mysql import katkat_mysql_client
-from utils.mongo import katkat_mongo_client
+from utils.mysql import MySQL
+from utils.mongo import Mongo
 from utils.logger import Logger
 from utils.utils import get_previous_start_time, get_today_start_time, getRestSeconds
 from utils.constants import MYSQL_INSERT_SUCCCESS, MYSQL_INSERT_FAIL
@@ -101,6 +101,8 @@ if __name__ == "__main__":
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
     while True:
+        katkat_mysql_client = MySQL("MYSQL_KATKAT")
+        katkat_mongo_client = Mongo("MONGO_ANALYTICS") 
         sql_mysql = "select table_name, max(updated_at) FROM {} group by table_name".format("main_day_involed_bigquery_tables")
         katkat_mysql_client.execute_sql(sql_mysql)
         mysql_res = katkat_mysql_client.cursor.fetchall()
@@ -146,15 +148,21 @@ if __name__ == "__main__":
             sync_end_time_str = sync_end_time.strftime(time_format)
             use_time = sync_end_time - sync_start_time
             logger.info("katkat sync indicator scripts by day {} complete, use_time={}".format(sync_end_time_str, use_time))
+            katkat_mysql_client.close_client()
+            katkat_mongo_client.close_client()
             if use_time.total_seconds() > 60*60:
                 logger.alert("katkat execute sync indicator scripts over one hour, please delay FinBI sync time")
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1 + 60*3
             time.sleep(sleep_time)
         elif condition == 2:
+            katkat_mysql_client.close_client()
+            katkat_mongo_client.close_client()
             logger.info("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
+            katkat_mysql_client.close_client()
+            katkat_mongo_client.close_client()
             logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
             time.sleep(60*60*1)
 
