@@ -15,5 +15,10 @@ class Mongo(object):
     def find_sync_tables(self, query):
         return self.collection.aggregate(query)
 
+    def close_client(self):
+        # 关闭客户端
+        if self.client:
+            self.client.close()
+
 buzzbreak_mongo_client = Mongo("MONGO_ANALYTICS")
 katkat_mongo_client = Mongo("MONGO_ANALYTICS")
