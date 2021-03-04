@@ -50,6 +50,7 @@ from indicator_scripts import video_ctr_recall
 from indicator_scripts import video_ctr_dimension_recall
 from indicator_scripts import video_ctr_recall_data_index0
 from indicator_scripts import video_ctr_people_recall
+from indicator_scripts import video_ctr_people_dimension_recall
 from indicator_scripts import video_ctr_people_recall_data_index0
 from indicator_scripts import video_ctr_rank
 from indicator_scripts import video_ctr_people_rank
@@ -105,6 +106,7 @@ KIND = {
     "video_ctr_dimension_recall": 1,  # 召回实验的视频ctr(按维度分组)
     "video_ctr_recall_data_index0": 1,  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": 1,    # 召回实验的视频ctr(人)
+    "video_ctr_people_dimension_recall": 1,    # 召回实验的视频ctr(人，按维度分组)
     "video_ctr_people_recall_data_index0": 1,    # 召回实验的视频ctr(人)(data_index=0)
     "video_ctr_rank": 1,  # Rank实验的视频ctr
     "video_ctr_people_rank": 1,    # Rank实验的视频ctr(人)
@@ -292,6 +294,8 @@ if __name__ == "__main__":
 
         video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
 
+        video_ctr_people_dimension_recall.VideoCtrPeopleDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_people_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_dimension_recall"))
+
         video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
 
         video_ctr_rank.VideoCtrRank(start_time, end_time, country_code, rank_experiment, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
@@ -392,6 +396,8 @@ if __name__ == "__main__":
         video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
     elif kind == "video_ctr_people_recall":
         video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
+    elif kind == "video_ctr_people_dimension_recall":
+        video_ctr_people_dimension_recall.VideoCtrPeopleDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_people_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_dimension_recall"))
     elif kind == "video_ctr_people_recall_data_index0":
         video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, country_code, recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
     elif kind == "video_ctr_rank":

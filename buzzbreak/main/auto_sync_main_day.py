@@ -58,6 +58,7 @@ from indicator_scripts import video_ctr_recall
 from indicator_scripts import video_ctr_dimension_recall
 from indicator_scripts import video_ctr_recall_data_index0
 from indicator_scripts import video_ctr_people_recall
+from indicator_scripts import video_ctr_people_dimension_recall
 from indicator_scripts import video_ctr_people_recall_data_index0
 from indicator_scripts import video_ctr_rank
 from indicator_scripts import video_ctr_people_rank
@@ -117,6 +118,7 @@ KIND = {
     "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
     "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
+    "video_ctr_people_dimension_recall": "video_ctr_people_dimension_recall",  # 召回实验的视频ctr(人)
     "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
     "video_ctr_rank": "video_ctr_rank",  # Rank实验的视频ctr
     "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
@@ -266,6 +268,9 @@ class AutoSyncMainDay:
             
             elif key == "video_ctr_people_recall":
                 video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
+
+            elif key == "video_ctr_people_dimension_recall":
+                video_ctr_people_dimension_recall.VideoCtrPeopleDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_dimension_recall"))
 
             elif key == "video_ctr_people_recall_data_index0":
                 video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
