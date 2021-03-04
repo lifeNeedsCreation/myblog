@@ -155,10 +155,14 @@ if __name__ == "__main__":
             sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1 + 60*3
             time.sleep(sleep_time)
         elif condition == 2:
+            katkat_mysql_client.close_client()
+            katkat_mongo_client.close_client()
             logger.info("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
+            katkat_mysql_client.close_client()
+            katkat_mongo_client.close_client()
             logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
             time.sleep(60*60*1)
 
