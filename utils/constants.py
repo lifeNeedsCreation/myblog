@@ -9,13 +9,13 @@ COUNTRY_CODE = ["ID", "PH", "TH", "AR", "BR"]
 # 新闻实验关注的位置
 PLACEMENT = ["home_tab_for_you", "news_detail_activity", "home_tab_home"]
 # 视频实验关注的位置
-VIDEO_PLACEMENT = ["videos_tab_popular", "home_tab_for_you", "home_tab_for_you_video", "immersive_videos_tab_popular", "videos_tab_hiphop", "immersive_videos_tab_hiphop", "video_activity", "home_tab_home_video", "home_tab_home"]
+VIDEO_PLACEMENT = ["videos_tab_popular", "home_tab_for_you", "home_tab_for_you_video", "immersive_videos_tab_popular", "videos_tab_hiphop", "immersive_videos_tab_hiphop", "video_activity", "home_tab_home_video", "home_tab_home", "videos_tab_cute", "videos_tab_funny", "videos_tab_gaming"]
 
 # 新视频按类型统计关注的位置
 VIDEO_KIND_PLACEMENT = ["videos_tab_popular", "home_tab_for_you"]
 
 
-INDICATOR_DIMENSION = ["control", "treatment", "treatment_1", "treatment_2", "video_multiple_features_v1", "video_multiple_features_v2", "video_multiple_features", "news_actions", "news_multiple_features", "news_multiple_features_v1", "news_multiple_features_v2"]
+INDICATOR_DIMENSION = ["control", "treatment", "treatment_1", "treatment_2", "video_multiple_features_v1", "video_multiple_features_v2", "video_multiple_features", "news_actions", "news_multiple_features", "news_multiple_features_v1", "news_multiple_features_v2", "immersive_video_multiple_features", "immersive_video_multiple_features_v1", "immersive_video_multiple_features_v2"]
 
 # 召回实验名称
 RECALL_EXPERIMENT = ["video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall", "immersive_video_recall_v1", "category_funny_video_recall", "category_cute_video_recall", "category_gaming_video_recall"]
