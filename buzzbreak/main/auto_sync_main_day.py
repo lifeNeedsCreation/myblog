@@ -56,15 +56,19 @@ from indicator_scripts import partiko_experiment_new_users_retention_tab_impress
 from indicator_scripts import cash_out
 from indicator_scripts import video_ctr_recall
 from indicator_scripts import video_ctr_dimension_recall
+from indicator_scripts import video_ctr_by_dimension_recall
 from indicator_scripts import video_ctr_recall_data_index0
 from indicator_scripts import video_ctr_people_recall
 from indicator_scripts import video_ctr_people_dimension_recall
+from indicator_scripts import video_ctr_people_by_dimension_recall
 from indicator_scripts import video_ctr_people_recall_data_index0
 from indicator_scripts import video_ctr_rank
 from indicator_scripts import video_ctr_people_rank
 from indicator_scripts import video_watch_average_of_duration_recall
+from indicator_scripts import video_watch_average_of_duration_by_dimension_recall
 from indicator_scripts import video_watch_average_of_duration_rank
 from indicator_scripts import immersive_retention_recall
+from indicator_scripts import immersive_retention_by_dimension_recall
 from indicator_scripts import immersive_retention_rank
 from indicator_scripts import video_ctr_with_device_model_recall
 from indicator_scripts import video_ctr_with_device_model_rank
@@ -116,15 +120,19 @@ KIND = {
     "cash_out": "cash_out", # 统计打钱，按国家和天
     "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
     "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
+    "video_ctr_by_dimension_recall": "video_ctr_by_dimension_recall",  # 召回实验的视频ctr(按meta_tag维度分组)
     "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
     "video_ctr_people_dimension_recall": "video_ctr_people_dimension_recall",  # 召回实验的视频ctr(人)
+    "video_ctr_people_by_dimension_recall": "video_ctr_people_by_dimension_recall",  # 召回实验的视频ctr(人，按meta_tag维度分组)
     "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
     "video_ctr_rank": "video_ctr_rank",  # Rank实验的视频ctr
     "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
     "video_watch_average_of_duration_recall": "video_watch_average_of_duration_recall", # 召回实验下所有用户的平均观看时长
+    "video_watch_average_of_duration_by_dimension_recall": "video_watch_average_of_duration_by_dimension_recall", # 召回实验下所有用户的平均观看时长(按meta_tag维度分组)
     "video_watch_average_of_duration_rank": "video_watch_average_of_duration_rank", # Rank实验下所有用户的平均观看时长
     "immersive_retention_recall": "immersive_retention_recall",    # 沉浸流召回实验留存
+    "immersive_retention_by_dimension_recall": "immersive_retention_by_dimension_recall",    # 沉浸流召回实验留存(按meta_tag维度分组)
     "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
     "video_ctr_with_device_model_recall": "video_ctr_with_device_model_recall",  # 召回实验视频ctr（按机型）
     "video_ctr_with_device_model_rank": "video_ctr_with_device_model_rank",  # 召回实验视频ctr（按机型）
@@ -263,6 +271,9 @@ class AutoSyncMainDay:
             elif key == "video_ctr_dimension_recall":
                 video_ctr_dimension_recall.VideoCtrDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_dimension_recall"))
 
+            elif key == "video_ctr_by_dimension_recall":
+                video_ctr_by_dimension_recall.VideoCtrByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_dimension_recall"))
+
             elif key == "video_ctr_recall_data_index0":
                 video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
             
@@ -271,6 +282,9 @@ class AutoSyncMainDay:
 
             elif key == "video_ctr_people_dimension_recall":
                 video_ctr_people_dimension_recall.VideoCtrPeopleDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_dimension_recall"))
+
+            elif key == "video_ctr_people_by_dimension_recall":
+                video_ctr_people_by_dimension_recall.VideoCtrPeopleByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_by_dimension_recall"))
 
             elif key == "video_ctr_people_recall_data_index0":
                 video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
@@ -284,11 +298,17 @@ class AutoSyncMainDay:
             elif key == "video_watch_average_of_duration_recall":
                 video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
 
+            elif key == "video_watch_average_of_duration_by_dimension_recall":
+                video_watch_average_of_duration_by_dimension_recall.VideoWatchAverageOfDurationByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_watch_average_of_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_by_dimension_recall"))
+
             elif key == "video_watch_average_of_duration_rank":
                 video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, self.country_code, self.rank_experiment, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
 
             elif key == "immersive_retention_recall":
                 immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, self.recall_experiment, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+
+            elif key == "immersive_retention_by_dimension_recall":
+                immersive_retention_by_dimension_recall.ImmersiveRetentionByDimensionRecall(start_time, end_time, self.recall_experiment, "immersive_retention_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_by_dimension_recall"))
             
             elif key == "immersive_retention_rank":
                 immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, self.rank_experiment, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
