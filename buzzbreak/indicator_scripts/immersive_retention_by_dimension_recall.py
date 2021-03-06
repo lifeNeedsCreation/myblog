@@ -18,7 +18,7 @@ class ImmersiveRetentionByDimensionRecall(object):
         self.experiments = experiments
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "placement", "experiment", "strategy", "initial_date", "retention_date", "date_diff", "initial_num", "retention_num", "retention_rate"]
+        self.fields = ["country_code", "placement", "experiment", "dimension", "initial_date", "retention_date", "date_diff", "initial_num", "retention_num", "retention_rate"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):

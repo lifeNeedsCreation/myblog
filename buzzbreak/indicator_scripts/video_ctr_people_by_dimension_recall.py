@@ -20,7 +20,7 @@ class VideoCtrPeopleByDimensionRecall(object):
         self.experiments = experiments
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "placement", "experiment", "strategy", "date", "click_num", "impression_num", "impression_union_num", "ctr", "ctr_union"]
+        self.fields = ["country_code", "placement", "experiment", "dimension", "date", "click_num", "impression_num", "impression_union_num", "ctr", "ctr_union"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):

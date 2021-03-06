@@ -20,7 +20,7 @@ class VideoWatchAverageOfDurationByDimensionRecall(object):
         self.experiments = experiments
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "placement", "experiment", "strategy", "date", "user_num", "duration_sum", "duration_avg"]
+        self.fields = ["country_code", "placement", "experiment", "dimension", "date", "user_num", "duration_sum", "duration_avg"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
