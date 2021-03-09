@@ -54,7 +54,7 @@ class PartikoMemoriesUserTimeAverageOfDuration:
         query = \
             f'''
             with
-            memories as (select * from partiko.memories where value in ({self.indicator_dimension})),
+            memories as (select * from partiko.memories where value in ({self.indicator_dimension}) and key like 'experiment%'),
 
             accounts as (select * from input.accounts where name is not null),
             user_time as (select * from stream_events.user_time where created_at>'{start_time}' and created_at<'{end_time}'),
