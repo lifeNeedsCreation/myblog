@@ -7,7 +7,7 @@ with
     cross join unnest(v.experiment) as experiment
     cross join unnest(v.ranking_strategies) as strategy),
 
-    video_watch_update as (select account_id, experiment, strategy, duration_in_seconds, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else placement end) as placement from video_watch),
+    video_watch_update as (select account_id, experiment, strategy, duration_in_seconds, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch),
     
     account_video_watch as (select account_id, country_code, placement, duration_in_seconds, experiment, strategy from video_watch_update inner join accounts on account_id = id where experiment in ({experiments})),
 

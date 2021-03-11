@@ -11,7 +11,7 @@ with
     
     experiment_accounts_user_time as (select id, country_code, key, value, page, duration_in_seconds, created_date from experiment_accounts as a inner join user_time on id = account_id  where created_date >= update_date),
 
-    experiment_accounts_user_time_update as (select id, country_code, key, value, duration_in_seconds, created_date, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity") then "immersive_videos_tab_popular" else page end) as page from experiment_accounts_user_time),
+    experiment_accounts_user_time_update as (select id, country_code, key, value, duration_in_seconds, created_date, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else page end) as page from experiment_accounts_user_time),
 
     experiment_account_app_open as (select distinct id, country_code, key, value, created_date from experiment_accounts as a inner join app_open on id = account_id  where created_date >= update_date),
 
