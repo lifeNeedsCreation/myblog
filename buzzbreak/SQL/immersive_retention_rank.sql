@@ -23,7 +23,7 @@ with
 
     impression_event_list as (select * from impression_event_infos where experiment in ({experiments})),
 
-    impression_event_list_update as (select account_id, experiment, strategy, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from impression_event_list),
+    impression_event_list_update as (select distinct account_id, experiment, strategy, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from impression_event_list),
 
     event_target_time as (select * from impression_event_list_update where date = "{start_time}"),
 
