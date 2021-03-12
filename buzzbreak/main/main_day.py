@@ -224,12 +224,12 @@ if __name__ == "__main__":
 
     # 开始数据指标统计
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
-    placement = "'" + "','".join(constants.PLACEMENT) + "'"
+    placement = "'" + "','".join(constants.NEWS_PLACEMENT) + "'"
     video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
     video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     recall_experiment = "'" + "','".join(constants.RECALL_EXPERIMENT) + "'"
-    rank_experiment = "'" + "','".join(constants.RANK_EXPERIMENT) + "'"
+    rank_experiment = "'" + "','".join(constants.RANKING_EXPERIMENT) + "'"
     if kind == "all":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
 

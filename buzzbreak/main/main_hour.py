@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     # 开始数据指标统计
     country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
-    placement = "'" + "','".join(constants.PLACEMENT) + "'"
+    placement = "'" + "','".join(constants.NEWS_PLACEMENT) + "'"
     video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
     indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
     if kind == "all":

@@ -148,12 +148,12 @@ KIND = {
 class AutoSyncMainDay:
     def __init__(self, logger):
         self.country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
-        self.placement = "'" + "','".join(constants.PLACEMENT) + "'"
+        self.placement = "'" + "','".join(constants.NEWS_PLACEMENT) + "'"
         self.video_placement = "'" + "','".join(constants.VIDEO_PLACEMENT) + "'"
         self.video_kind_placement = "'" + "','".join(constants.VIDEO_KIND_PLACEMENT) + "'"
         self.indicator_dimension = "'" + "','".join(constants.INDICATOR_DIMENSION) + "'"
         self.recall_experiment = "'" + "','".join(constants.RECALL_EXPERIMENT) + "'"
-        self.rank_experiment = "'" + "','".join(constants.RANK_EXPERIMENT) + "'"
+        self.rank_experiment = "'" + "','".join(constants.RANKING_EXPERIMENT) + "'"
         self.logger = logger
 
     def work_on(self, start_time, end_time, limit_time):
