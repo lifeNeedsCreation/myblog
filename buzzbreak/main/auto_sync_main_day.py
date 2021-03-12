@@ -74,6 +74,7 @@ from indicator_scripts import video_ctr_with_device_model_recall
 from indicator_scripts import video_ctr_with_device_model_rank
 from indicator_scripts import video_ctr_with_brand_recall
 from indicator_scripts import video_ctr_with_brand_rank
+from indicator_scripts import video_watch_average_by_dimension_recall
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -120,24 +121,25 @@ KIND = {
     "cash_out": "cash_out", # 统计打钱，按国家和天
     "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
     "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
-    "video_ctr_by_dimension_recall": "video_ctr_by_dimension_recall",  # 召回实验的视频ctr(按meta_tag维度分组)
+    "video_ctr_by_dimension_recall": "video_ctr_by_dimension_recall",  # 召回实验的视频ctr(按实验维度分组)
     "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
     "video_ctr_people_dimension_recall": "video_ctr_people_dimension_recall",  # 召回实验的视频ctr(人)
-    "video_ctr_people_by_dimension_recall": "video_ctr_people_by_dimension_recall",  # 召回实验的视频ctr(人，按meta_tag维度分组)
+    "video_ctr_people_by_dimension_recall": "video_ctr_people_by_dimension_recall",  # 召回实验的视频ctr(人，按实验维度分组)
     "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
     "video_ctr_rank": "video_ctr_rank",  # Rank实验的视频ctr
     "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
     "video_watch_average_of_duration_recall": "video_watch_average_of_duration_recall", # 召回实验下所有用户的平均观看时长
-    "video_watch_average_of_duration_by_dimension_recall": "video_watch_average_of_duration_by_dimension_recall", # 召回实验下所有用户的平均观看时长(按meta_tag维度分组)
+    "video_watch_average_of_duration_by_dimension_recall": "video_watch_average_of_duration_by_dimension_recall", # 召回实验下所有用户的平均观看时长(按实验维度分组)
     "video_watch_average_of_duration_rank": "video_watch_average_of_duration_rank", # Rank实验下所有用户的平均观看时长
     "immersive_retention_recall": "immersive_retention_recall",    # 沉浸流召回实验留存
-    "immersive_retention_by_dimension_recall": "immersive_retention_by_dimension_recall",    # 沉浸流召回实验留存(按meta_tag维度分组)
+    "immersive_retention_by_dimension_recall": "immersive_retention_by_dimension_recall",    # 沉浸流召回实验留存(按实验维度分组)
     "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
     "video_ctr_with_device_model_recall": "video_ctr_with_device_model_recall",  # 召回实验视频ctr（按机型）
     "video_ctr_with_device_model_rank": "video_ctr_with_device_model_rank",  # 召回实验视频ctr（按机型）
     "video_ctr_with_brand_recall": "video_ctr_with_brand_recall",  # 召回实验视频ctr（按品牌）
     "video_ctr_with_brand_rank": "video_ctr_with_brand_rank",  # Rank实验视频ctr（按品牌）
+    "video_watch_average_by_dimension_recall": "video_watch_average_by_dimension_recall",  # 召回实验平均观看次数(按实验维度分组)
 
 }
 
@@ -324,6 +326,9 @@ class AutoSyncMainDay:
 
             elif key == "video_ctr_with_brand_rank":
                 video_ctr_with_brand_rank.VideoCtrWithBrandRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_with_brand_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_rank"))
+
+            elif key == "video_watch_average_by_dimension_recall":
+                video_watch_average_by_dimension_recall.VideoWatchAverageByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_watch_average_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_by_dimension_recall"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

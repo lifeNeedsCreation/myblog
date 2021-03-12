@@ -67,6 +67,7 @@ from indicator_scripts import video_ctr_with_device_model_recall
 from indicator_scripts import video_ctr_with_device_model_rank
 from indicator_scripts import video_ctr_with_brand_recall
 from indicator_scripts import video_ctr_with_brand_rank
+from indicator_scripts import video_watch_average_by_dimension_recall
 
 # 指标列表
 KIND = {
@@ -108,24 +109,25 @@ KIND = {
     "cash_out": 1, # 统计打钱，按国家和天
     "video_ctr_recall": 1,  # 召回实验的视频ctr
     "video_ctr_dimension_recall": 1,  # 召回实验的视频ctr(按维度分组)
-    "video_ctr_by_dimension_recall": 1,  # 召回实验的视频ctr(按meta_tag维度分组)
+    "video_ctr_by_dimension_recall": 1,  # 召回实验的视频ctr(按实验维度分组)
     "video_ctr_recall_data_index0": 1,  # 召回实验的视频ctr(data_index=0)
     "video_ctr_people_recall": 1,    # 召回实验的视频ctr(人)
     "video_ctr_people_dimension_recall": 1,    # 召回实验的视频ctr(人，按维度分组)
-    "video_ctr_people_by_dimension_recall": 1,  # 召回实验的视频ctr(人，按meta_tag维度分组)
+    "video_ctr_people_by_dimension_recall": 1,  # 召回实验的视频ctr(人，按实验维度分组)
     "video_ctr_people_recall_data_index0": 1,    # 召回实验的视频ctr(人)(data_index=0)
     "video_ctr_rank": 1,  # Rank实验的视频ctr
     "video_ctr_people_rank": 1,    # Rank实验的视频ctr(人)
     "video_watch_average_of_duration_recall": 1,    # 召回实验下所有用户的平均观看时长
-    "video_watch_average_of_duration_by_dimension_recall": 1,   # 召回实验下所有用户的平均观看时长(按meta_tag维度分组)
+    "video_watch_average_of_duration_by_dimension_recall": 1,   # 召回实验下所有用户的平均观看时长(按实验维度分组)
     "video_watch_average_of_duration_rank": 1,    # Rank实验下所有用户的平均观看时长
     "immersive_retention_recall": 1,    # 沉浸流召回实验留存
-    "immersive_retention_by_dimension_recall": 1,   # 沉浸流召回实验留存(按meta_tag维度分组)
+    "immersive_retention_by_dimension_recall": 1,   # 沉浸流召回实验留存(按实验维度分组)
     "immersive_retention_rank": 1,    # 沉浸流Rank实验留存
     "video_ctr_with_device_model_recall": 1,    # 召回实验视频ctr（按机型）
     "video_ctr_with_device_model_rank": 1,    # Rank实验视频ctr（按机型）
     "video_ctr_with_brand_recall": 1,    # 召回实验视频ctr（按品牌）
     "video_ctr_with_brand_rank": 1,    # Rank实验视频ctr（按品牌）
+    "video_watch_average_by_dimension_recall": 1,   # 召回实验平均观看次数(按实验维度分组)
 }
 
 
@@ -334,6 +336,9 @@ if __name__ == "__main__":
 
         video_ctr_with_brand_rank.VideoCtrWithBrandRank(start_time, end_time, country_code, rank_experiment, "video_ctr_with_brand_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_rank"))
 
+        video_watch_average_by_dimension_recall.VideoWatchAverageByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_watch_average_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_by_dimension_recall"))
+
+
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
     elif kind == "ctr_people":
@@ -444,6 +449,8 @@ if __name__ == "__main__":
         video_ctr_with_brand_recall.VideoCtrWithBrandRecall(start_time, end_time, country_code, recall_experiment, "video_ctr_with_brand_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_recall"))
     elif kind == "video_ctr_with_brand_rank":
         video_ctr_with_brand_rank.VideoCtrWithBrandRank(start_time, end_time, country_code, rank_experiment, "video_ctr_with_brand_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_rank"))
+    elif kind == "video_watch_average_by_dimension_recall":
+        video_watch_average_by_dimension_recall.VideoWatchAverageByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_watch_average_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_by_dimension_recall"))
     else:
         pass
 
