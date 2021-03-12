@@ -1,29 +1,34 @@
+import os
+import sys
+
+DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(DIR)
+
+from redis_utils import event_redis_client
+
+name = 'buzzbreak-experiment-platform-config'
+
 # BuzzBreak 指标
+# 国家
+COUNTRY_CODE = event_redis_client.hget(name, 'country_code').decode().split(',')
 
-# 时间秒数
-ONE_MINUTE = 60
-ONE_HOUR = 3600
-ONE_DAY = 86400
-
-COUNTRY_CODE = ["ID", "PH", "TH", "AR", "BR"]
 # 新闻实验关注的位置
-PLACEMENT = ["home_tab_for_you", "news_detail_activity", "home_tab_home"]
+NEWS_PLACEMENT = event_redis_client.hget(name, 'news_placement').decode().split(',')
+
 # 视频实验关注的位置
-VIDEO_PLACEMENT = ["videos_tab_popular", "home_tab_for_you", "home_tab_for_you_video", "immersive_videos_tab_popular", "videos_tab_hiphop", "immersive_videos_tab_hiphop", "video_activity", "home_tab_home_video", "home_tab_home", "videos_tab_cute", "videos_tab_funny", "videos_tab_gaming", "immersive_videos_tab_home", "immersive_vertical_videos_tab_home", "immersive_vertical_videos_tab_for_you"]
+VIDEO_PLACEMENT = event_redis_client.hget(name, 'video_placement').decode().split(',')
+
+# 实验关注的维度
+INDICATOR_DIMENSION = event_redis_client.hget(name, 'memories_indicator_dimension').decode().split(',')
+
+# 召回实验名称
+RECALL_EXPERIMENT = event_redis_client.hget(name, 'recall_experiment_name').decode().split(',')
+
+# Rank实验名称
+RANKING_EXPERIMENT = event_redis_client.hget(name, 'ranking_experiment_name').decode().split(',')
 
 # 新视频按类型统计关注的位置
 VIDEO_KIND_PLACEMENT = ["videos_tab_popular", "home_tab_for_you"]
-
-
-INDICATOR_DIMENSION = ["control", "treatment", "treatment_1", "treatment_2", "video_multiple_features_v1", "video_multiple_features_v2", "video_multiple_features", "news_actions", "news_multiple_features", "news_multiple_features_v1", "news_multiple_features_v2", "immersive_video_multiple_features", "immersive_video_multiple_features_v1", "immersive_video_multiple_features_v2"]
-
-# 召回实验名称
-RECALL_EXPERIMENT = ["video_recall", "immersive_video_recall", "short_video_recall", "cold_start_video_recall", "immersive_video_recall_v1", "immersive_video_recall_v2", "category_funny_video_recall", "category_cute_video_recall", "category_gaming_video_recall"]
-
-# Rank实验名称
-RANK_EXPERIMENT = ["immersive_video_multiple_recommendation_model_v1", "immersive_video_multiple_recommendation_model_v2", "video_multiple_recommendation_model_v4"]
-
-
 
 # Katkat 指标
 
