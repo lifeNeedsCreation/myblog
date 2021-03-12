@@ -171,3 +171,6 @@ db.sqlite3
 
 # config
 /config/*
+
+# pipfile
+Pipfile
