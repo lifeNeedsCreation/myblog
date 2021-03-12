@@ -1,15 +1,15 @@
 with
     accounts as (select id, country_code from input.accounts where name is not null and country_code in ({country_code})),
 
-    video_watch_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, json_extract_array(meta_tag, "$.experiment") as experiment, json_extract_scalar(meta_tag, "$.recall_experiment_value") as dimension from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from stream_events.video_watch where created_at >= "{start_time}" and created_at < "{end_time}") where meta_tag is not null),
+    video_watch_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, json_extract_array(meta_tag, "$.experiment") as experiment, json_extract_scalar(meta_tag, "$.recall_experiment_value") as dimension, json_extract_scalar(data, "$.id") as video_id from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from stream_events.video_watch where created_at >= "{start_time}" and created_at < "{end_time}") where meta_tag is not null),
 
-    video_watch as (select account_id, placement, replace(experiment, '"', '') as experiment, replace(dimension, '"', '') as dimension from video_watch_info as v cross join unnest(v.experiment) as experiment where dimension is not null),
+    video_watch as (select distinct account_id, placement, replace(experiment, '"', '') as experiment, replace(dimension, '"', '') as dimension, video_id from video_watch_info as v cross join unnest(v.experiment) as experiment where dimension is not null),
 
-    video_watch_update as (select account_id, experiment, dimension, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch where experiment in ({experiments})),
+    video_watch_update as (select account_id, experiment, dimension, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch where experiment in ({experiments})),
 
-    account_video_watch_update as (select country_code, account_id, placement, experiment, dimension from video_watch_update inner join accounts on account_id = id),
+    account_video_watch_update as (select country_code, account_id, placement, experiment, dimension, video_id from video_watch_update inner join accounts on account_id = id),
 
-    video_watch_count as (select country_code, placement, experiment, dimension, count(*) as watch_num from account_video_watch_update group by country_code, placement, experiment, dimension),
+    video_watch_count as (select country_code, placement, experiment, dimension, count(video_id) as watch_num from account_video_watch_update group by country_code, placement, experiment, dimension),
 
     video_impression_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, json_extract_array(meta_tag, "$.experiment") as experiment, json_extract_scalar(meta_tag, "$.recall_experiment_value") as dimension from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from stream_events.video_impression where created_at >= "{start_time}" and created_at < "{end_time}") where meta_tag is not null),
 
