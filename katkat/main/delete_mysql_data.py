@@ -66,7 +66,7 @@ if __name__ == "__main__":
         sql_str = "DELETE FROM " + table_name + " where create_time<'" + limit_time.strftime("%Y-%m-%d %H:%M:%S") + "'"
         try:
             cursor.execute(sql_str)
-            cursor.commit()
+            katkat_mysql_client.client.commit()
             logger.info("limit_time={} delete katkat tabel {} success".format(limit_time, table_name))
         except Exception as e:
             logger.exception("limit_time={} delete katkat tabel {} err msg".format(limit_time, table_name))
