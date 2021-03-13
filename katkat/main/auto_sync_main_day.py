@@ -83,7 +83,7 @@ class AutoSyncMainDay:
                 cash_out.CashOut(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "all_users_ad_impression_avg":
-                all_users_ad_impression_avg.AdImpressionAvg(start_time, end_time, self.ad_placement, "all_users_ad_impression_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_ad_impression_avg"))
+                all_users_ad_impression_avg.AllUsersAdImpressionAvg(start_time, end_time, self.ad_placement, "all_users_ad_impression_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_ad_impression_avg"))
 
             elif key == "all_users_video_watch_average":
                 all_users_video_watch_average.AllUsersVideoWatchAverage(start_time, end_time, self.video_placement, "all_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average"))
