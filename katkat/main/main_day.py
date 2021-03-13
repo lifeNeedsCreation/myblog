@@ -22,6 +22,7 @@ from indicator_scripts import cash_out
 from indicator_scripts import all_users_ad_impression_avg
 from indicator_scripts import all_users_video_watch_average
 from indicator_scripts import all_users_video_watch_average_of_duration
+from indicator_scripts import ad_video_impression_ratio
 
 # 指标列表
 KIND = {
@@ -36,6 +37,7 @@ KIND = {
     "all_users_ad_impression_avg": 1,     # 所有用户不同位置广告的平均曝光次数
     "all_users_video_watch_average": 1, # 所有用户视频不同位置平均观看次数
     "all_users_video_watch_average_of_duration": 1, # 所有用户不同位置的平均观看时长
+    "ad_video_impression_ratio": 1, # 沉浸流广告与视频曝光比率
 }
 
 
@@ -129,6 +131,7 @@ if __name__ == "__main__":
     #     print('参数 %s 为：%s' % (i + 1, args[i]))
 
     # 开始数据指标统计
+    country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
     channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
     video_placement = "'" + "','".join(constants.KATKAT_VIDEO_PLACEMENT) + "'"
     ad_placement = "'" + "','".join(constants.KATKAT_AD_PLACEMENT) + "'"
@@ -153,6 +156,8 @@ if __name__ == "__main__":
 
         all_users_video_watch_average_of_duration.AllUsersVideoWatchAverageOfDuration(start_time, end_time, video_placement, "all_users_video_watch_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average_of_duration"))
 
+        ad_video_impression_ratio.AdVideoImpressionRatio(start_time, end_time, country_code, "ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ad_video_impression_ratio"))
+
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
     elif kind == "new_users_channels_average_of_duration":
@@ -173,6 +178,8 @@ if __name__ == "__main__":
         all_users_video_watch_average.AllUsersVideoWatchAverage(start_time, end_time, video_placement, "all_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average"))
     elif kind == "all_users_video_watch_average_of_duration":
         all_users_video_watch_average_of_duration.AllUsersVideoWatchAverageOfDuration(start_time, end_time, video_placement, "all_users_video_watch_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average_of_duration"))
+    elif kind == "ad_video_impression_ratio":
+        ad_video_impression_ratio.AdVideoImpressionRatio(start_time, end_time, country_code, "ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ad_video_impression_ratio"))
     else:
         pass
 

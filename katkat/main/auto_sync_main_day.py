@@ -28,6 +28,7 @@ from indicator_scripts import cash_out
 from indicator_scripts import all_users_ad_impression_avg
 from indicator_scripts import all_users_video_watch_average
 from indicator_scripts import all_users_video_watch_average_of_duration
+from indicator_scripts import ad_video_impression_ratio
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -45,10 +46,12 @@ KIND = {
     "all_users_all_users_ad_impression_avg": "all_users_ad_impression_avg",   # 所有用户不同位置广告的平均曝光次数
     "all_users_video_watch_average": "all_users_video_watch_average",    # 所有用户不同位置的平均观看次数
     "all_users_video_watch_average_of_duration": "all_users_video_watch_average_of_duration",     # 新用户不同placement的平均观看时长(video_watch)
+    "ad_video_impression_ratio": "ad_video_impression_ratio",     # 沉浸流广告与视频曝光比率
 }
 
 class AutoSyncMainDay:
     def __init__(self, logger):
+        self.country_code = "'" + "','".join(constants.COUNTRY_CODE) + "'"
         self.video_placement = "'" + "','".join(constants.KATKAT_VIDEO_PLACEMENT) + "'"
         self.ad_placement = "'" + "','".join(constants.KATKAT_AD_PLACEMENT) + "'"
         self.channel = "'" + "','".join(constants.KATKAT_VIDEO_CHANNEL) + "'"
@@ -90,6 +93,9 @@ class AutoSyncMainDay:
 
             elif key == "all_users_video_watch_average_of_duration":
                 all_users_video_watch_average_of_duration.AllUsersVideoWatchAverageOfDuration(start_time, end_time, self.video_placement, "all_users_video_watch_average_of_duration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average_of_duration"))
+
+            elif key == "ad_video_impression_ratio":
+                ad_video_impression_ratio.AdVideoImpressionRatio(start_time, end_time, self.country_code, "ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ad_video_impression_ratio"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
