@@ -18,7 +18,7 @@ class AdVideoImpressionRatio(object):
         self.country_code = country_code
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "placement", "ad_impression_num", "video_impression_num", "ad_video_impression_ratio"]
+        self.fields = ["country_code", "placement", "date" "ad_impression_num", "video_impression_num", "ad_video_impression_ratio"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
