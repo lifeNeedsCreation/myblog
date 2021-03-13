@@ -13,4 +13,4 @@ with
 
     video_impression_count as (select country_code, placement, count(*) as video_impression_num from accounts_video_impression group by country_code, placement)
 
-    select v.country_code as country_code, v.placement as placement, ifnull(ad_impression_num, 0) as ad_impression_num, video_impression_num, round(ifnull(ad_impression_num, 0)/video_impression_num, 4) as ad_video_impression_ratio from video_impression_count as v left join ad_impression_count as a on v.country_code = a.country_code and v.placement = a.placement
+    select v.country_code as country_code, v.placement as placement, extract(date from timestamp"{start_time}") as date, ifnull(ad_impression_num, 0) as ad_impression_num, video_impression_num, round(ifnull(ad_impression_num, 0)/video_impression_num, 4) as ad_video_impression_ratio from video_impression_count as v left join ad_impression_count as a on v.country_code = a.country_code and v.placement = a.placement
