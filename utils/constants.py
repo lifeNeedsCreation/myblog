@@ -10,22 +10,22 @@ name = 'buzzbreak-experiment-platform-config'
 
 # BuzzBreak 指标
 # 国家
-COUNTRY_CODE = event_redis_client.hget(name, 'country_code').decode().split(',')
+COUNTRY_CODE = event_redis_client.hget(name, 'country_code').decode().split(', ')
 
 # 新闻实验关注的位置
-NEWS_PLACEMENT = event_redis_client.hget(name, 'news_placement').decode().split(',')
+NEWS_PLACEMENT = event_redis_client.hget(name, 'news_placement').decode().split(', ')
 
 # 视频实验关注的位置
-VIDEO_PLACEMENT = event_redis_client.hget(name, 'video_placement').decode().split(',')
+VIDEO_PLACEMENT = event_redis_client.hget(name, 'video_placement').decode().split(', ')
 
 # 实验关注的维度
-INDICATOR_DIMENSION = event_redis_client.hget(name, 'memories_indicator_dimension').decode().split(',')
+INDICATOR_DIMENSION = event_redis_client.hget(name, 'memories_indicator_dimension').decode().split(', ')
 
 # 召回实验名称
-RECALL_EXPERIMENT = event_redis_client.hget(name, 'recall_experiment_name').decode().split(',')
+RECALL_EXPERIMENT = event_redis_client.hget(name, 'recall_experiment_name').decode().split(', ')
 
 # Rank实验名称
-RANKING_EXPERIMENT = event_redis_client.hget(name, 'ranking_experiment_name').decode().split(',')
+RANKING_EXPERIMENT = event_redis_client.hget(name, 'ranking_experiment_name').decode().split(', ')
 
 # 新视频按类型统计关注的位置
 VIDEO_KIND_PLACEMENT = ["videos_tab_popular", "home_tab_for_you"]
