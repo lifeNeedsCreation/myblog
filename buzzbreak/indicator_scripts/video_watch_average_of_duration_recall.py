@@ -25,6 +25,7 @@ class VideoWatchAverageOfDurationRecall(object):
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
         result = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: {}\n".format(result))
         dict_info = {field: [] for field in self.fields}
         for index, row in result.iterrows():
             for field in self.fields:

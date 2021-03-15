@@ -22,6 +22,7 @@ class NewVideoClickCtrByType:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         result = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: {}\n".format(result))
         result_num = {}
         for index, row in result.iterrows():
             category = row["category"]

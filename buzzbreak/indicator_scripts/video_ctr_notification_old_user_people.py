@@ -28,6 +28,7 @@ class VideoCtrNotificationOldUserPeopleData(object):
         """
         res_num = {}
         result = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: {}\n".format(result))
         for index, row in result.iterrows():
             treatment_name = row["treatment_name"]
             country_code = row["country_code"]

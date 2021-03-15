@@ -30,6 +30,7 @@ class NewUserVideoWatchAverageData(object):
         : return result_num : 字典，{'country_code&&placement&&key&&value': num}
         """
         result = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: {}\n".format(result))
         result_num = {}
         for index, row in result.iterrows():
             country_code = row['country_code']

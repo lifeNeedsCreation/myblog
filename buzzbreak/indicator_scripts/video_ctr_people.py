@@ -28,6 +28,7 @@ class VideoCTRPeopleData(object):
     def get_data(self, sql):
         res_num = {}
         bq_job = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: \n{}".format(bq_job))
         for index, row in bq_job.iterrows():
             placement = row["placement"]
             key = row["key"]

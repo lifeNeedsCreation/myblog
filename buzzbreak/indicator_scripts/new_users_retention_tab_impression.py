@@ -20,6 +20,7 @@ class NewUsersRetentionTabImpression:
     # 查询bigquery，并解析组装数据
     def get_data(self, sql):
         df_result = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: \n{}".format(df_result))
         fields = [
             'country_code',
             'initial_date',

@@ -29,6 +29,7 @@ class NewsCtrNotificationOldUserData(object):
         """
         res_num = {}
         bq_job = buzzbreak_bigquery_client.query(sql).to_dataframe()
+        self.logger.info("result: \n{}".format(bq_job))
         for index, row in bq_job.iterrows():
             treatment_name = row["treatment_name"]
             country_code = row["country_code"]
