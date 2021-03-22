@@ -44,7 +44,7 @@ KIND = {
     "new_users_channels_retention": "new_users_channels_retention",  # 新用户不同channel的留存
     "new_users_same_channels_retention": "new_users_same_channels_retention",  # 新用户相同channel的留存
     "cash_out": "cash_out",  # 统计打钱，按国家和天
-    "all_users_all_users_ad_impression_avg": "all_users_ad_impression_avg",   # 所有用户不同位置广告的平均曝光次数
+    "all_users_ad_impression_avg": "all_users_ad_impression_avg",   # 所有用户不同位置广告的平均曝光次数
     "all_users_video_watch_average": "all_users_video_watch_average",    # 所有用户不同位置的平均观看次数
     "all_users_video_watch_average_of_duration": "all_users_video_watch_average_of_duration",     # 新用户不同placement的平均观看时长(video_watch)
     "ad_video_impression_ratio": "ad_video_impression_ratio",     # 沉浸流广告与视频曝光比率
