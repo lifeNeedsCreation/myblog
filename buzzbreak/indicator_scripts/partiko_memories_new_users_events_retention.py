@@ -60,7 +60,7 @@ class PartikoMemoriesNewUsersEventsRetention:
 
             account_profiles as (select * from partiko.account_profiles where mac_address is not null),
 
-            memories as (select * from partiko.memories where key like 'experiment_%' and value in ({self.indicator_dimension}) and updated_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and updated_at < '{end_time}'),
+            memories as (select * from partiko.memories where key like 'experiment_%' and value in ({self.indicator_dimension})),
 
             app_open as (select * from stream_events.app_open where created_at > timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < '{end_time}'),
 
