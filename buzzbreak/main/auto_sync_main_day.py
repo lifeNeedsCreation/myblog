@@ -76,6 +76,7 @@ from indicator_scripts import video_ctr_with_brand_recall
 from indicator_scripts import video_ctr_with_brand_rank
 from indicator_scripts import video_watch_average_by_dimension_recall
 from indicator_scripts import video_watch_average_rank
+from indicator_scripts import posts
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -142,7 +143,7 @@ KIND = {
     "video_ctr_with_brand_rank": "video_ctr_with_brand_rank",  # Rank实验视频ctr（按品牌）
     "video_watch_average_by_dimension_recall": "video_watch_average_by_dimension_recall",  # 召回实验平均观看次数(按实验维度分组)
     "video_watch_average_rank": "video_watch_average_rank",  # Rank实验平均观看次数(按实验策略分组)
-
+    "posts": "posts",   # 发帖数量统计
 }
 
 class AutoSyncMainDay:
@@ -334,6 +335,9 @@ class AutoSyncMainDay:
 
             elif key == "video_watch_average_rank":
                 video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, self.country_code, self.rank_experiment, "video_watch_average_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_rank"))
+
+            elif key == "posts":
+                posts.Posts(start_time, end_time, self.country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

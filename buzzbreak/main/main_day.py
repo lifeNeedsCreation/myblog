@@ -69,6 +69,7 @@ from indicator_scripts import video_ctr_with_brand_recall
 from indicator_scripts import video_ctr_with_brand_rank
 from indicator_scripts import video_watch_average_by_dimension_recall
 from indicator_scripts import video_watch_average_rank
+from indicator_scripts import posts
 
 # 指标列表
 KIND = {
@@ -130,6 +131,7 @@ KIND = {
     "video_ctr_with_brand_rank": 1,    # Rank实验视频ctr（按品牌）
     "video_watch_average_by_dimension_recall": 1,   # 召回实验平均观看次数(按实验维度分组)
     "video_watch_average_rank": 1,   # Rank实验平均观看次数(按实验策略分组)
+    "posts": 1,     # 发帖数量统计
 }
 
 
@@ -342,6 +344,8 @@ if __name__ == "__main__":
 
         video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, country_code, rank_experiment, "video_watch_average_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_rank"))
 
+        posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -457,6 +461,8 @@ if __name__ == "__main__":
         video_watch_average_by_dimension_recall.VideoWatchAverageByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_watch_average_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_by_dimension_recall"))
     elif kind == "video_watch_average_rank":
         video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, country_code, rank_experiment, "video_watch_average_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_rank"))
+    elif kind == "posts":
+        posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
     else:
         pass
 
