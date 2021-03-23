@@ -49,7 +49,7 @@ class Posts(object):
             for i in range(len(posts_data[self.fields[0]])):
                 insert_sql += '('
                 for field in self.fields:
-                    insert_sql += f''{posts_data[field][i]}', '
-                insert_sql += f''{now_time_utc}'),'
+                    insert_sql += f'"{posts_data[field][i]}", '
+                insert_sql += f'"{now_time_utc}"),'
             insert_sql = insert_sql[:-1]
             katkat_mysql_client.execute_sql(insert_sql)
