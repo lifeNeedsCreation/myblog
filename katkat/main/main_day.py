@@ -24,6 +24,8 @@ from indicator_scripts import all_users_video_watch_average
 from indicator_scripts import all_users_video_watch_average_of_duration
 from indicator_scripts import ad_video_impression_ratio
 from indicator_scripts import total_ad_video_impression_ratio
+from indicator_scripts import posts
+
 
 # 指标列表
 KIND = {
@@ -40,6 +42,7 @@ KIND = {
     "all_users_video_watch_average_of_duration": 1, # 所有用户不同位置的平均观看时长
     "ad_video_impression_ratio": 1, # 沉浸流广告与视频曝光比率
     "total_ad_video_impression_ratio": 1, # 广告与视频曝光总比率
+    "posts": 1,     # 发帖数量统计
 }
 
 
@@ -161,6 +164,8 @@ if __name__ == "__main__":
         ad_video_impression_ratio.AdVideoImpressionRatio(start_time, end_time, country_code, "ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ad_video_impression_ratio"))
 
         total_ad_video_impression_ratio.TotalAdVideoImpressionRatio(start_time, end_time, country_code, "total_ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "total_ad_video_impression_ratio"))
+        
+        posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
 
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
@@ -186,6 +191,8 @@ if __name__ == "__main__":
         ad_video_impression_ratio.AdVideoImpressionRatio(start_time, end_time, country_code, "ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ad_video_impression_ratio"))
     elif kind == "total_ad_video_impression_ratio":
         total_ad_video_impression_ratio.TotalAdVideoImpressionRatio(start_time, end_time, country_code, "total_ad_video_impression_ratio", logger).compute_data("{}/SQL/{}.sql".format(DIR, "total_ad_video_impression_ratio"))
+    elif kind == "posts":
+        posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
     else:
         pass
 
