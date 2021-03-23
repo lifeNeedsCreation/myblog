@@ -81,7 +81,7 @@ class PartikoMemoriesNewUsersEventsRetention:
             initial_event_count as (select count(distinct id) as initial_users,country_code,key,value,initial_date,event as initial_event from initial_events group by country_code,initial_date,initial_event,key,value),
             retention_event_count as (select count(distinct id) as retention_users,country_code,key,value,initial_date,retention_date,initial_event,retention_event,date_diff from retention_events group by country_code,initial_date,retention_date,initial_event,retention_event,date_diff,key,value)
 
-            select i.country_code,i.initial_date,i.key,i.value,retention_date,date_diff,i.initial_event,retention_event,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_event_count as i left join retention_event_count as r on i.country_code=r.country_code and i.initial_date=r.initial_date and i.initial_event=r.initial_event and i.key=r.key and i.value=r.value where date_diff is not null
+            select i.country_code,i.initial_date,i.key,i.value,retention_date,date_diff,i.initial_event,retention_event,initial_users,ifnull(retention_users,0) as retention_users,round(ifnull(retention_users,0)/initial_users, 4) as retention_rate from initial_event_count as i left join retention_event_count as r on i.country_code=r.country_code and i.initial_date=r.initial_date and i.initial_event=r.initial_event and i.key=r.key and i.value=r.value where date_diff is not null and date_diff > 0
             '''
         retention_data = self.get_data(query)
         # 结果数据存入数据库
