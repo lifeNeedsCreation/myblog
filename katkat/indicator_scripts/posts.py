@@ -12,7 +12,7 @@ class Posts(object):
     : param table_name：计算结果存的表
     '''
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, table_name, logger=None):
+    def __init__(self, start_time, end_time, country_code, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
