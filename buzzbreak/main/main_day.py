@@ -70,6 +70,8 @@ from indicator_scripts import video_ctr_with_brand_rank
 from indicator_scripts import video_watch_average_by_dimension_recall
 from indicator_scripts import video_watch_average_rank
 from indicator_scripts import posts
+from indicator_scripts import video_retention_recall
+from indicator_scripts import video_retention_rank
 
 # 指标列表
 KIND = {
@@ -132,6 +134,8 @@ KIND = {
     "video_watch_average_by_dimension_recall": 1,   # 召回实验平均观看次数(按实验维度分组)
     "video_watch_average_rank": 1,   # Rank实验平均观看次数(按实验策略分组)
     "posts": 1,     # 发帖数量统计
+    "video_retention_recall": 1,    # 召回实验视频留存(按实验策略分组)
+    "video_retention_rank": 1,      # Rank实验视频留存(按实验策略分组)
 }
 
 
@@ -346,6 +350,10 @@ if __name__ == "__main__":
 
         posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
 
+        video_retention_recall.VideoRetentionRecall(start_time, end_time, country_code, recall_experiment, "video_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall"))
+
+        video_retention_rank.VideoRetentionRank(start_time, end_time, country_code, rank_experiment, "video_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rank"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -463,6 +471,10 @@ if __name__ == "__main__":
         video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, country_code, rank_experiment, "video_watch_average_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_rank"))
     elif kind == "posts":
         posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
+    elif kind == "video_retention_recall":
+        video_retention_recall.VideoRetentionRecall(start_time, end_time, country_code, recall_experiment, "video_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall"))
+    elif kind == "video_retention_rank":
+        video_retention_rank.VideoRetentionRank(start_time, end_time, country_code, rank_experiment, "video_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rank"))
     else:
         pass
 
