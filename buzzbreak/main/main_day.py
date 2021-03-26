@@ -43,7 +43,7 @@ from indicator_scripts import partiko_memories_new_user_user_time_average_of_dur
 from indicator_scripts import new_user_news_ctr_people
 from indicator_scripts import new_user_video_ctr_people
 from indicator_scripts import push_retention
-from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
+# from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
 from indicator_scripts import new_video_click_ctr_by_type
 from indicator_scripts import cash_out
 from indicator_scripts import video_ctr_recall
@@ -108,7 +108,7 @@ KIND = {
     "new_user_news_ctr_people": 1,  # 新用户 新闻 click_user_ratio
     "new_user_video_ctr_people": 1,  # 新用户 视频 click_user_ratio
     "push_tention": 1,
-    "partiko_experiment_new_users_retention_tab_impression": 1,     # partiko.experiment 实验中 新用户在各个 tab 的留存
+    # "partiko_experiment_new_users_retention_tab_impression": 1,     # partiko.experiment 实验中 新用户在各个 tab 的留存
     "new_video_click_ctr_by_type": 1,   # 各类新视频点击率、点击数及曝光数
     "cash_out": 1, # 统计打钱，按国家和天
     "video_ctr_recall": 1,  # 召回实验的视频ctr
@@ -278,7 +278,7 @@ if __name__ == "__main__":
 
         new_users_events_retention.NewUsersEventsRetention(start_time, end_time, 'new_users_events_retention', logger).compute_data()
         
-        partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
+        # partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
 
         partiko_experiment_average_of_invites.PartikoExperimentAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_experiment_average_of_invites', logger).compute_data()
         
@@ -296,7 +296,7 @@ if __name__ == "__main__":
 
         new_users_partiko_memories_average_of_invites.NewUsersPartikoMemoriesAverageOfInvites(start_time, end_time, indicator_dimension, 'new_users_partiko_memories_average_of_invites', logger).compute_data()
 
-        partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
+        # partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'partiko_experiment_new_users_retention_tab_impression', logger).compute_data()
 
         old_users_events_retention.OldUsersEventsRetention(start_time, end_time, 'old_users_events_retention', logger).compute_data()
 
@@ -419,8 +419,8 @@ if __name__ == "__main__":
         new_user_video_ctr_people.NewUserVideoCTRPeopleData(start_time, end_time, country_code, video_placement, indicator_dimension, "day_new_user_video_ctr_people", logger).compute_data()
     elif kind == "push_tention":
         push_retention.PushRetentionData(start_time, end_time, country_code, indicator_dimension, "push_tention", logger).compute_data()
-    elif kind == "partiko_experiment_new_users_retention_tab_impression":
-        partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, "partiko_experiment_new_users_retention_tab_impression", logger).compute_data()
+    # elif kind == "partiko_experiment_new_users_retention_tab_impression":
+    #     partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, "partiko_experiment_new_users_retention_tab_impression", logger).compute_data()
     elif kind == "new_video_click_ctr_by_type":
         new_video_click_ctr_by_type.NewVideoClickCtrByType(start_time, end_time, video_kind_placement, "new_video_click_ctr_by_type", logger).compute_data()
     elif kind == "cash_out":

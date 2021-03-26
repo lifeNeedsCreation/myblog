@@ -52,7 +52,7 @@ from indicator_scripts import partiko_memories_new_user_user_time_average_of_dur
 from indicator_scripts import experiment_immersive_page_duration_avg
 from indicator_scripts import new_user_news_ctr_people
 from indicator_scripts import new_user_video_ctr_people
-from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
+# from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
 from indicator_scripts import cash_out
 from indicator_scripts import video_ctr_recall
 from indicator_scripts import video_ctr_dimension_recall
@@ -121,7 +121,7 @@ KIND = {
     "experiment_immersive_page_duration_avg":"experiment_immersive_page_duration_avg",   # 沉浸流页面用户平局停留时长
     "new_user_news_ctr_people": "day_new_user_news_ctr_people",  # 新用户 新闻 click_user_ratio
     "new_user_video_ctr_people": "day_new_user_video_ctr_people",  # 新用户 视频 click_user_ratio
-    "partiko_experiment_new_users_retention_tab_impression": "partiko_experiment_new_users_retention_tab_impression",     # partiko.experiment 实验中 新用户在各个 tab 的留存
+    # "partiko_experiment_new_users_retention_tab_impression": "partiko_experiment_new_users_retention_tab_impression",     # partiko.experiment 实验中 新用户在各个 tab 的留存
     "cash_out": "cash_out", # 统计打钱，按国家和天
     "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
     "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
@@ -268,8 +268,8 @@ class AutoSyncMainDay:
             elif key == "new_user_video_ctr_people":
                 new_user_video_ctr_people.NewUserVideoCTRPeopleData(start_time, end_time, self.country_code, self.video_placement, self.indicator_dimension, value, self.logger).compute_data()
                 
-            elif key == "partiko_experiment_new_users_retention_tab_impression":
-                partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
+            # elif key == "partiko_experiment_new_users_retention_tab_impression":
+            #     partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
 
             elif key == "cash_out":
                 cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
