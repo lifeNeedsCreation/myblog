@@ -79,6 +79,8 @@ from indicator_scripts import video_watch_average_rank
 from indicator_scripts import posts
 from indicator_scripts import video_retention_recall
 from indicator_scripts import video_retention_rank
+from indicator_scripts import video_average_of_total_duration_recall
+from indicator_scripts import video_average_of_total_duration_rank
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -148,6 +150,8 @@ KIND = {
     "posts": "posts",   # 发帖数量统计
     "video_retention_recall": "video_retention_recall",     # 召回实验视频留存(按实验策略分组)
     "video_retention_rank": "video_retention_rank",     # Rank实验视频留存(按实验策略分组)
+    "video_average_of_total_duration_recall": "video_average_of_total_duration_recall",     # 召回实验用户平均总时长
+    "video_average_of_total_duration_rank": "video_average_of_total_duration_rank",     # Rank实验用户平均总时长
 }
 
 class AutoSyncMainDay:
@@ -348,6 +352,12 @@ class AutoSyncMainDay:
 
             elif key == "video_retention_rank":
                 video_retention_rank.VideoRetentionRank(start_time, end_time, self.country_code, self.rank_experiment, "video_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rank"))
+
+            elif key == "video_average_of_total_duration_recall":
+                video_average_of_total_duration_recall.VideoAverageOfTotalDurationRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_average_of_total_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_recall"))
+
+            elif key == "video_average_of_total_duration_rank":
+                video_average_of_total_duration_rank.VideoAverageOfTotalDurationRank(start_time, end_time, self.country_code, self.rank_experiment, "video_average_of_total_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_rank"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
