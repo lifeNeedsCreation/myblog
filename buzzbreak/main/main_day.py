@@ -74,6 +74,7 @@ from indicator_scripts import video_retention_recall
 from indicator_scripts import video_retention_rank
 from indicator_scripts import video_average_of_total_duration_recall
 from indicator_scripts import video_average_of_total_duration_rank
+from indicator_scripts import video_average_of_total_duration_by_dimension_recall
 
 # 指标列表
 KIND = {
@@ -140,6 +141,7 @@ KIND = {
     "video_retention_rank": 1,      # Rank实验视频留存(按实验策略分组)
     "video_average_of_total_duration_recall": 1,    # 召回实验用户平均总时长
     "video_average_of_total_duration_rank": 1,    # Rank实验用户平均总时长
+    "video_average_of_total_duration_by_dimension_recall": 1,   # 召回实验用户平均总时长(按实验维度分组)
 }
 
 
@@ -362,6 +364,8 @@ if __name__ == "__main__":
 
         video_average_of_total_duration_rank.VideoAverageOfTotalDurationRank(start_time, end_time, country_code, rank_experiment, "video_average_of_total_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_rank"))
 
+        video_average_of_total_duration_by_dimension_recall.VideoAverageOfTotalDurationByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_average_of_total_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_by_dimension_recall"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -487,6 +491,8 @@ if __name__ == "__main__":
         video_average_of_total_duration_recall.VideoAverageOfTotalDurationRecall(start_time, end_time, country_code, recall_experiment, "video_average_of_total_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_recall"))
     elif kind == "video_average_of_total_duration_rank":
         video_average_of_total_duration_rank.VideoAverageOfTotalDurationRank(start_time, end_time, country_code, rank_experiment, "video_average_of_total_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_rank"))
+    elif kind == "video_average_of_total_duration_by_dimension_recall":
+        video_average_of_total_duration_by_dimension_recall.VideoAverageOfTotalDurationByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_average_of_total_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_by_dimension_recall"))
     else:
         pass
 
