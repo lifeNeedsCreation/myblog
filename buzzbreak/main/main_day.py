@@ -75,6 +75,9 @@ from indicator_scripts import video_retention_rank
 from indicator_scripts import video_average_of_total_duration_recall
 from indicator_scripts import video_average_of_total_duration_rank
 from indicator_scripts import video_average_of_total_duration_by_dimension_recall
+from indicator_scripts import video_ctr_without_experiments
+from indicator_scripts import video_ctr_people_without_experiments
+from indicator_scripts import video_watch_average_of_duration_without_experiments
 
 # 指标列表
 KIND = {
@@ -142,6 +145,9 @@ KIND = {
     "video_average_of_total_duration_recall": 1,    # 召回实验用户平均总时长
     "video_average_of_total_duration_rank": 1,    # Rank实验用户平均总时长
     "video_average_of_total_duration_by_dimension_recall": 1,   # 召回实验用户平均总时长(按实验维度分组)
+    "video_ctr_without_experiments": 1,     # 视频ctr(按次数，不带实验)
+    "video_ctr_people_without_experiments": 1,     # 视频ctr(按人数，不带实验)
+    "video_watch_average_of_duration_without_experiments": 1,       # 用户平均观看时长(不带实验)
 }
 
 
@@ -366,6 +372,12 @@ if __name__ == "__main__":
 
         video_average_of_total_duration_by_dimension_recall.VideoAverageOfTotalDurationByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_average_of_total_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_by_dimension_recall"))
 
+        video_ctr_without_experiments.VideoCtrWithoutExperiments(start_time, end_time, country_code, "video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_without_experiments"))
+
+        video_ctr_people_without_experiments.VideoCtrPeopleWithoutExperiments(start_time, end_time, country_code, "video_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_without_experiments"))
+
+        video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -493,6 +505,12 @@ if __name__ == "__main__":
         video_average_of_total_duration_rank.VideoAverageOfTotalDurationRank(start_time, end_time, country_code, rank_experiment, "video_average_of_total_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_rank"))
     elif kind == "video_average_of_total_duration_by_dimension_recall":
         video_average_of_total_duration_by_dimension_recall.VideoAverageOfTotalDurationByDimensionRecall(start_time, end_time, country_code, recall_experiment, "video_average_of_total_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_by_dimension_recall"))
+    elif kind == "video_ctr_without_experiments":
+        video_ctr_without_experiments.VideoCtrWithoutExperiments(start_time, end_time, country_code, "video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_without_experiments"))
+    elif kind == "video_ctr_people_without_experiments":
+        video_ctr_people_without_experiments.VideoCtrPeopleWithoutExperiments(start_time, end_time, country_code, "video_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_without_experiments"))
+    elif kind == "video_watch_average_of_duration_without_experiments":
+        video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
     else:
         pass
 
