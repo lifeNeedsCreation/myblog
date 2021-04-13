@@ -31,6 +31,7 @@ from indicator_scripts import all_users_video_watch_average_of_duration
 from indicator_scripts import ad_video_impression_ratio
 from indicator_scripts import total_ad_video_impression_ratio
 from indicator_scripts import posts
+from indicator_scripts import user_total_duration_average
 
 
 # 新用户指标
@@ -52,6 +53,7 @@ KIND = {
     "ad_video_impression_ratio": "ad_video_impression_ratio",     # 沉浸流广告与视频曝光比率
     "total_ad_video_impression_ratio": "total_ad_video_impression_ratio", # 广告与视频曝光总比率
     "posts": "posts",   # 发帖数量统计
+    "user_total_duration_average": "user_total_duration_average",   # 各国家用户平均使用app时间
 }
 
 class AutoSyncMainDay:
@@ -107,6 +109,9 @@ class AutoSyncMainDay:
 
             elif key == "posts":
                 posts.Posts(start_time, end_time, self.country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
+
+            elif key == "user_total_duration_average":
+                user_total_duration_average.UserTotalDurationAverage(start_time, end_time, self.country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
