@@ -78,6 +78,7 @@ from indicator_scripts import video_average_of_total_duration_by_dimension_recal
 from indicator_scripts import video_ctr_without_experiments
 from indicator_scripts import video_ctr_people_without_experiments
 from indicator_scripts import video_watch_average_of_duration_without_experiments
+from indicator_scripts import user_total_duration_average
 
 # 指标列表
 KIND = {
@@ -148,6 +149,7 @@ KIND = {
     "video_ctr_without_experiments": 1,     # 视频ctr(按次数，不带实验)
     "video_ctr_people_without_experiments": 1,     # 视频ctr(按人数，不带实验)
     "video_watch_average_of_duration_without_experiments": 1,       # 用户平均观看时长(不带实验)
+    "user_total_duration_average": 1,   # 各国家用户平均使用app时间
 }
 
 
@@ -378,6 +380,8 @@ if __name__ == "__main__":
 
         video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
 
+        user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -511,6 +515,8 @@ if __name__ == "__main__":
         video_ctr_people_without_experiments.VideoCtrPeopleWithoutExperiments(start_time, end_time, country_code, "video_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_without_experiments"))
     elif kind == "video_watch_average_of_duration_without_experiments":
         video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
+    elif kind == "user_total_duratino_average":
+        user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
     else:
         pass
 

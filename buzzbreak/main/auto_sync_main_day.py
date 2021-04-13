@@ -85,6 +85,7 @@ from indicator_scripts import video_average_of_total_duration_by_dimension_recal
 from indicator_scripts import video_ctr_without_experiments
 from indicator_scripts import video_ctr_people_without_experiments
 from indicator_scripts import video_watch_average_of_duration_without_experiments
+from indicator_scripts improt user_total_duratino_average
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -160,6 +161,7 @@ KIND = {
     "video_ctr_without_experiments": "video_ctr_without_experiments",     # 视频ctr(按次数，不带实验)
     "video_ctr_people_without_experiments": "video_ctr_people_without_experiments",     # 视频ctr(按人数，不带实验)
     "video_watch_average_of_duration_without_experiments": "video_watch_average_of_duration_without_experiments",       # 用户平均观看时长(不带实验)
+    "user_total_duration_average": "user_total_duration_average",   # 各国家用户平均使用app时间
 }
 
 class AutoSyncMainDay:
@@ -378,6 +380,9 @@ class AutoSyncMainDay:
             
             elif key == "video_watch_average_of_duration_without_experiments":
                 video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, self.country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
+
+            elif key == "user_total_duration_average":
+                user_total_duration_average.UserTotalDurationAverage(start_time, end_time, self.country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
