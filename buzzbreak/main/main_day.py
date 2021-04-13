@@ -515,7 +515,7 @@ if __name__ == "__main__":
         video_ctr_people_without_experiments.VideoCtrPeopleWithoutExperiments(start_time, end_time, country_code, "video_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_without_experiments"))
     elif kind == "video_watch_average_of_duration_without_experiments":
         video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
-    elif kind == "user_total_duratino_average":
+    elif kind == "user_total_duration_average":
         user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
     else:
         pass
