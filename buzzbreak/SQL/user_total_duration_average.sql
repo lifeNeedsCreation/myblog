@@ -7,4 +7,4 @@ with
 
     account_user_time_group as (select country_code, date, count(distinct account_id) as user_num from user_time inner join accounts on account_id = id group by country_code, date order by user_num desc)
 
-    select t.country_code as country_code, t.date as date, sum_duration, user_num, round(sum_duration / user_num, 4) as avg_duration from account_user_time_total as t inner join account_user_time_group as g on t.country_code = g.country_code and t.date = g. order by country_code, date
+    select t.country_code as country_code, t.date as date, sum_duration, user_num, round(sum_duration / user_num, 4) as avg_duration from account_user_time_total as t inner join account_user_time_group as g on t.country_code = g.country_code and t.date = g.date order by country_code, date
