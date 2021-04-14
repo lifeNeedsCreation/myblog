@@ -54,6 +54,7 @@ from indicator_scripts import new_user_news_ctr_people
 from indicator_scripts import new_user_video_ctr_people
 # from indicator_scripts import partiko_experiment_new_users_retention_tab_impression
 from indicator_scripts import cash_out
+from indicator_scripts import cashout_by_method
 from indicator_scripts import video_ctr_recall
 from indicator_scripts import video_ctr_dimension_recall
 from indicator_scripts import video_ctr_by_dimension_recall
@@ -130,6 +131,7 @@ KIND = {
     "new_user_video_ctr_people": "day_new_user_video_ctr_people",  # 新用户 视频 click_user_ratio
     # "partiko_experiment_new_users_retention_tab_impression": "partiko_experiment_new_users_retention_tab_impression",     # partiko.experiment 实验中 新用户在各个 tab 的留存
     "cash_out": "cash_out", # 统计打钱，按国家和天
+    "cashout_by_method": "cashout_by_method",   # 各国家打钱统计(按打钱方式)
     "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
     "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
     "video_ctr_by_dimension_recall": "video_ctr_by_dimension_recall",  # 召回实验的视频ctr(按实验维度分组)
@@ -287,6 +289,9 @@ class AutoSyncMainDay:
 
             elif key == "cash_out":
                 cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
+
+            elif key == "cashout_by_method":
+                cashout_by_method.CashOutByMethod(start_time, end_time, "cashout_by_method", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_method"))
 
             elif key == "video_ctr_recall":
                 video_ctr_recall.VideoCtrRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
