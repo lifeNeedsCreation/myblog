@@ -25,6 +25,7 @@ from indicator_scripts import new_users_video_watch_average
 from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
 from indicator_scripts import cash_out
+from indicator_scripts import cashout_by_method
 from indicator_scripts import all_users_ad_impression_avg
 from indicator_scripts import all_users_video_watch_average
 from indicator_scripts import all_users_video_watch_average_of_duration

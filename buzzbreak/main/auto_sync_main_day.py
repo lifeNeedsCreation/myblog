@@ -86,7 +86,7 @@ from indicator_scripts import video_average_of_total_duration_by_dimension_recal
 from indicator_scripts import video_ctr_without_experiments
 from indicator_scripts import video_ctr_people_without_experiments
 from indicator_scripts import video_watch_average_of_duration_without_experiments
-from indicator_scripts improt user_total_duratino_average
+from indicator_scripts import user_total_duratino_average
 
 # 新用户指标
 NEW_USER_KIND = {
