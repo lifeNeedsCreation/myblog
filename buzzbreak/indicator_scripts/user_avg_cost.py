@@ -6,12 +6,10 @@ from utils.utils import read_sql
 
 class UserAvgCostOut(object):
     """
-    : param start_time: 指标计算的开始时间
-    : param end_time：指标计算的结束时间
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, table_name, logger=None):
+    def __init__(self, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.table_name = table_name
@@ -30,13 +28,9 @@ class UserAvgCostOut(object):
 
     # 组装查询 sql，并将统计计算结果存入 mysql
     def compute_data(self, path):
-        start_time = self.start_time.strftime("%Y-%m-%d")
-        end_time = self.end_time.strftime("%Y-%m-%d")
-        sql = read_sql(path)
-        params = {"start_time": start_time, "end_time": end_time}
-        query = sql.format(**params)
-        cash_out_data = self.get_data(query)
-        if cash_out_data[self.fields[0]]:
+        query = read_sql(path)
+        user_avg_cost_data = self.get_data(query)
+        if user_avg_cost_data[self.fields[0]]:
             # 结果数据存入数据库
             values = ""
             for field in self.fields:
@@ -44,10 +38,10 @@ class UserAvgCostOut(object):
             values += "create_time"
             insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
             now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-            for i in range(len(cash_out_data[self.fields[0]])):
+            for i in range(len(user_avg_cost_data[self.fields[0]])):
                 insert_sql += "("
                 for field in self.fields:
-                    insert_sql += f"'{cash_out_data[field][i]}', "
+                    insert_sql += f"'{user_avg_cost_data[field][i]}', "
                 insert_sql += f"'{now_time_utc}'),"
             insert_sql = insert_sql[:-1]
             buzzbreak_mysql_client.execute_sql(insert_sql)
