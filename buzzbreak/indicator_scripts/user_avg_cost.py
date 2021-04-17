@@ -10,8 +10,6 @@ class UserAvgCostOut(object):
     """
     # 构造函数，初始化数据
     def __init__(self, table_name, logger=None):
-        self.start_time = start_time
-        self.end_time = end_time
         self.table_name = table_name
         self.logger = logger
         self.fields = ["country_code", "paid_money", "user_num", "avg_cost"]
