@@ -27,6 +27,7 @@ from indicator_scripts import ad_video_impression_ratio
 from indicator_scripts import total_ad_video_impression_ratio
 from indicator_scripts import posts
 from indicator_scripts import user_total_duration_average
+from indicator_scripts import user_avg_cost
 
 
 # 指标列表
@@ -47,6 +48,7 @@ KIND = {
     "total_ad_video_impression_ratio": 1, # 广告与视频曝光总比率
     "posts": 1,     # 发帖数量统计
     "user_total_duration_average": 1,   # 各国家用户平均使用app时间
+    "user_avg_cost": 1,     # 用户平均成本
 }
 
 
@@ -175,6 +177,8 @@ if __name__ == "__main__":
 
         user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
 
+        user_avg_cost.UserAvgCostOut(start_time, end_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+
 
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
@@ -206,6 +210,8 @@ if __name__ == "__main__":
         posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
     elif kind == "user_total_duration_average":
         user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
+    elif kind == "user_avg_cost":
+        user_avg_cost.UserAvgCostOut(start_time, end_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
     else:
         pass
 
