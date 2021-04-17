@@ -9,10 +9,11 @@ class UserAvgCostOut(object):
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, table_name, logger=None):
+    def __init__(self, start_time, table_name, logger=None):
+        self.start_time = start_time
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "paid_money", "user_num", "avg_cost"]
+        self.fields = ["country_code", "date", "paid_money", "user_num", "avg_cost"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
@@ -26,7 +27,9 @@ class UserAvgCostOut(object):
 
     # 组装查询 sql，并将统计计算结果存入 mysql
     def compute_data(self, path):
-        query = read_sql(path)
+        start_time = self.start_time.strftime("%Y-%m-%d")
+        sql = read_sql(path)
+        params = {"start_time": start_time}
         user_avg_cost_data = self.get_data(query)
         if user_avg_cost_data[self.fields[0]]:
             # 结果数据存入数据库

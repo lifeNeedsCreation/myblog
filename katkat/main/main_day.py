@@ -177,7 +177,7 @@ if __name__ == "__main__":
 
         user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
 
-        user_avg_cost.UserAvgCostOut("user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+        user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
 
 
     elif kind == "different_channels_pr":
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     elif kind == "user_total_duration_average":
         user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
     elif kind == "user_avg_cost":
-        user_avg_cost.UserAvgCostOut("user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+        user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
     else:
         pass
 

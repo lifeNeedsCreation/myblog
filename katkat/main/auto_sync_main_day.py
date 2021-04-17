@@ -121,7 +121,7 @@ class AutoSyncMainDay:
                 user_total_duration_average.UserTotalDurationAverage(start_time, end_time, self.country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
 
             elif key == "user_avg_cost":
-                user_avg_cost.UserAvgCostOut("user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+                user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
