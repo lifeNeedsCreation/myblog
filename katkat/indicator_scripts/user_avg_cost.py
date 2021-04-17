@@ -30,6 +30,7 @@ class UserAvgCostOut(object):
         start_time = self.start_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
         params = {"start_time": start_time}
+        query = sql.format(**params)
         user_avg_cost_data = self.get_data(query)
         if user_avg_cost_data[self.fields[0]]:
             # 结果数据存入数据库
