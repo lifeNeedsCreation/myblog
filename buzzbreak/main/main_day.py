@@ -296,7 +296,7 @@ if __name__ == "__main__":
 
         new_users_events_retention.NewUsersEventsRetention(start_time, end_time, 'new_users_events_retention', logger).compute_data()
         
-        # partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
+        partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
 
         partiko_experiment_average_of_invites.PartikoExperimentAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_experiment_average_of_invites', logger).compute_data()
         
