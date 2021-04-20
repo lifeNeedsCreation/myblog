@@ -463,12 +463,16 @@ if __name__ == "__main__":
         elif condition == 2:
             buzzbreak_mysql_client.close_client()
             buzzbreak_mongo_client.close_client()
-            logger.info("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
-            logger.alert("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.info("sync buzzbreak indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.alert("sync buzzbreak indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
             buzzbreak_mysql_client.close_client()
             buzzbreak_mongo_client.close_client()
-            logger.info("mongo sync buzzbreak log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
+            logger.info("mongo sync buzzbreak indicator scripts by day {} fail due to date_diff = {}, try again 30 minutes later".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.alert("sync buzzbreak indicator scripts by day {} fail due to date_diff = {}, try again 30 minutes later".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            if now_time_utc.hour == 4:
+                logger.info("mongo sync buzzbreak indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+                logger.alert("sync buzzbreak indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+                sys.exit(0)
             time.sleep(60*30)
-

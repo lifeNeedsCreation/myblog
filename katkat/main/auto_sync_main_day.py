@@ -190,12 +190,17 @@ if __name__ == "__main__":
         elif condition == 2:
             katkat_mysql_client.close_client()
             katkat_mongo_client.close_client()
-            logger.info("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
-            logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.info("sync katkat indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.alert("sync katkat indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
             sys.exit(0)
         elif condition == 0:
             katkat_mysql_client.close_client()
             katkat_mongo_client.close_client()
-            logger.info("mongo sync katkat log fail auto_sync_time={}".format(now_time_utc.strftime(time_format)))
+            logger.info("mongo sync katkat indicator scripts by day {} fail due to date_diff = {}, try again 30 minutes later".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            logger.alert("sync katkat indicator scripts by day {} fail due to date_diff = {}, try again 30 minutes later".format(start_time.strftime("%Y-%m-%d"), date_diff))
+            if now_time_utc.hour == 4:
+                logger.info("mongo sync katkat indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+                logger.alert("sync katkat indicator scripts by day {} fail and stop due to date_diff = {}".format(start_time.strftime("%Y-%m-%d"), date_diff))
+                sys.exit(0)
             time.sleep(60*30)
 
