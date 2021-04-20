@@ -457,8 +457,9 @@ if __name__ == "__main__":
             buzzbreak_mongo_client.close_client()
             if use_time.total_seconds() > 60*60:
                 logger.alert("buzzbreak execute sync indicator scripts over one hour, please delay FinBI sync time")
-            sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
-            time.sleep(sleep_time)
+            # sleep_time = getRestSeconds(datetime.datetime.utcnow()) + 60*60*1
+            # time.sleep(sleep_time)
+            sys.exit(0)
         elif condition == 2:
             buzzbreak_mysql_client.close_client()
             buzzbreak_mongo_client.close_client()
@@ -469,5 +470,5 @@ if __name__ == "__main__":
             buzzbreak_mysql_client.close_client()
             buzzbreak_mongo_client.close_client()
             logger.info("mongo sync buzzbreak log fail auto_sync_time={}".format(now_time_utc.strftime("%Y-%m-%d %H:%M:%S")))
-            time.sleep(60*60*1)
+            time.sleep(60*30)
 
