@@ -9,4 +9,4 @@ with
    
    user_info as (select paid_out_date, country_code, money, payout_method, count(distinct account_id) as user_num from cash_out_info group by paid_out_date, country_code, money, payout_method)
    
-   select u.country_code as country_code, u.paid_out_date as paid_out_date, u.money as money, u.payout_method as payout_method, cashout_num, user_num from user_info as u inner join money_info as m on u.paid_out_date = m.paid_out_date and u.country_code = m.country_code and u.money = m.money and u.payout_method = m.payout_method order by date desc, money desc
+   select u.country_code as country_code, u.paid_out_date as paid_out_date, u.money as money, u.payout_method as payout_method, cashout_num, user_num from user_info as u inner join money_info as m on u.paid_out_date = m.paid_out_date and u.country_code = m.country_code and u.money = m.money and u.payout_method = m.payout_method order by paid_out_date desc, money desc

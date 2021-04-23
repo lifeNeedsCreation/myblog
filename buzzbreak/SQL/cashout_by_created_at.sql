@@ -5,4 +5,4 @@ with
     
     info as (select account_id, country_code, created_date, payout_method, money, paid_out_date from cash_out inner join accounts on account_id = id)
     
-    select country_code, payout_method, created_date, sum(money) as total_money from info group by country_code, payout_method, created_date order by country_code, created_date desc
+    select country_code, payout_method, created_date as paid_out_date, sum(money) as money from info group by country_code, payout_method, created_date order by country_code, created_date desc
