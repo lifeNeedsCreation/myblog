@@ -403,9 +403,9 @@ if __name__ == "__main__":
 
         short_new_video_ctr.ShortNewVideoCtr(start_time, end_time, country_code, "short_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_ctr"))
 
-        short_video_completion_rate.UserTotalDurationAverage(start_time, end_time, country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
+        short_video_completion_rate.ShortVideoCompletionRate(start_time, end_time, country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
 
-        short_new_video_completion_rate.UserTotalDurationAverage(start_time, end_time, country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
+        short_new_video_completion_rate.ShortNewVideoCompletionRate(start_time, end_time, country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
 
 
     elif kind == "ctr":
@@ -551,9 +551,9 @@ if __name__ == "__main__":
     elif kind == "short_new_video_ctr":
         short_new_video_ctr.ShortNewVideoCtr(start_time, end_time, country_code, "short_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_ctr"))
     elif kind == "short_video_completion_rate":
-        short_video_completion_rate.UserTotalDurationAverage(start_time, end_time, country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
+        short_video_completion_rate.ShortVideoCompletionRate(start_time, end_time, country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
     elif kind == "short_new_video_completion_rate":
-        short_new_video_completion_rate.UserTotalDurationAverage(start_time, end_time, country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
+        short_new_video_completion_rate.ShortNewVideoCompletionRate(start_time, end_time, country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
     else:
         pass
 
