@@ -20,6 +20,8 @@ from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
 from indicator_scripts import cash_out
 from indicator_scripts import cashout_by_method
+from indicator_scripts import cashout_by_created_at
+from indicator_scripts import cashout_by_money
 from indicator_scripts import all_users_ad_impression_avg
 from indicator_scripts import all_users_video_watch_average
 from indicator_scripts import all_users_video_watch_average_of_duration
@@ -41,6 +43,8 @@ KIND = {
     "new_users_same_channels_retention": 1,  # 新用户相同channel的留存
     "cash_out": 1,  # 统计打钱，按国家和天
     "cashout_by_method": 1,   # 各国家打钱统计(按打钱方式)
+    "cashout_by_created_at": 1,   # 各国家打钱统计(按打钱创建时间)
+    "cashout_by_money": 1,   # 各国家打钱统计(按打钱金额)
     "all_users_ad_impression_avg": 1,     # 所有用户不同位置广告的平均曝光次数
     "all_users_video_watch_average": 1, # 所有用户视频不同位置平均观看次数
     "all_users_video_watch_average_of_duration": 1, # 所有用户不同位置的平均观看时长
@@ -163,6 +167,10 @@ if __name__ == "__main__":
 
         cashout_by_method.CashOutByMethod(start_time, end_time, "cashout_by_method", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_method"))
 
+        cashout_by_created_at.CashOutByCreatedAt(start_time, end_time, "cashout_by_created_at", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_created_at"))
+
+        cashout_by_money.CashOutByMoney(start_time, end_time, "cashout_by_money", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_money"))
+
         all_users_ad_impression_avg.AllUsersAdImpressionAvg(start_time, end_time, ad_placement, "all_users_ad_impression_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_ad_impression_avg"))
 
         all_users_video_watch_average.AllUsersVideoWatchAverage(start_time, end_time, video_placement, "all_users_video_watch_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_video_watch_average"))
@@ -196,6 +204,10 @@ if __name__ == "__main__":
         cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
     elif kind == "cashout_by_method":
         cashout_by_method.CashOutByMethod(start_time, end_time, "cashout_by_method", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_method"))
+    elif kind == "cashout_by_created_at":
+        cashout_by_created_at.CashOutByCreatedAt(start_time, end_time, "cashout_by_created_at", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_created_at"))
+    elif kind == "cashout_by_money":
+        cashout_by_money.CashOutByMoney(start_time, end_time, "cashout_by_money", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_money"))
     elif kind == "all_users_ad_impression_avg":
         all_users_ad_impression_avg.AllUsersAdImpressionAvg(start_time, end_time, ad_placement, "all_users_ad_impression_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_ad_impression_avg"))
     elif kind == "all_users_video_watch_average":

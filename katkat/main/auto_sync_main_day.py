@@ -26,6 +26,8 @@ from indicator_scripts import new_users_channels_retention
 from indicator_scripts import new_users_same_channels_retention
 from indicator_scripts import cash_out
 from indicator_scripts import cashout_by_method
+from indicator_scripts import cashout_by_created_at
+from indicator_scripts import cashout_by_money
 from indicator_scripts import all_users_ad_impression_avg
 from indicator_scripts import all_users_video_watch_average
 from indicator_scripts import all_users_video_watch_average_of_duration
@@ -50,6 +52,8 @@ KIND = {
     "new_users_same_channels_retention": "new_users_same_channels_retention",  # 新用户相同channel的留存
     "cash_out": "cash_out",  # 统计打钱，按国家和天
     "cashout_by_method": "cashout_by_method",   # 各国家打钱统计(按打钱方式)
+    "cashout_by_created_at": "cashout_by_created_at",   # 各国家打钱统计(按打钱创建时间)
+    "cashout_by_money": "cashout_by_money",   # 各国家打钱统计(按打钱金额)
     "all_users_ad_impression_avg": "all_users_ad_impression_avg",   # 所有用户不同位置广告的平均曝光次数
     "all_users_video_watch_average": "all_users_video_watch_average",    # 所有用户不同位置的平均观看次数
     "all_users_video_watch_average_of_duration": "all_users_video_watch_average_of_duration",     # 新用户不同placement的平均观看时长(video_watch)
@@ -98,6 +102,12 @@ class AutoSyncMainDay:
 
             elif key == "cashout_by_method":
                 cashout_by_method.CashOutByMethod(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "cashout_by_created_at":
+                cashout_by_created_at.CashOutByCreatedAt(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "cashout_by_money":
+                cashout_by_money.CashOutByMoney(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "all_users_ad_impression_avg":
                 all_users_ad_impression_avg.AllUsersAdImpressionAvg(start_time, end_time, self.ad_placement, "all_users_ad_impression_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "all_users_ad_impression_avg"))
