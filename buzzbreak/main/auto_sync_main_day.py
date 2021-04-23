@@ -88,6 +88,10 @@ from indicator_scripts import video_ctr_people_without_experiments
 from indicator_scripts import video_watch_average_of_duration_without_experiments
 from indicator_scripts import user_total_duration_average
 from indicator_scripts import user_avg_cost
+from indicator_scripts import short_video_ctr
+from indicator_scripts import short_new_video_ctr
+from indicator_scripts import short_video_completion_rate
+from indicator_scripts import short_new_video_completion_rate
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -166,6 +170,10 @@ KIND = {
     "video_watch_average_of_duration_without_experiments": "video_watch_average_of_duration_without_experiments",       # 用户平均观看时长(不带实验)
     "user_total_duration_average": "user_total_duration_average",   # 各国家用户平均使用app时间
     "user_avg_cost": "user_avg_cost",   # 用户平均成本
+    "short_video_ctr": "short_video_ctr",   # 3分钟以下短视频点击率
+    "short_new_video_ctr": "short_new_video_ctr",   # 3分钟以下短视频点击率(7天内的视频)
+    "short_video_completion_rate": "short_video_completion_rate",   # 3分钟以下短视频完播率
+    "short_new_video_completion_rate": "short_new_video_completion_rate",   # 3分钟以下短视频完播率(7天内的视频)
 }
 
 class AutoSyncMainDay:
@@ -393,6 +401,18 @@ class AutoSyncMainDay:
 
             elif key == "user_avg_cost":
                 user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+
+            elif kind == "short_video_ctr":
+                short_video_ctr.ShortVideoCtr(start_time, end_time, self.country_code, "short_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_ctr"))
+
+            elif kind == "short_new_video_ctr":
+                short_new_video_ctr.ShortNewVideoCtr(start_time, end_time, self.country_code, "short_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_ctr"))
+
+            elif kind == "short_video_completion_rate":
+                short_video_completion_rate.UserTotalDurationAverage(start_time, end_time, self.country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
+
+            elif kind == "short_new_video_completion_rate":
+                short_new_video_completion_rate.UserTotalDurationAverage(start_time, end_time, self.country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
