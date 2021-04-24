@@ -412,16 +412,16 @@ class AutoSyncMainDay:
             elif key == "user_avg_cost":
                 user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
 
-            elif kind == "short_video_ctr":
+            elif key == "short_video_ctr":
                 short_video_ctr.ShortVideoCtr(start_time, end_time, self.country_code, "short_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_ctr"))
 
-            elif kind == "short_new_video_ctr":
+            elif key == "short_new_video_ctr":
                 short_new_video_ctr.ShortNewVideoCtr(start_time, end_time, self.country_code, "short_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_ctr"))
 
-            elif kind == "short_video_completion_rate":
+            elif key == "short_video_completion_rate":
                 short_video_completion_rate.ShortVideoCompletionRate(start_time, end_time, self.country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
 
-            elif kind == "short_new_video_completion_rate":
+            elif key == "short_new_video_completion_rate":
                 short_new_video_completion_rate.ShortNewVideoCompletionRate(start_time, end_time, self.country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
 
             indicator_end_time = datetime.datetime.now()
