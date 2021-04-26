@@ -36,6 +36,8 @@ from indicator_scripts import total_ad_video_impression_ratio
 from indicator_scripts import posts
 from indicator_scripts import user_total_duration_average
 from indicator_scripts import user_avg_cost
+from indicator_scripts import notification_video_ctr_without_experiments
+from indicator_scripts import notification_video_ctr_without_experiments_by_people
 
 
 # 新用户指标
@@ -62,6 +64,8 @@ KIND = {
     "posts": "posts",   # 发帖数量统计
     "user_total_duration_average": "user_total_duration_average",   # 各国家用户平均使用app时间
     "user_avg_cost": "user_avg_cost",   # 用户平均成本
+    "notification_video_ctr_without_experiments": "notification_video_ctr_without_experiments",    # push的次数ctr
+    "notification_video_ctr_without_experiments_by_people": "notification_video_ctr_without_experiments_by_people",    # push的人数ctr
 }
 
 class AutoSyncMainDay:
@@ -132,6 +136,12 @@ class AutoSyncMainDay:
 
             elif key == "user_avg_cost":
                 user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+
+            elif key == "notification_video_ctr_without_experiments":
+                notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, self.country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
+
+            elif key == "notification_video_ctr_without_experiments_by_people":
+                notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, self.country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

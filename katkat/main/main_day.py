@@ -30,6 +30,8 @@ from indicator_scripts import total_ad_video_impression_ratio
 from indicator_scripts import posts
 from indicator_scripts import user_total_duration_average
 from indicator_scripts import user_avg_cost
+from indicator_scripts import notification_video_ctr_without_experiments
+from indicator_scripts import notification_video_ctr_without_experiments_by_people
 
 
 # 指标列表
@@ -53,6 +55,8 @@ KIND = {
     "posts": 1,     # 发帖数量统计
     "user_total_duration_average": 1,   # 各国家用户平均使用app时间
     "user_avg_cost": 1,     # 用户平均成本
+    "notification_video_ctr_without_experiments": 1,    # push的次数ctr
+    "notification_video_ctr_without_experiments_by_people": 1,    # push的人数ctr
 }
 
 
@@ -187,6 +191,10 @@ if __name__ == "__main__":
 
         user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
 
+        notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
+
+        notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, table_name)(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))        
+
 
     elif kind == "different_channels_pr":
         different_channels_pr.DifferentChannelsPRData(start_time, end_time, channel, "different_channels_pr", logger).compute_data()
@@ -224,6 +232,10 @@ if __name__ == "__main__":
         user_total_duration_average.UserTotalDurationAverage(start_time, end_time, country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
     elif kind == "user_avg_cost":
         user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+    elif kind == "notification_video_ctr_without_experiments":
+        notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
+    elif kind == "notification_video_ctr_without_experiments_by_people":
+        notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
     else:
         pass
 
