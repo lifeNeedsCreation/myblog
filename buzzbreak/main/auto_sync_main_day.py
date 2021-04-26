@@ -94,6 +94,14 @@ from indicator_scripts import short_video_ctr
 from indicator_scripts import short_new_video_ctr
 from indicator_scripts import short_video_completion_rate
 from indicator_scripts import short_new_video_completion_rate
+from indicator_scripts import one_minute_video_ctr
+from indicator_scripts import one_minute_new_video_ctr
+from indicator_scripts import one_minute_video_completion_rate
+from indicator_scripts import one_minute_new_video_completion_rate
+from indicator_scripts import five_minutes_video_ctr
+from indicator_scripts import five_minutes_new_video_ctr
+from indicator_scripts import five_minutes_video_completion_rate
+from indicator_scripts import five_minutes_new_video_completion_rate
 from indicator_scripts import notification_video_ctr_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments_by_people
 
@@ -180,6 +188,14 @@ KIND = {
     "short_new_video_ctr": "short_new_video_ctr",   # 3分钟以下短视频点击率(7天内的视频)
     "short_video_completion_rate": "short_video_completion_rate",   # 3分钟以下短视频完播率
     "short_new_video_completion_rate": "short_new_video_completion_rate",   # 3分钟以下短视频完播率(7天内的视频)
+    "one_minute_video_ctr": "one_minute_video_ctr",   # 1分钟以下短视频点击率
+    "one_minute_new_video_ctr": "one_minute_new_video_ctr",   # 1分钟以下短视频点击率(7天内的视频)
+    "one_minute_video_completion_rate": "one_minute_video_completion_rate",   # 1分钟以下短视频完播率
+    "one_minute_new_video_completion_rate": "one_minute_new_video_completion_rate",   # 1分钟以下短视频完播率(7天内的视频)
+    "five_minutes_video_ctr": "five_minutes_video_ctr",   # 5分钟以下短视频点击率
+    "five_minutes_new_video_ctr": "five_minutes_new_video_ctr",   # 5分钟以下短视频点击率(7天内的视频)
+    "five_minutes_video_completion_rate": "five_minutes_video_completion_rate",   # 5分钟以下短视频完播率
+    "five_minutes_new_video_completion_rate": "five_minutes_new_video_completion_rate",   # 5分钟以下短视频完播率(7天内的视频)
     "notification_video_ctr_without_experiments": "notification_video_ctr_without_experiments",    # push的次数ctr
     "notification_video_ctr_without_experiments_by_people": "notification_video_ctr_without_experiments_by_people",    # push的人数ctr
 }
@@ -427,6 +443,30 @@ class AutoSyncMainDay:
 
             elif key == "short_new_video_completion_rate":
                 short_new_video_completion_rate.ShortNewVideoCompletionRate(start_time, end_time, self.country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
+
+            elif key == "one_minute_video_ctr":
+                one_minute_video_ctr.OneMinuteVideoCtr(start_time, end_time, self.country_code, "one_minute_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_video_ctr"))
+
+            elif key == "one_minute_new_video_ctr":
+                one_minute_new_video_ctr.OneMinuteNewVideoCtr(start_time, end_time, self.country_code, "one_minute_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_new_video_ctr"))
+
+            elif key == "one_minute_video_completion_rate":
+                one_minute_video_completion_rate.OneMinuteVideoCompletionRate(start_time, end_time, self.country_code, "one_minute_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_video_completion_rate"))
+
+            elif key == "one_minute_new_video_completion_rate":
+                one_minute_new_video_completion_rate.OneMinuteNewVideoCompletionRate(start_time, end_time, self.country_code, "one_minute_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_new_video_completion_rate"))
+
+            elif key == "five_minutes_video_ctr":
+                five_minutes_video_ctr.FiveMinutesVideoCtr(start_time, end_time, self.country_code, "five_minutes_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_video_ctr"))
+
+            elif key == "five_minutes_new_video_ctr":
+                five_minutes_new_video_ctr.FiveMinutesNewVideoCtr(start_time, end_time, self.country_code, "five_minutes_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_video_ctr"))
+
+            elif key == "five_minutes_video_completion_rate":
+                five_minutes_video_completion_rate.FiveMinutesVideoCompletionRate(start_time, end_time, self.country_code, "five_minutes_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_video_completion_rate"))
+
+            elif key == "five_minutes_new_video_completion_rate":
+                five_minutes_new_video_completion_rate.FiveMinutesNewVideoCompletionRate(start_time, end_time, self.country_code, "five_minutes_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_video_completion_rate"))
 
             elif key == "notification_video_ctr_without_experiments":
                 notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, self.country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
