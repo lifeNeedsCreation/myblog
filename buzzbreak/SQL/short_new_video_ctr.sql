@@ -1,7 +1,7 @@
 with
     accounts as (select id, country_code from input.accounts where name is not null and country_code in ({country_code})),
 
-    videos as (select id, category from partiko.videos where category is not null and video_length_seconds < 60*3 and created_at > timestamp_sub(timestamp'{end_time}', interval 7 day)),
+    videos as (select id, category from partiko.videos where category is not null and video_length_seconds < 60*3 and created_at > timestamp_sub(timestamp'{start_time}', interval 7 day)),
 
     video_click as (select distinct account_id, safe_cast(json_extract_scalar(data, '$.id') as numeric) as video_id, json_extract_scalar(data, '$.placement') as placement, created_at from stream_events.video_click where created_at >= '{start_time}' and created_at < '{end_time}'),
 

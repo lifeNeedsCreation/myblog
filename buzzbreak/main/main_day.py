@@ -97,6 +97,7 @@ from indicator_scripts import five_minutes_video_completion_rate
 from indicator_scripts import five_minutes_new_video_completion_rate
 from indicator_scripts import notification_video_ctr_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments_by_people
+from indicator_scripts import new_videos_ctr
 
 # 指标列表
 KIND = {
@@ -186,6 +187,7 @@ KIND = {
     "five_minutes_new_video_completion_rate": 1,   # 5分钟以下短视频完播率(7天内的视频)
     "notification_video_ctr_without_experiments": 1,    # push的次数ctr
     "notification_video_ctr_without_experiments_by_people": 1,    # push的人数ctr
+    "new_videos_ctr": 1,    # 新视频ctr（2天内的视频）
 }
 
 
@@ -454,6 +456,8 @@ if __name__ == "__main__":
 
         notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
 
+        new_videos_ctr.NewVideosCtr(start_time, end_time, country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -626,6 +630,8 @@ if __name__ == "__main__":
         notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
     elif kind == "notification_video_ctr_without_experiments_by_people":
         notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
+    elif kind == "new_videos_ctr":    
+        new_videos_ctr.NewVideosCtr(start_time, end_time, country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
     else:
         pass
 

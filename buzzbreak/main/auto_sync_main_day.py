@@ -104,6 +104,7 @@ from indicator_scripts import five_minutes_video_completion_rate
 from indicator_scripts import five_minutes_new_video_completion_rate
 from indicator_scripts import notification_video_ctr_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments_by_people
+from indicator_scripts import new_videos_ctr
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -198,6 +199,7 @@ KIND = {
     "five_minutes_new_video_completion_rate": "five_minutes_new_video_completion_rate",   # 5分钟以下短视频完播率(7天内的视频)
     "notification_video_ctr_without_experiments": "notification_video_ctr_without_experiments",    # push的次数ctr
     "notification_video_ctr_without_experiments_by_people": "notification_video_ctr_without_experiments_by_people",    # push的人数ctr
+    "new_videos_ctr": "new_videos_ctr",    # 新视频的ctr(2天内的视频)
 }
 
 class AutoSyncMainDay:
@@ -473,6 +475,9 @@ class AutoSyncMainDay:
 
             elif key == "notification_video_ctr_without_experiments_by_people":
                 notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, self.country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
+
+            elif key == "new_videos_ctr":
+                new_videos_ctr.NewVideosCtr(start_time, end_time, self.country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
