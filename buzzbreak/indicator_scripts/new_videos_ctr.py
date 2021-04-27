@@ -18,7 +18,7 @@ class NewVideosCtr(object):
         self.country_code = country_code
         self.table_name = table_name
         self.logger = logger
-        self.fields = ['country_code', 'date', 'placement', 'category', 'click_num', 'impression_num', 'impression_union_num']
+        self.fields = ['country_code', 'date', 'placement', 'category', 'click_num', 'impression_num', 'impression_union_num', 'ctr', 'ctr_union']
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
