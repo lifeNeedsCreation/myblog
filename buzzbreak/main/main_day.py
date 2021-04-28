@@ -98,6 +98,12 @@ from indicator_scripts import five_minutes_new_video_completion_rate
 from indicator_scripts import notification_video_ctr_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments_by_people
 from indicator_scripts import new_videos_ctr
+from indicator_scripts import immersive_video_watch_average_recall_by_model
+from indicator_scripts import immersive_video_watch_average_of_duration_recall_by_model
+from indicator_scripts import immersive_video_watch_average_recall_by_bucket
+from indicator_scripts import immersive_video_watch_average_of_duration_recall_by_bucket
+from indicator_scripts import immersive_video_watch_average_rough_rank_by_model
+from indicator_scripts import immersive_video_watch_average_of_duration_rough_rank_by_model
 
 # 指标列表
 KIND = {
@@ -188,6 +194,12 @@ KIND = {
     "notification_video_ctr_without_experiments": 1,    # push的次数ctr
     "notification_video_ctr_without_experiments_by_people": 1,    # push的人数ctr
     "new_videos_ctr": 1,    # 新视频ctr（2天内的视频）
+    "immersive_video_watch_average_recall_by_model": 1,      # 召回实验平均观看次数(按模型统计)
+    "immersive_video_watch_average_of_duration_recall_by_model": 1,      # 召回实验平均观看时长(按模型统计)
+    "immersive_video_watch_average_recall_by_bucket": 1,      # 召回实验平均观看次数(按桶统计)
+    "immersive_video_watch_average_of_duration_recall_by_bucket": 1,      # 召回实验平均观看时长(按桶统计)
+    "immersive_video_watch_average_rough_rank_by_model": 1,      # 粗排实验平均观看次数(按模型统计)
+    "immersive_video_watch_average_of_duration_rough_rank_by_model": 1,      # 粗排实验平均观看时长(按模型统计)
 }
 
 
@@ -458,6 +470,18 @@ if __name__ == "__main__":
 
         new_videos_ctr.NewVideosCtr(start_time, end_time, country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
 
+        immersive_video_watch_average_recall_by_model.ImmersiveVideoWatchAverageRecallByModel(start_time, end_time, country_code, "immersive_video_watch_average_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_model"))
+
+        immersive_video_watch_average_of_duration_recall_by_model.ImmersiveVideoWatchAverageOfDurationRecallByModel(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_model"))
+
+        immersive_video_watch_average_recall_by_bucket.ImmersiveVideoWatchAverageRecallByBucket(start_time, end_time, country_code, "immersive_video_watch_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_bucket"))
+
+        immersive_video_watch_average_of_duration_recall_by_bucket.ImmersiveVideoWatchAverageOfDurationRecallByBucket(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_bucket"))
+
+        immersive_video_watch_average_rough_rank_by_model.ImmersiveVideoWatchAverageRoughRankByModel(start_time, end_time, country_code, "immersive_video_watch_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_rough_rank_by_model"))
+
+        immersive_video_watch_average_of_duration_rough_rank_by_model.ImmersiveVideoWatchAverageOfDurationRoughRankByModel(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_rough_rank_by_model"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -632,6 +656,18 @@ if __name__ == "__main__":
         notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
     elif kind == "new_videos_ctr":    
         new_videos_ctr.NewVideosCtr(start_time, end_time, country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
+    elif kind == "immersive_video_watch_average_recall_by_model":    
+        immersive_video_watch_average_recall_by_model.ImmersiveVideoWatchAverageRecallByModel(start_time, end_time, country_code, "immersive_video_watch_average_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_model"))
+    elif kind == "immersive_video_watch_average_of_duration_recall_by_model":    
+        immersive_video_watch_average_of_duration_recall_by_model.ImmersiveVideoWatchAverageOfDurationRecallByModel(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_model"))
+    elif kind == "immersive_video_watch_average_recall_by_bucket":    
+        immersive_video_watch_average_recall_by_bucket.ImmersiveVideoWatchAverageRecallByBucket(start_time, end_time, country_code, "immersive_video_watch_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_bucket"))
+    elif kind == "immersive_video_watch_average_of_duration_recall_by_bucket":    
+        immersive_video_watch_average_of_duration_recall_by_bucket.ImmersiveVideoWatchAverageOfDurationRecallByBucket(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_bucket"))
+    elif kind == "immersive_video_watch_average_rough_rank_by_model":    
+        immersive_video_watch_average_rough_rank_by_model.ImmersiveVideoWatchAverageRoughRankByModel(start_time, end_time, country_code, "immersive_video_watch_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_rough_rank_by_model"))
+    elif kind == "immersive_video_watch_average_of_duration_rough_rank_by_model":    
+        immersive_video_watch_average_of_duration_rough_rank_by_model.ImmersiveVideoWatchAverageOfDurationRoughRankByModel(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_rough_rank_by_model"))
     else:
         pass
 
