@@ -107,10 +107,13 @@ from indicator_scripts import notification_video_ctr_without_experiments_by_peop
 from indicator_scripts import new_videos_ctr
 from indicator_scripts import immersive_video_watch_average_recall_by_model
 from indicator_scripts import immersive_video_watch_average_of_duration_recall_by_model
+from indicator_scripts import immersive_retention_recall_by_model
 from indicator_scripts import immersive_video_watch_average_recall_by_bucket
 from indicator_scripts import immersive_video_watch_average_of_duration_recall_by_bucket
+from indicator_scripts import immersive_retention_recall_by_bucket
 from indicator_scripts import immersive_video_watch_average_rough_rank_by_model
 from indicator_scripts import immersive_video_watch_average_of_duration_rough_rank_by_model
+from indicator_scripts import immersive_retention_rough_rank_by_model
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -208,10 +211,13 @@ KIND = {
     "new_videos_ctr": "new_videos_ctr",    # 新视频的ctr(2天内的视频)
     "immersive_video_watch_average_recall_by_model": "immersive_video_watch_average_recall_by_model",      # 召回实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_recall_by_model": "immersive_video_watch_average_of_duration_recall_by_model",      # 召回实验平均观看时长(按模型统计)
+    "immersive_retention_recall_by_model": "immersive_retention_recall_by_model",   # 召回实验留存(按模型统计)
     "immersive_video_watch_average_recall_by_bucket": "immersive_video_watch_average_recall_by_bucket",      # 召回实验平均观看次数(按桶统计)
     "immersive_video_watch_average_of_duration_recall_by_bucket": "immersive_video_watch_average_of_duration_recall_by_bucket",      # 召回实验平均观看时长(按桶统计)
+    "immersive_retention_recall_by_bucket": "immersive_retention_recall_by_bucket",   # 召回实验留存(按桶统计)
     "immersive_video_watch_average_rough_rank_by_model": "immersive_video_watch_average_rough_rank_by_model",      # 粗排实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_rough_rank_by_model": "immersive_video_watch_average_of_duration_rough_rank_by_model",      # 粗排实验平均观看时长(按模型统计)
+    "immersive_retention_rough_rank_by_model": "immersive_retention_rough_rank_by_model",   # 粗排实验留存(按模型统计)
 }
 
 class AutoSyncMainDay:
@@ -497,17 +503,26 @@ class AutoSyncMainDay:
             elif key == "immersive_video_watch_average_of_duration_recall_by_model":    
                 immersive_video_watch_average_of_duration_recall_by_model.ImmersiveVideoWatchAverageOfDurationRecallByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_of_duration_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_model"))
 
+            elif key == "immersive_retention_recall_by_model":    
+                immersive_retention_recall_by_model.ImmersiveRetentionRecallByModel(start_time, end_time, self.country_code, "immersive_retention_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall_by_model"))
+
             elif key == "immersive_video_watch_average_recall_by_bucket":    
                 immersive_video_watch_average_recall_by_bucket.ImmersiveVideoWatchAverageRecallByBucket(start_time, end_time, self.country_code, "immersive_video_watch_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_bucket"))
 
             elif key == "immersive_video_watch_average_of_duration_recall_by_bucket":    
                 immersive_video_watch_average_of_duration_recall_by_bucket.ImmersiveVideoWatchAverageOfDurationRecallByBucket(start_time, end_time, self.country_code, "immersive_video_watch_average_of_duration_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_bucket"))
 
+            elif key == "immersive_retention_recall_by_bucket":    
+                immersive_retention_recall_by_bucket.ImmersiveRetentionRecallByBucket(start_time, end_time, self.country_code, "immersive_retention_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall_by_bucket"))
+
             elif key == "immersive_video_watch_average_rough_rank_by_model":    
                 immersive_video_watch_average_rough_rank_by_model.ImmersiveVideoWatchAverageRoughRankByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_rough_rank_by_model"))
 
             elif key == "immersive_video_watch_average_of_duration_rough_rank_by_model":    
                 immersive_video_watch_average_of_duration_rough_rank_by_model.ImmersiveVideoWatchAverageOfDurationRoughRankByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_of_duration_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_rough_rank_by_model"))
+
+            elif key == "immersive_retention_rough_rank_by_model":    
+                immersive_retention_rough_rank_by_model.ImmersiveRetentionRoughRankByModel(start_time, end_time, self.country_code, "immersive_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rough_rank_by_model"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
