@@ -11,9 +11,10 @@ class ImmersiveRetentionRecallByModel(object):
     : param table_name: 计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, table_name, logger=None):
+    def __init__(self, start_time, end_time, country_code, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
+        self.country_code = country_code
         self.table_name = table_name
         self.logger = logger
         self.fields = ["country_code", "placement", "bucket", "strategy", "initial_date", "retention_date", "date_diff", "initial_num", "retention_num", "retention_rate"]
@@ -33,7 +34,7 @@ class ImmersiveRetentionRecallByModel(object):
         start_time = self.start_time.strftime("%Y-%m-%d")
         end_time = self.end_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
-        params = {"start_time": start_time, "end_time": end_time}
+        params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code}
         query = sql.format(**params)
         immersive_retention_recall_by_model_data = self.get_data(query)
         if immersive_retention_recall_by_model_data[self.fields[0]]:
