@@ -107,6 +107,12 @@ from indicator_scripts import immersive_retention_recall_by_bucket
 from indicator_scripts import immersive_video_watch_average_rough_rank_by_model
 from indicator_scripts import immersive_video_watch_average_of_duration_rough_rank_by_model
 from indicator_scripts import immersive_retention_rough_rank_by_model
+from indicator_scripts import video_ctr_recall_by_model
+from indicator_scripts import video_ctr_people_recall_by_model
+from indicator_scripts import video_ctr_recall_by_bucket
+from indicator_scripts import video_ctr_people_recall_by_bucket
+from indicator_scripts import video_ctr_rough_rank_by_model
+from indicator_scripts import video_ctr_people_rough_rank_by_model
 
 # 指标列表
 KIND = {
@@ -206,6 +212,12 @@ KIND = {
     "immersive_video_watch_average_rough_rank_by_model": 1,      # 粗排实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_rough_rank_by_model": 1,      # 粗排实验平均观看时长(按模型统计)
     "immersive_retention_rough_rank_by_model": 1,   # 粗排实验留存(按模型统计)
+    "video_ctr_recall_by_model": 1,     # 召回实验次数ctr(按模型统计)
+    "video_ctr_people_recall_by_model": 1,     # 召回实验人数ctr(按模型统计)
+    "video_ctr_recall_by_bucket": 1,     # 召回实验次数ctr(按桶统计)
+    "video_ctr_people_recall_by_bucket": 1,     # 召回实验人数ctr(按桶统计)
+    "video_ctr_rough_rank_by_model": 1,     # 粗排实验次数ctr(按模型统计)
+    "video_ctr_people_rough_rank_by_model": 1,     # 粗排实验人数ctr(按模型统计)
 }
 
 
@@ -494,6 +506,18 @@ if __name__ == "__main__":
 
         immersive_retention_rough_rank_by_model.ImmersiveRetentionRoughRankByModel(start_time, end_time, country_code, "immersive_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rough_rank_by_model"))
 
+        video_ctr_recall_by_model.VideoCtrRecallByModel(start_time, end_time, country_code, "video_ctr_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_model"))
+
+        video_ctr_people_recall_by_model.VideoCtrPeopleRecallByModel(start_time, end_time, country_code, "video_ctr_people_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_model"))
+
+        video_ctr_recall_by_bucket.VideoCtrRecallByBucket(start_time, end_time, country_code, "video_ctr_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_bucket"))
+
+        video_ctr_people_recall_by_bucket.VideoCtrPeopleRecallByBucket(start_time, end_time, country_code, "video_ctr_people_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_bucket"))
+
+        video_ctr_rough_rank_by_model.VideoCtrRoughRankByModel(start_time, end_time, country_code, "video_ctr_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rough_rank_by_model"))
+
+        video_ctr_people_rough_rank_by_model.VideoCtrPeopleRoughRankByModel(start_time, end_time, country_code, "video_ctr_people_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rough_rank_by_model"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -686,6 +710,18 @@ if __name__ == "__main__":
         immersive_video_watch_average_of_duration_rough_rank_by_model.ImmersiveVideoWatchAverageOfDurationRoughRankByModel(start_time, end_time, country_code, "immersive_video_watch_average_of_duration_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_rough_rank_by_model"))
     elif kind == "immersive_retention_rough_rank_by_model":    
         immersive_retention_rough_rank_by_model.ImmersiveRetentionRoughRankByModel(start_time, end_time, country_code, "immersive_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rough_rank_by_model"))
+    elif kind == "video_ctr_recall_by_model": 
+        video_ctr_recall_by_model.VideoCtrRecallByModel(start_time, end_time, country_code, "video_ctr_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_model"))
+    elif kind == "video_ctr_people_recall_by_model": 
+        video_ctr_people_recall_by_model.VideoCtrPeopleRecallByModel(start_time, end_time, country_code, "video_ctr_people_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_model"))
+    elif kind == "video_ctr_recall_by_bucket": 
+        video_ctr_recall_by_bucket.VideoCtrRecallByBucket(start_time, end_time, country_code, "video_ctr_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_bucket"))
+    elif kind == "video_ctr_people_recall_by_bucket": 
+        video_ctr_people_recall_by_bucket.VideoCtrPeopleRecallByBucket(start_time, end_time, country_code, "video_ctr_people_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_bucket"))
+    elif kind == "video_ctr_rough_rank_by_model": 
+        video_ctr_rough_rank_by_model.VideoCtrRoughRankByModel(start_time, end_time, country_code, "video_ctr_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rough_rank_by_model"))
+    elif kind == "video_ctr_people_rough_rank_by_model": 
+        video_ctr_people_rough_rank_by_model.VideoCtrPeopleRoughRankByModel(start_time, end_time, country_code, "video_ctr_people_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rough_rank_by_model"))
     else:
         pass
 
