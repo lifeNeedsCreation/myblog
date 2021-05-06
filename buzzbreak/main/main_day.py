@@ -212,12 +212,12 @@ KIND = {
     "immersive_video_watch_average_rough_rank_by_model": 1,      # 粗排实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_rough_rank_by_model": 1,      # 粗排实验平均观看时长(按模型统计)
     "immersive_retention_rough_rank_by_model": 1,   # 粗排实验留存(按模型统计)
-    "video_ctr_recall_by_model": 1,     # 召回实验次数ctr(按模型统计)
-    "video_ctr_people_recall_by_model": 1,     # 召回实验人数ctr(按模型统计)
-    "video_ctr_recall_by_bucket": 1,     # 召回实验次数ctr(按桶统计)
-    "video_ctr_people_recall_by_bucket": 1,     # 召回实验人数ctr(按桶统计)
-    "video_ctr_rough_rank_by_model": 1,     # 粗排实验次数ctr(按模型统计)
-    "video_ctr_people_rough_rank_by_model": 1,     # 粗排实验人数ctr(按模型统计)
+    "video_ctr_recall_by_model": 1,     # 召回实验视频次数ctr(按模型统计)
+    "video_ctr_people_recall_by_model": 1,     # 召回实验视频人数ctr(按模型统计)
+    "video_ctr_recall_by_bucket": 1,     # 召回实验视频次数ctr(按桶统计)
+    "video_ctr_people_recall_by_bucket": 1,     # 召回实验视频人数ctr(按桶统计)
+    "video_ctr_rough_rank_by_model": 1,     # 粗排实验视频次数ctr(按模型统计)
+    "video_ctr_people_rough_rank_by_model": 1,     # 粗排实验视频人数ctr(按模型统计)
 }
 
 
