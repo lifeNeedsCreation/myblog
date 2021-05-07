@@ -120,6 +120,9 @@ from indicator_scripts import video_ctr_recall_by_bucket
 from indicator_scripts import video_ctr_people_recall_by_bucket
 from indicator_scripts import video_ctr_rough_rank_by_model
 from indicator_scripts import video_ctr_people_rough_rank_by_model
+from indicator_scripts import video_click_average_recall_by_model
+from indicator_scripts import video_click_average_recall_by_bucket
+from indicator_scripts import video_click_average_rough_rank_by_model
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -230,6 +233,9 @@ KIND = {
     "video_ctr_people_recall_by_bucket": "video_ctr_people_recall_by_bucket",     # 召回实验视频人数ctr(按桶统计)
     "video_ctr_rough_rank_by_model": "video_ctr_rough_rank_by_model",     # 粗排实验视频次数ctr(按模型统计)
     "video_ctr_people_rough_rank_by_model": "video_ctr_people_rough_rank_by_model",     # 粗排实验视频人数ctr(按模型统计)
+    "video_click_average_recall_by_model": "video_click_average_recall_by_model",       # 召回实验视频平均点击次数(按模型统计)
+    "video_click_average_recall_by_bucket": "video_click_average_recall_by_bucket",      # 召回实验视频平均点击次数(按桶统计)
+    "video_click_average_rough_rank_by_model": "video_click_average_rough_rank_by_model",       # 粗排实验视频平均点击次数(按模型统计)
 }
 
 class AutoSyncMainDay:
@@ -553,6 +559,15 @@ class AutoSyncMainDay:
 
             elif key == "video_ctr_people_rough_rank_by_model": 
                 video_ctr_people_rough_rank_by_model.VideoCtrPeopleRoughRankByModel(start_time, end_time, self.country_code, "video_ctr_people_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rough_rank_by_model"))
+
+            elif KeyError() == "video_click_average_recall_by_model":
+                video_click_average_recall_by_model.VideoClickAverageRecallByModel(start_time, end_time, self.country_code, "video_click_average_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_recall_by_model"))
+
+            elif KeyError() == "video_click_average_recall_by_bucket":
+                video_click_average_recall_by_bucket.VideoClickAverageRecallByBucket(start_time, end_time, self.country_code, "video_click_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_recall_by_bucket"))
+
+            elif KeyError() == "video_click_average_rough_rank_by_model":
+                video_click_average_rough_rank_by_model.VideoClickAverageRoughRankByModel(start_time, end_time, self.country_code, "video_click_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_rough_rank_by_model"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
