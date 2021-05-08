@@ -13,11 +13,11 @@ class PartikoMemoriesNewUsersEventsRetentionWithImpression(object):
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, country_code, indicator, table_name, logger=None):
+    def __init__(self, start_time, end_time, country_code, indicator_dimension, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
         self.country_code = country_code
-        self.indicator = indicator
+        self.indicator_dimension = indicator_dimension
         self.table_name = table_name
         self.logger = logger
         self.fields = ["country_code", "treatment_name", "value", "initial_date", "retention_date", "date_diff", "initial_event", "retention_event", "initial_users", "retention_users", "retention_rate"]
@@ -37,7 +37,7 @@ class PartikoMemoriesNewUsersEventsRetentionWithImpression(object):
         start_time = self.start_time.strftime("%Y-%m-%d")
         end_time = self.end_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
-        params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code, "indicator": self.indicator}
+        params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code, "indicator_dimension": self.indicator_dimension}
         query = sql.format(**params)
         partiko_memories_new_user_events_retention_news_and_video_impression_data = self.get_data(query)
         if partiko_memories_new_user_events_retention_news_and_video_impression_data[self.fields[0]]:
