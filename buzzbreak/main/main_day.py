@@ -370,7 +370,7 @@ if __name__ == "__main__":
         
         partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
 
-        partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, country_code, indicator_dimension, 'partiko_memories_new_users_events_retention_with_impression', logger).compute_data()
+        partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, country_code, indicator_dimension, 'partiko_memories_new_users_events_retention_with_impression', logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_users_events_retention_with_impression"))
         
 
         partiko_experiment_average_of_invites.PartikoExperimentAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_experiment_average_of_invites', logger).compute_data()
@@ -581,7 +581,7 @@ if __name__ == "__main__":
     elif kind == 'partiko_memories_new_users_events_retention':
         partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
     elif kind == 'partiko_memories_new_users_events_retention_with_impression':
-        partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, country_code, indicator_dimension, 'partiko_memories_new_users_events_retention_with_impression', logger).compute_data()
+        partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, country_code, indicator_dimension, 'partiko_memories_new_users_events_retention_with_impression', logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_users_events_retention_with_impression"))
     elif kind == 'partiko_memories_old_users_events_retention':
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention', logger).compute_data()
     elif kind == 'partiko_memories_average_of_invites':

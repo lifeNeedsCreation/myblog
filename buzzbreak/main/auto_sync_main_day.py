@@ -332,7 +332,7 @@ class AutoSyncMainDay:
                 partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "partiko_memories_new_users_events_retention_with_impression":
-                partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data()
+                partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_users_events_retention_with_impression"))
                 
             elif key == "partiko_memories_old_users_events_retention":
                 partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
