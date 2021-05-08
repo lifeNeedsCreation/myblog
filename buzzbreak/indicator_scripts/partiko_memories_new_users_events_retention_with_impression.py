@@ -4,7 +4,7 @@ from utils.mysql import buzzbreak_mysql_client
 from utils.utils import read_sql
 
 
-class PartikoMemoriesNewEventsRetentionWithImpression(object):
+class PartikoMemoriesNewUsersEventsRetentionWithImpression(object):
     """
     : param start_time: 指标计算的开始时间
     : param end_time：指标计算的结束时间
