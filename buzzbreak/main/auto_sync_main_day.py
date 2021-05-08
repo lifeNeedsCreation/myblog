@@ -43,6 +43,7 @@ from indicator_scripts import new_users_events_retention
 from indicator_scripts import old_users_events_retention
 from indicator_scripts import experiment_new_users_retention_tab_impression
 from indicator_scripts import partiko_memories_new_users_events_retention
+from indicator_scripts import partiko_memories_new_users_events_retention_with_impression
 from indicator_scripts import partiko_memories_old_users_events_retention
 from indicator_scripts import partiko_experiment_average_of_invites
 from indicator_scripts import partiko_memories_average_of_invites
@@ -156,6 +157,7 @@ KIND = {
     "new_users_events_retention": "new_users_events_retention",    # 新用户在app_open与tab_impression下的留存
     "old_users_events_retention": "old_users_events_retention",    # app_open与tab_impression 老用户留存
     "partiko_memories_new_users_events_retention": "partiko_memories_new_users_events_retention",       # app_open与tab_impression 实验中新用户留存
+    "partiko_memories_new_users_events_retention_with_impression": "partiko_memories_new_users_events_retention_with_impression",   # 实验中新用户留存(去掉没有新闻视频曝光的用户)
     "partiko_memories_old_users_events_retention": "partiko_memories_old_users_events_retention",       # app_open与tab_impression 实验中老用户留存
     "partiko_experiment_average_of_invites": "partiko_experiment_average_of_invites",     # partiko.experiment 实验中的 平均邀请人数
     "partiko_memories_average_of_invites": "partiko_memories_average_of_invites",     # partiko.memories 实验中的 平均邀请人数
@@ -328,6 +330,9 @@ class AutoSyncMainDay:
                 
             elif key == "partiko_memories_new_users_events_retention":
                 partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
+                
+            elif key == "partiko_memories_new_users_events_retention_with_impression":
+                partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_users_events_retention_with_impression"))
                 
             elif key == "partiko_memories_old_users_events_retention":
                 partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
