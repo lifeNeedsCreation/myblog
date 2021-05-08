@@ -34,6 +34,7 @@ from indicator_scripts import new_users_events_retention
 from indicator_scripts import old_users_events_retention
 from indicator_scripts import experiment_new_users_retention_tab_impression
 from indicator_scripts import partiko_memories_new_users_events_retention
+from indicator_scripts import partiko_memories_new_users_events_retention_with_impression
 from indicator_scripts import partiko_memories_old_users_events_retention
 from indicator_scripts import partiko_experiment_average_of_invites
 from indicator_scripts import partiko_memories_average_of_invites
@@ -142,6 +143,7 @@ KIND = {
     "old_users_events_retention": 1,    # app_open与tab_impression 老用户留存
     "experiment_new_users_retention_tab_impression": 1,     # tab_impression 实验中新用户留存
     "partiko_memories_new_users_events_retention": 1,       # app_open与tab_impression 实验中新用户留存
+    "partiko_memories_new_users_events_retention_with_impression": 1,     # 实验中新用户留存(去掉没有新闻视频曝光的用户)
     "partiko_memories_old_users_events_retention": 1,       # app_open与tab_impression 实验中老用户留存
     "partiko_memories_average_of_invites": 1,     # partiko.memories 实验中的 平均邀请人数
     "new_users_partiko_memories_average_of_invites": 1,     # partiko.memories 实验中的 新用户平均邀请人数
@@ -368,6 +370,9 @@ if __name__ == "__main__":
         
         partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
 
+        partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, country_code, indicator_dimension, 'partiko_memories_new_users_events_retention_with_impression', logger).compute_data()
+        
+
         partiko_experiment_average_of_invites.PartikoExperimentAverageOfInvites(start_time, end_time, indicator_dimension, 'partiko_experiment_average_of_invites', logger).compute_data()
         
         partiko_memories_user_time_average_of_duration.PartikoMemoriesUserTimeAverageOfDuration(start_time, end_time, indicator_dimension, 'partiko_memories_user_time_average_of_duration', logger).compute_data()
@@ -575,6 +580,8 @@ if __name__ == "__main__":
         experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, indicator_dimension, 'experiment_new_users_retention_tab_impression', logger).compute_data()
     elif kind == 'partiko_memories_new_users_events_retention':
         partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_new_users_events_retention', logger).compute_data()
+    elif kind == 'partiko_memories_new_users_events_retention_with_impression':
+        partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, country_code, indicator_dimension, 'partiko_memories_new_users_events_retention_with_impression', logger).compute_data()
     elif kind == 'partiko_memories_old_users_events_retention':
         partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, indicator_dimension, 'partiko_memories_old_users_events_retention', logger).compute_data()
     elif kind == 'partiko_memories_average_of_invites':
