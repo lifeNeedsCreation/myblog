@@ -25,7 +25,7 @@ with
 
     events_one_month as (select * from ((select distinct account_id,extract(date from created_at) as date, json_extract_scalar(data, '$.tab') as event from tab_impression) union all (select distinct id as account_id, extract(date from created_at) as date, 'app_open' as event from initial_app_open))),
 
-    initial_events as (select distinct id, country_code, key, value, created_date as initial_date, event from account_news_impression inner join events_one_month on id = account_id where created_date = date),
+    initial_events as (select distinct id, country_code, key, value, created_date as initial_date, event from account_news_video_impression inner join events_one_month on id = account_id where created_date = date),
 
     retention_events as (select distinct id,country_code,key,value,initial_date, date as retention_date, initial_events.event as initial_event, events_target_time.event as retention_event, date_diff(date, initial_date, day) as date_diff from initial_events inner join events_target_time on id = account_id),
 
