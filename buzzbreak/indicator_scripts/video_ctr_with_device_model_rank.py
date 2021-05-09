@@ -39,19 +39,25 @@ class VideoCtrWithDeviceModelRank(object):
         sql = read_sql(path)
         params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code, "experiments": self.experiments}
         query = sql.format(**params)
-        video_ctr_recall_data = self.get_data(query)
-        if video_ctr_recall_data[self.fields[0]]:
+        video_ctr_with_device_model_rank_data = self.get_data(query)
+        if video_ctr_with_device_model_rank_data[self.fields[0]]:
             # 结果数据存入数据库
             values = ""
+            n = 5000
             for field in self.fields:
                 values += field + ", "
             values += "create_time"
             insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
             now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-            for i in range(len(video_ctr_recall_data[self.fields[0]])):
+            for i in range(len(video_ctr_with_device_model_rank_data[self.fields[0]])):
                 insert_sql += "("
                 for field in self.fields:
-                    insert_sql += f"'{video_ctr_recall_data[field][i]}', "
+                    insert_sql += f'"{video_ctr_with_device_model_rank_data[field][i]}", '
                 insert_sql += f"'{now_time_utc}'),"
-            insert_sql = insert_sql[:-1]
-            buzzbreak_mysql_client.execute_sql(insert_sql)
+                if i % n == 0:
+                    insert_sql1 = insert_sql + value_sql[:-1]
+                    buzzbreak_mysql_client.execute_sql(insert_sql1)
+                    value_sql = ''
+                elif (i - len(video_ctr_with_device_model_rank_data[self.fields[0]])) == 0:
+                    insert_sql2 = insert_sql + value_sql[:-1]
+                    buzzbreak_mysql_client.execute_sql(insert_sql2)
