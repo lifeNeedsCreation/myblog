@@ -50,10 +50,10 @@ class VideoCtrWithDeviceModelRank(object):
             insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
             now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
             for i in range(len(video_ctr_with_device_model_rank_data[self.fields[0]])):
-                insert_sql += "("
+                value_sql += "("
                 for field in self.fields:
-                    insert_sql += f'"{video_ctr_with_device_model_rank_data[field][i]}", '
-                insert_sql += f"'{now_time_utc}'),"
+                    value_sql += f'"{video_ctr_with_device_model_rank_data[field][i]}", '
+                value_sql += f"'{now_time_utc}'),"
                 if i % n == 0:
                     insert_sql1 = insert_sql + value_sql[:-1]
                     buzzbreak_mysql_client.execute_sql(insert_sql1)
