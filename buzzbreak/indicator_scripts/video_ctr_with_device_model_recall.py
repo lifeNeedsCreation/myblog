@@ -49,6 +49,7 @@ class VideoCtrWithDeviceModelRecall(object):
             values += "create_time"
             insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
             now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+            value_sql = ''
             for i in range(len(video_ctr_with_device_model_recall_data[self.fields[0]])):
                 value_sql += "("
                 for field in self.fields:
