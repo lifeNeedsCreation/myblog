@@ -43,6 +43,7 @@ from indicator_scripts import new_users_events_retention
 from indicator_scripts import old_users_events_retention
 from indicator_scripts import experiment_new_users_retention_tab_impression
 from indicator_scripts import partiko_memories_new_users_events_retention
+from indicator_scripts import partiko_memories_new_users_events_retention_with_impression
 from indicator_scripts import partiko_memories_old_users_events_retention
 from indicator_scripts import partiko_experiment_average_of_invites
 from indicator_scripts import partiko_memories_average_of_invites
@@ -114,6 +115,15 @@ from indicator_scripts import immersive_retention_recall_by_bucket
 from indicator_scripts import immersive_video_watch_average_rough_rank_by_model
 from indicator_scripts import immersive_video_watch_average_of_duration_rough_rank_by_model
 from indicator_scripts import immersive_retention_rough_rank_by_model
+from indicator_scripts import video_ctr_recall_by_model
+from indicator_scripts import video_ctr_people_recall_by_model
+from indicator_scripts import video_ctr_recall_by_bucket
+from indicator_scripts import video_ctr_people_recall_by_bucket
+from indicator_scripts import video_ctr_rough_rank_by_model
+from indicator_scripts import video_ctr_people_rough_rank_by_model
+from indicator_scripts import video_click_average_recall_by_model
+from indicator_scripts import video_click_average_recall_by_bucket
+from indicator_scripts import video_click_average_rough_rank_by_model
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -147,6 +157,7 @@ KIND = {
     "new_users_events_retention": "new_users_events_retention",    # 新用户在app_open与tab_impression下的留存
     "old_users_events_retention": "old_users_events_retention",    # app_open与tab_impression 老用户留存
     "partiko_memories_new_users_events_retention": "partiko_memories_new_users_events_retention",       # app_open与tab_impression 实验中新用户留存
+    "partiko_memories_new_users_events_retention_with_impression": "partiko_memories_new_users_events_retention_with_impression",   # 实验中新用户留存(去掉没有新闻视频曝光的用户)
     "partiko_memories_old_users_events_retention": "partiko_memories_old_users_events_retention",       # app_open与tab_impression 实验中老用户留存
     "partiko_experiment_average_of_invites": "partiko_experiment_average_of_invites",     # partiko.experiment 实验中的 平均邀请人数
     "partiko_memories_average_of_invites": "partiko_memories_average_of_invites",     # partiko.memories 实验中的 平均邀请人数
@@ -218,6 +229,15 @@ KIND = {
     "immersive_video_watch_average_rough_rank_by_model": "immersive_video_watch_average_rough_rank_by_model",      # 粗排实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_rough_rank_by_model": "immersive_video_watch_average_of_duration_rough_rank_by_model",      # 粗排实验平均观看时长(按模型统计)
     "immersive_retention_rough_rank_by_model": "immersive_retention_rough_rank_by_model",   # 粗排实验留存(按模型统计)
+    "video_ctr_recall_by_model": "video_ctr_recall_by_model",     # 召回实验视频次数ctr(按模型统计)
+    "video_ctr_people_recall_by_model": "video_ctr_people_recall_by_model",     # 召回实验视频人数ctr(按模型统计)
+    "video_ctr_recall_by_bucket": "video_ctr_recall_by_bucket",     # 召回实验视频次数ctr(按桶统计)
+    "video_ctr_people_recall_by_bucket": "video_ctr_people_recall_by_bucket",     # 召回实验视频人数ctr(按桶统计)
+    "video_ctr_rough_rank_by_model": "video_ctr_rough_rank_by_model",     # 粗排实验视频次数ctr(按模型统计)
+    "video_ctr_people_rough_rank_by_model": "video_ctr_people_rough_rank_by_model",     # 粗排实验视频人数ctr(按模型统计)
+    "video_click_average_recall_by_model": "video_click_average_recall_by_model",       # 召回实验视频平均点击次数(按模型统计)
+    "video_click_average_recall_by_bucket": "video_click_average_recall_by_bucket",      # 召回实验视频平均点击次数(按桶统计)
+    "video_click_average_rough_rank_by_model": "video_click_average_rough_rank_by_model",       # 粗排实验视频平均点击次数(按模型统计)
 }
 
 class AutoSyncMainDay:
@@ -310,6 +330,9 @@ class AutoSyncMainDay:
                 
             elif key == "partiko_memories_new_users_events_retention":
                 partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
+                
+            elif key == "partiko_memories_new_users_events_retention_with_impression":
+                partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_users_events_retention_with_impression"))
                 
             elif key == "partiko_memories_old_users_events_retention":
                 partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
@@ -523,6 +546,33 @@ class AutoSyncMainDay:
 
             elif key == "immersive_retention_rough_rank_by_model":    
                 immersive_retention_rough_rank_by_model.ImmersiveRetentionRoughRankByModel(start_time, end_time, self.country_code, "immersive_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rough_rank_by_model"))
+
+            elif key == "video_ctr_recall_by_model": 
+                video_ctr_recall_by_model.VideoCtrRecallByModel(start_time, end_time, self.country_code, "video_ctr_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_model"))
+
+            elif key == "video_ctr_people_recall_by_model": 
+                video_ctr_people_recall_by_model.VideoCtrPeopleRecallByModel(start_time, end_time, self.country_code, "video_ctr_people_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_model"))
+
+            elif key == "video_ctr_recall_by_bucket": 
+                video_ctr_recall_by_bucket.VideoCtrRecallByBucket(start_time, end_time, self.country_code, "video_ctr_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_bucket"))
+
+            elif key == "video_ctr_people_recall_by_bucket": 
+                video_ctr_people_recall_by_bucket.VideoCtrPeopleRecallByBucket(start_time, end_time, self.country_code, "video_ctr_people_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_bucket"))
+
+            elif key == "video_ctr_rough_rank_by_model": 
+                video_ctr_rough_rank_by_model.VideoCtrRoughRankByModel(start_time, end_time, self.country_code, "video_ctr_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rough_rank_by_model"))
+
+            elif key == "video_ctr_people_rough_rank_by_model": 
+                video_ctr_people_rough_rank_by_model.VideoCtrPeopleRoughRankByModel(start_time, end_time, self.country_code, "video_ctr_people_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rough_rank_by_model"))
+
+            elif KeyError() == "video_click_average_recall_by_model":
+                video_click_average_recall_by_model.VideoClickAverageRecallByModel(start_time, end_time, self.country_code, "video_click_average_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_recall_by_model"))
+
+            elif KeyError() == "video_click_average_recall_by_bucket":
+                video_click_average_recall_by_bucket.VideoClickAverageRecallByBucket(start_time, end_time, self.country_code, "video_click_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_recall_by_bucket"))
+
+            elif KeyError() == "video_click_average_rough_rank_by_model":
+                video_click_average_rough_rank_by_model.VideoClickAverageRoughRankByModel(start_time, end_time, self.country_code, "video_click_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_rough_rank_by_model"))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
