@@ -40,7 +40,7 @@ class VideoCtrWithDeviceModelRecall(object):
         params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code, "experiments": self.experiments}
         query = sql.format(**params)
         video_ctr_with_device_model_recall_data = self.get_data(query)
-         if video_ctr_with_device_model_recall_data[self.fields[0]]:
+        if video_ctr_with_device_model_recall_data[self.fields[0]]:
             # 结果数据存入数据库
             values = ""
             n = 5000
