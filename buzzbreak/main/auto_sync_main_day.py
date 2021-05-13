@@ -302,7 +302,7 @@ class AutoSyncMainDay:
                 video_ctr_notification_old_user_people.VideoCtrNotificationOldUserPeopleData(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "new_user_news_click_average":
-                new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, self.country_code, self.placement, self.indicator_dimension, "day_new_user_news_click_average", logger).compute_data()
+                new_user_news_click_average.NewUserNewsClickAverageData(start_time, end_time, self.country_code, self.placement, self.indicator_dimension, value, logger).compute_data()
 
             elif key == "new_user_video_watch_average":
                 new_user_video_watch_average.NewUserVideoWatchAverageData(start_time, end_time, self.country_code, self.video_placement, self.indicator_dimension, value, self.logger).compute_data()
@@ -317,13 +317,13 @@ class AutoSyncMainDay:
                 new_users_retention_news_event.NewUsersRetentionNewsEvent(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "video_ctr":
-                video_ctr.VideoCTRData(start_time, end_time, self.country_code, self.video_placement, self.indicator_dimension, "day_video_ctr", self.logger).compute_data()
+                video_ctr.VideoCTRData(start_time, end_time, self.country_code, self.video_placement, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "video_ctr_people":
-                video_ctr_people.VideoCTRPeopleData(start_time, end_time, self.country_code, self.video_placement, self.indicator_dimension, "day_video_ctr_people", self.logger).compute_data()
+                video_ctr_people.VideoCTRPeopleData(start_time, end_time, self.country_code, self.video_placement, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "new_users_retention_tab_impression":
-                new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, 'new_users_retention_tab_impression', self.logger).compute_data()
+                new_users_retention_tab_impression.NewUsersRetentionTabImpression(start_time, end_time, value, self.logger).compute_data()
                 
             elif key == "experiment_new_users_retention_tab_impression":
                 experiment_new_users_retention_tab_impression.ExperimentNewUsersRetentionTabImpression(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
@@ -338,7 +338,7 @@ class AutoSyncMainDay:
                 partiko_memories_new_users_events_retention.PartikoMemoriesNewUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "partiko_memories_new_users_events_retention_with_impression":
-                partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_users_events_retention_with_impression"))
+                partiko_memories_new_users_events_retention_with_impression.PartikoMemoriesNewUsersEventsRetentionWithImpression(start_time, end_time, self.country_code, self.indicator_dimension, value, self.logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
                 
             elif key == "partiko_memories_old_users_events_retention":
                 partiko_memories_old_users_events_retention.PartikoMemoriesOldUsersEventsRetention(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
@@ -356,10 +356,10 @@ class AutoSyncMainDay:
                 partiko_memories_user_time_average_of_duration.PartikoMemoriesUserTimeAverageOfDuration(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
                 
             elif key == "partiko_memories_new_user_user_time_average_of_duration":
-                partiko_memories_new_user_user_time_average_of_duration.PartikoMemoriesNewUserUserTimeAverageOfDuration(start_time, end_time, self.indicator_dimension, 'partiko_memories_new_user_user_time_average_of_duration', logger).compute_data("{}/SQL/{}.sql".format(DIR, "partiko_memories_new_user_user_time_average_of_duration"))
+                partiko_memories_new_user_user_time_average_of_duration.PartikoMemoriesNewUserUserTimeAverageOfDuration(start_time, end_time, self.indicator_dimension, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "experiment_immersive_page_duration_avg":
-                experiment_immersive_page_duration_avg.ExperimentImmersivePageDurationAvg(start_time, end_time, self.country_code, 'experiment_immersive_page_duration_avg', logger).compute_data("{}/SQL/{}.sql".format(DIR, "experiment_immersive_page_duration_avg"))
+                experiment_immersive_page_duration_avg.ExperimentImmersivePageDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "new_user_news_ctr_people":
                 new_user_news_ctr_people.NewUserCTRPeopleData(start_time, end_time, self.country_code, self.placement, self.indicator_dimension, value, self.logger).compute_data()
@@ -371,10 +371,10 @@ class AutoSyncMainDay:
             #     partiko_experiment_new_users_retention_tab_impression.PartikoExperimentNewUsersRetentionTabImpression(start_time, end_time, self.indicator_dimension, value, self.logger).compute_data()
 
             elif key == "cash_out":
-                cash_out.CashOut(start_time, end_time, "cash_out", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cash_out"))
+                cash_out.CashOut(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "cashout_by_method":
-                cashout_by_method.CashOutByMethod(start_time, end_time, "cashout_by_method", logger).compute_data("{}/SQL/{}.sql".format(DIR, "cashout_by_method"))
+                cashout_by_method.CashOutByMethod(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "cashout_by_created_at":
                 cashout_by_created_at.CashOutByCreatedAt(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
@@ -383,211 +383,211 @@ class AutoSyncMainDay:
                 cashout_by_money.CashOutByMoney(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_recall":
-                video_ctr_recall.VideoCtrRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall"))
+                video_ctr_recall.VideoCtrRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_dimension_recall":
-                video_ctr_dimension_recall.VideoCtrDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_dimension_recall"))
+                video_ctr_dimension_recall.VideoCtrDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_by_dimension_recall":
-                video_ctr_by_dimension_recall.VideoCtrByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_dimension_recall"))
+                video_ctr_by_dimension_recall.VideoCtrByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_recall_data_index0":
-                video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_data_index0"))
+                video_ctr_recall_data_index0.VideoCtrRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
             
             elif key == "video_ctr_people_recall":
-                video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall"))
+                video_ctr_people_recall.VideoCtrPeopleRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_dimension_recall":
-                video_ctr_people_dimension_recall.VideoCtrPeopleDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_dimension_recall"))
+                video_ctr_people_dimension_recall.VideoCtrPeopleDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_by_dimension_recall":
-                video_ctr_people_by_dimension_recall.VideoCtrPeopleByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_by_dimension_recall"))
+                video_ctr_people_by_dimension_recall.VideoCtrPeopleByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_recall_data_index0":
-                video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_people_recall_data_index0", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_data_index0"))
+                video_ctr_people_recall_data_index0.VideoCtrPeopleRecallDataIndex0(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_rank":
-                video_ctr_rank.VideoCtrRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rank"))
+                video_ctr_rank.VideoCtrRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_rank":
-                video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_people_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rank"))
+                video_ctr_people_rank.VideoCtrPeopleRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_watch_average_of_duration_recall":
-                video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_watch_average_of_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_recall"))
+                video_watch_average_of_duration_recall.VideoWatchAverageOfDurationRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_watch_average_of_duration_by_dimension_recall":
-                video_watch_average_of_duration_by_dimension_recall.VideoWatchAverageOfDurationByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_watch_average_of_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_by_dimension_recall"))
+                video_watch_average_of_duration_by_dimension_recall.VideoWatchAverageOfDurationByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_watch_average_of_duration_rank":
-                video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, self.country_code, self.rank_experiment, "video_watch_average_of_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_rank"))
+                video_watch_average_of_duration_rank.VideoWatchAverageOfDurationRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_retention_recall":
-                immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, self.recall_experiment, "immersive_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall"))
+                immersive_retention_recall.ImmersiveRetentionRecall(start_time, end_time, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_retention_by_dimension_recall":
-                immersive_retention_by_dimension_recall.ImmersiveRetentionByDimensionRecall(start_time, end_time, self.recall_experiment, "immersive_retention_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_by_dimension_recall"))
+                immersive_retention_by_dimension_recall.ImmersiveRetentionByDimensionRecall(start_time, end_time, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
             
             elif key == "immersive_retention_rank":
-                immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, self.rank_experiment, "immersive_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rank"))
+                immersive_retention_rank.ImmersiveRetentionRank(start_time, end_time, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_with_device_model_recall":
-                video_ctr_with_device_model_recall.VideoCtrWithDeviceModelRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_with_device_model_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_device_model_recall"))
+                video_ctr_with_device_model_recall.VideoCtrWithDeviceModelRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_with_device_model_rank":
-                video_ctr_with_device_model_rank.VideoCtrWithDeviceModelRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_with_device_model_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_device_model_rank"))
+                video_ctr_with_device_model_rank.VideoCtrWithDeviceModelRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_with_brand_recall":
-                video_ctr_with_brand_recall.VideoCtrWithBrandRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_ctr_with_brand_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_recall"))
+                video_ctr_with_brand_recall.VideoCtrWithBrandRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_with_brand_rank":
-                video_ctr_with_brand_rank.VideoCtrWithBrandRank(start_time, end_time, self.country_code, self.rank_experiment, "video_ctr_with_brand_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_with_brand_rank"))
+                video_ctr_with_brand_rank.VideoCtrWithBrandRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_watch_average_by_dimension_recall":
-                video_watch_average_by_dimension_recall.VideoWatchAverageByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_watch_average_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_by_dimension_recall"))
+                video_watch_average_by_dimension_recall.VideoWatchAverageByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_watch_average_rank":
-                video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, self.country_code, self.rank_experiment, "video_watch_average_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_rank"))
+                video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "posts":
-                posts.Posts(start_time, end_time, self.country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
+                posts.Posts(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_retention_recall":
-                video_retention_recall.VideoRetentionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall"))
+                video_retention_recall.VideoRetentionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_retention_rank":
-                video_retention_rank.VideoRetentionRank(start_time, end_time, self.country_code, self.rank_experiment, "video_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rank"))
+                video_retention_rank.VideoRetentionRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_average_of_total_duration_recall":
-                video_average_of_total_duration_recall.VideoAverageOfTotalDurationRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_average_of_total_duration_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_recall"))
+                video_average_of_total_duration_recall.VideoAverageOfTotalDurationRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_average_of_total_duration_rank":
-                video_average_of_total_duration_rank.VideoAverageOfTotalDurationRank(start_time, end_time, self.country_code, self.rank_experiment, "video_average_of_total_duration_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_rank"))
+                video_average_of_total_duration_rank.VideoAverageOfTotalDurationRank(start_time, end_time, self.country_code, self.rank_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_average_of_total_duration_by_dimension_recall":
-                video_average_of_total_duration_by_dimension_recall.VideoAverageOfTotalDurationByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, "video_average_of_total_duration_by_dimension_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_average_of_total_duration_by_dimension_recall"))
+                video_average_of_total_duration_by_dimension_recall.VideoAverageOfTotalDurationByDimensionRecall(start_time, end_time, self.country_code, self.recall_experiment, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_without_experiments":
-                video_ctr_without_experiments.VideoCtrWithoutExperiments(start_time, end_time, self.country_code, "video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_without_experiments"))
+                video_ctr_without_experiments.VideoCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
             
             elif key == "video_ctr_people_without_experiments":
-                video_ctr_people_without_experiments.VideoCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, "video_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_without_experiments"))
+                video_ctr_people_without_experiments.VideoCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
             
             elif key == "video_watch_average_of_duration_without_experiments":
-                video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, self.country_code, "video_watch_average_of_duration_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_of_duration_without_experiments"))
+                video_watch_average_of_duration_without_experiments.VideoWatchAverageOfDurationWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "user_total_duration_average":
-                user_total_duration_average.UserTotalDurationAverage(start_time, end_time, self.country_code, "user_total_duration_average", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_total_duration_average"))
+                user_total_duration_average.UserTotalDurationAverage(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "user_avg_cost":
-                user_avg_cost.UserAvgCostOut(start_time, "user_avg_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_avg_cost"))
+                user_avg_cost.UserAvgCostOut(start_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "short_video_ctr":
-                short_video_ctr.ShortVideoCtr(start_time, end_time, self.country_code, "short_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_ctr"))
+                short_video_ctr.ShortVideoCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "short_new_video_ctr":
-                short_new_video_ctr.ShortNewVideoCtr(start_time, end_time, self.country_code, "short_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_ctr"))
+                short_new_video_ctr.ShortNewVideoCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "short_video_completion_rate":
-                short_video_completion_rate.ShortVideoCompletionRate(start_time, end_time, self.country_code, "short_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_video_completion_rate"))
+                short_video_completion_rate.ShortVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "short_new_video_completion_rate":
-                short_new_video_completion_rate.ShortNewVideoCompletionRate(start_time, end_time, self.country_code, "short_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "short_new_video_completion_rate"))
+                short_new_video_completion_rate.ShortNewVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "one_minute_video_ctr":
-                one_minute_video_ctr.OneMinuteVideoCtr(start_time, end_time, self.country_code, "one_minute_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_video_ctr"))
+                one_minute_video_ctr.OneMinuteVideoCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "one_minute_new_video_ctr":
-                one_minute_new_video_ctr.OneMinuteNewVideoCtr(start_time, end_time, self.country_code, "one_minute_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_new_video_ctr"))
+                one_minute_new_video_ctr.OneMinuteNewVideoCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "one_minute_video_completion_rate":
-                one_minute_video_completion_rate.OneMinuteVideoCompletionRate(start_time, end_time, self.country_code, "one_minute_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_video_completion_rate"))
+                one_minute_video_completion_rate.OneMinuteVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "one_minute_new_video_completion_rate":
-                one_minute_new_video_completion_rate.OneMinuteNewVideoCompletionRate(start_time, end_time, self.country_code, "one_minute_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "one_minute_new_video_completion_rate"))
+                one_minute_new_video_completion_rate.OneMinuteNewVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "five_minutes_video_ctr":
-                five_minutes_video_ctr.FiveMinutesVideoCtr(start_time, end_time, self.country_code, "five_minutes_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_video_ctr"))
+                five_minutes_video_ctr.FiveMinutesVideoCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "five_minutes_new_video_ctr":
-                five_minutes_new_video_ctr.FiveMinutesNewVideoCtr(start_time, end_time, self.country_code, "five_minutes_new_video_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_video_ctr"))
+                five_minutes_new_video_ctr.FiveMinutesNewVideoCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "five_minutes_video_completion_rate":
-                five_minutes_video_completion_rate.FiveMinutesVideoCompletionRate(start_time, end_time, self.country_code, "five_minutes_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_video_completion_rate"))
+                five_minutes_video_completion_rate.FiveMinutesVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "five_minutes_new_video_completion_rate":
-                five_minutes_new_video_completion_rate.FiveMinutesNewVideoCompletionRate(start_time, end_time, self.country_code, "five_minutes_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_video_completion_rate"))
+                five_minutes_new_video_completion_rate.FiveMinutesNewVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "notification_video_ctr_without_experiments":
-                notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, self.country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
+                notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "notification_video_ctr_without_experiments_by_people":
-                notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, self.country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
+                notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "new_videos_ctr":
-                new_videos_ctr.NewVideosCtr(start_time, end_time, self.country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
+                new_videos_ctr.NewVideosCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_video_watch_average_recall_by_model":    
-                immersive_video_watch_average_recall_by_model.ImmersiveVideoWatchAverageRecallByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_model"))
+                immersive_video_watch_average_recall_by_model.ImmersiveVideoWatchAverageRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_video_watch_average_of_duration_recall_by_model":    
-                immersive_video_watch_average_of_duration_recall_by_model.ImmersiveVideoWatchAverageOfDurationRecallByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_of_duration_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_model"))
+                immersive_video_watch_average_of_duration_recall_by_model.ImmersiveVideoWatchAverageOfDurationRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_retention_recall_by_model":    
-                immersive_retention_recall_by_model.ImmersiveRetentionRecallByModel(start_time, end_time, self.country_code, "immersive_retention_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall_by_model"))
+                immersive_retention_recall_by_model.ImmersiveRetentionRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_video_watch_average_recall_by_bucket":    
-                immersive_video_watch_average_recall_by_bucket.ImmersiveVideoWatchAverageRecallByBucket(start_time, end_time, self.country_code, "immersive_video_watch_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_recall_by_bucket"))
+                immersive_video_watch_average_recall_by_bucket.ImmersiveVideoWatchAverageRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_video_watch_average_of_duration_recall_by_bucket":    
-                immersive_video_watch_average_of_duration_recall_by_bucket.ImmersiveVideoWatchAverageOfDurationRecallByBucket(start_time, end_time, self.country_code, "immersive_video_watch_average_of_duration_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_recall_by_bucket"))
+                immersive_video_watch_average_of_duration_recall_by_bucket.ImmersiveVideoWatchAverageOfDurationRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_retention_recall_by_bucket":    
-                immersive_retention_recall_by_bucket.ImmersiveRetentionRecallByBucket(start_time, end_time, self.country_code, "immersive_retention_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_recall_by_bucket"))
+                immersive_retention_recall_by_bucket.ImmersiveRetentionRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_video_watch_average_rough_rank_by_model":    
-                immersive_video_watch_average_rough_rank_by_model.ImmersiveVideoWatchAverageRoughRankByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_rough_rank_by_model"))
+                immersive_video_watch_average_rough_rank_by_model.ImmersiveVideoWatchAverageRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_video_watch_average_of_duration_rough_rank_by_model":    
-                immersive_video_watch_average_of_duration_rough_rank_by_model.ImmersiveVideoWatchAverageOfDurationRoughRankByModel(start_time, end_time, self.country_code, "immersive_video_watch_average_of_duration_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_video_watch_average_of_duration_rough_rank_by_model"))
+                immersive_video_watch_average_of_duration_rough_rank_by_model.ImmersiveVideoWatchAverageOfDurationRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "immersive_retention_rough_rank_by_model":    
-                immersive_retention_rough_rank_by_model.ImmersiveRetentionRoughRankByModel(start_time, end_time, self.country_code, "immersive_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "immersive_retention_rough_rank_by_model"))
+                immersive_retention_rough_rank_by_model.ImmersiveRetentionRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_recall_by_model": 
-                video_ctr_recall_by_model.VideoCtrRecallByModel(start_time, end_time, self.country_code, "video_ctr_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_model"))
+                video_ctr_recall_by_model.VideoCtrRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_recall_by_model": 
-                video_ctr_people_recall_by_model.VideoCtrPeopleRecallByModel(start_time, end_time, self.country_code, "video_ctr_people_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_model"))
+                video_ctr_people_recall_by_model.VideoCtrPeopleRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_recall_by_bucket": 
-                video_ctr_recall_by_bucket.VideoCtrRecallByBucket(start_time, end_time, self.country_code, "video_ctr_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_recall_by_bucket"))
+                video_ctr_recall_by_bucket.VideoCtrRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_recall_by_bucket": 
-                video_ctr_people_recall_by_bucket.VideoCtrPeopleRecallByBucket(start_time, end_time, self.country_code, "video_ctr_people_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_recall_by_bucket"))
+                video_ctr_people_recall_by_bucket.VideoCtrPeopleRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_rough_rank_by_model": 
-                video_ctr_rough_rank_by_model.VideoCtrRoughRankByModel(start_time, end_time, self.country_code, "video_ctr_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_rough_rank_by_model"))
+                video_ctr_rough_rank_by_model.VideoCtrRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_ctr_people_rough_rank_by_model": 
-                video_ctr_people_rough_rank_by_model.VideoCtrPeopleRoughRankByModel(start_time, end_time, self.country_code, "video_ctr_people_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_people_rough_rank_by_model"))
+                video_ctr_people_rough_rank_by_model.VideoCtrPeopleRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_click_average_recall_by_model":
-                video_click_average_recall_by_model.VideoClickAverageRecallByModel(start_time, end_time, self.country_code, "video_click_average_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_recall_by_model"))
+                video_click_average_recall_by_model.VideoClickAverageRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_click_average_recall_by_bucket":
-                video_click_average_recall_by_bucket.VideoClickAverageRecallByBucket(start_time, end_time, self.country_code, "video_click_average_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_recall_by_bucket"))
+                video_click_average_recall_by_bucket.VideoClickAverageRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_click_average_rough_rank_by_model":
-                video_click_average_rough_rank_by_model.VideoClickAverageRoughRankByModel(start_time, end_time, self.country_code, "video_click_average_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_click_average_rough_rank_by_model"))
+                video_click_average_rough_rank_by_model.VideoClickAverageRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_retention_recall_by_model":
-                video_retention_recall_by_model.VideoRetentionRecallByModel(start_time, end_time, self.country_code, "video_retention_recall_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall_by_model"))
+                video_retention_recall_by_model.VideoRetentionRecallByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_retention_recall_by_bucket":
-                video_retention_recall_by_bucket.VideoRetentionRecallByBucket(start_time, end_time, self.country_code, "video_retention_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall_by_bucket"))
+                video_retention_recall_by_bucket.VideoRetentionRecallByBucket(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_retention_rough_rank_by_model":
-                video_retention_rough_rank_by_model.VideoRetentionRoughRankByModel(start_time, end_time, self.country_code, "video_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rough_rank_by_model"))
+                video_retention_rough_rank_by_model.VideoRetentionRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
