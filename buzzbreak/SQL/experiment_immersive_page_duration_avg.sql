@@ -1,7 +1,7 @@
 with
     memories as (select * from partiko.memories),
 
-    accounts as (select * from input.accounts where name is not null and country_code in ({country_code})),
+    accounts as (select id, country_code from input.accounts where name is not null and country_code in ({country_code})),
 
     user_time as (select * from stream_events.user_time where created_at >= "{start_time}" and created_at < "{end_time}"),
 
