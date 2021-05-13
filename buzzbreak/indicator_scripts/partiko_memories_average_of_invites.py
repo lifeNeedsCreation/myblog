@@ -53,7 +53,7 @@ class PartikoMemoriesAverageOfInvites:
             f'''
             with
             memories as (select * from partiko.memories where value in ({self.indicator_dimension})),
-            accounts as (select * from input.accounts where name is not null),
+            accounts as (select id, country_code from input.accounts where name is not null),
             referrals as (select * from partiko.referrals where created_at>'{start_time}' and created_at<'{end_time}'),
             app_open as (select * from stream_events.app_open where created_at>'{start_time}' and created_at<'{end_time}'),
             experiment_accounts as (select distinct id,country_code,key,value,updated_at as experiment_timestamp from accounts inner join memories on id=account_id),
