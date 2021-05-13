@@ -242,8 +242,8 @@ KIND = {
     "video_click_average_recall_by_bucket": "video_click_average_recall_by_bucket",      # 召回实验视频平均点击次数(按桶统计)
     "video_click_average_rough_rank_by_model": "video_click_average_rough_rank_by_model",       # 粗排实验视频平均点击次数(按模型统计)
     "video_retention_recall_by_model": "video_retention_recall_by_model",   # 召回实验视频留存(按模型统计)
-    "video_retention_recall_by_bucket": 1,   # 召回实验视频留存(按桶统计)
-    "video_retention_rough_rank_by_model": 1,   # 粗排实验视频留存(按模型统计)
+    "video_retention_recall_by_bucket": "video_retention_recall_by_bucket",   # 召回实验视频留存(按桶统计)
+    "video_retention_rough_rank_by_model": "video_retention_rough_rank_by_model",   # 粗排实验视频留存(按模型统计)
 }
 
 class AutoSyncMainDay:
