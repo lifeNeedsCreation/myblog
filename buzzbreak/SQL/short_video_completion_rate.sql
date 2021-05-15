@@ -7,7 +7,7 @@ with
 
     video_watch_update as (select distinct account_id, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement, duration_in_seconds, date from video_watch),
 
-    video_watch_info as (select country_code, a.*, (case when duration_in_seconds > video_length_seconds then video_length_seconds else duration_in_seconds end) as truely_duration_in_seconds from (select v.*, category, video_length_seconds from video_watch_update as v inner join video on video_id = id) as a inner join accounts on account_id = id),
+    video_watch_info as (select country_code, a.*, (case when duration_in_seconds > video_length_seconds then video_length_seconds else duration_in_seconds end) as truely_duration_in_seconds from (select v.*, category, video_length_seconds from video_watch_update as v inner join video on video_id = id) as a inner join accounts on account_id = id where video_length_seconds != 0),
 
     video_watch_num as (select country_code, date, placement, category, count(*) as watch_num from video_watch_info group by country_code, date, placement, category),
 
