@@ -120,6 +120,10 @@ from indicator_scripts import video_click_average_rough_rank_by_model
 from indicator_scripts import video_retention_recall_by_model
 from indicator_scripts import video_retention_recall_by_bucket
 from indicator_scripts import video_retention_rough_rank_by_model
+from indicator_scripts import thirty_seconds_new_user_app_open_retention
+from indicator_scripts import three_minutes_new_user_app_open_retention
+from indicator_scripts import five_minutes_new_user_app_open_retention
+from indicator_scripts import ten_minutes_new_user_app_open_retention
 
 # 指标列表
 KIND = {
@@ -232,6 +236,10 @@ KIND = {
     "video_retention_recall_by_model": 1,   # 召回实验视频留存(按模型统计)
     "video_retention_recall_by_bucket": 1,   # 召回实验视频留存(按桶统计)
     "video_retention_rough_rank_by_model": 1,   # 粗排实验视频留存(按模型统计)
+    "thirty_seconds_new_user_app_open_retention": 1,   # 使用时长30秒到3分钟的新用户app_open留存
+    "three_minutes_new_user_app_open_retention": 1,   # 使用时长3到5分钟的新用户app_open留存
+    "five_minutes_new_user_app_open_retention": 1,   # 使用时长5到10分钟的新用户app_open留存
+    "ten_minutes_new_user_app_open_retention": 1,   # 使用时长10分钟以上的新用户app_open留存
 }
 
 
@@ -547,6 +555,14 @@ if __name__ == "__main__":
 
         video_retention_rough_rank_by_model.VideoRetentionRoughRankByModel(start_time, end_time, country_code, "video_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rough_rank_by_model"))
 
+        thirty_seconds_new_user_app_open_retention.ThirtySecondsNewUserAppOpenRetention(start_time, end_time, country_code, "thirty_seconds_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "thirty_seconds_new_user_app_open_retention"))
+
+        three_minutes_new_user_app_open_retention.ThreeMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "three_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "three_minutes_new_user_app_open_retention"))
+
+        five_minutes_new_user_app_open_retention.FiveMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "five_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_user_app_open_retention"))
+
+        ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "ten_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ten_minutes_new_user_app_open_retention"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -765,6 +781,14 @@ if __name__ == "__main__":
         video_retention_recall_by_bucket.VideoRetentionRecallByBucket(start_time, end_time, country_code, "video_retention_recall_by_bucket", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall_by_bucket"))
     elif kind == "video_retention_rough_rank_by_model":
         video_retention_rough_rank_by_model.VideoRetentionRoughRankByModel(start_time, end_time, country_code, "video_retention_rough_rank_by_model", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rough_rank_by_model"))
+    elif kind == "thirty_seconds_new_user_app_open_retention":
+        thirty_seconds_new_user_app_open_retention.ThirtySecondsNewUserAppOpenRetention(start_time, end_time, country_code, "thirty_seconds_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "thirty_seconds_new_user_app_open_retention"))
+    elif kind == "three_minutes_new_user_app_open_retention":
+        three_minutes_new_user_app_open_retention.ThreeMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "three_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "three_minutes_new_user_app_open_retention"))
+    elif kind == "five_minutes_new_user_app_open_retention":
+        five_minutes_new_user_app_open_retention.FiveMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "five_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_user_app_open_retention"))
+    elif kind == "ten_minutes_new_user_app_open_retention":
+        ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "ten_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ten_minutes_new_user_app_open_retention"))
     else:
         pass
 
