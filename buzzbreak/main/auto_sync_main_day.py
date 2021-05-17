@@ -127,6 +127,10 @@ from indicator_scripts import video_click_average_rough_rank_by_model
 from indicator_scripts import video_retention_recall_by_model
 from indicator_scripts import video_retention_recall_by_bucket
 from indicator_scripts import video_retention_rough_rank_by_model
+from indicator_scripts import thirty_seconds_new_user_app_open_retention
+from indicator_scripts import three_minutes_new_user_app_open_retention
+from indicator_scripts import five_minutes_new_user_app_open_retention
+from indicator_scripts import ten_minutes_new_user_app_open_retention
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -244,6 +248,11 @@ KIND = {
     "video_retention_recall_by_model": "video_retention_recall_by_model",   # 召回实验视频留存(按模型统计)
     "video_retention_recall_by_bucket": "video_retention_recall_by_bucket",   # 召回实验视频留存(按桶统计)
     "video_retention_rough_rank_by_model": "video_retention_rough_rank_by_model",   # 粗排实验视频留存(按模型统计)
+    "thirty_seconds_new_user_app_open_retention": "thirty_seconds_new_user_app_open_retention",   # 使用时长30秒到3分钟的新用户app_open留存
+    "three_minutes_new_user_app_open_retention": "three_minutes_new_user_app_open_retention",   # 使用时长3到5分钟的新用户app_open留存
+    "five_minutes_new_user_app_open_retention": "five_minutes_new_user_app_open_retention",   # 使用时长5到10分钟的新用户app_open留存
+    "ten_minutes_new_user_app_open_retention": "ten_minutes_new_user_app_open_retention",   # 使用时长10分钟以上的新用户app_open留存
+
 }
 
 class AutoSyncMainDay:
@@ -588,6 +597,18 @@ class AutoSyncMainDay:
 
             elif key == "video_retention_rough_rank_by_model":
                 video_retention_rough_rank_by_model.VideoRetentionRoughRankByModel(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "thiry_seconds_new_user_app_open_retention":
+                thiry_seconds_new_user_app_open_rteention.ThirtySecondsNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "three_minutes_new_user_app_open_retention":
+                three_minutes_new_user_app_open_retention.ThreeMinutesNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "five_minutes_new_user_app_open_retention":
+                five_minutes_new_user_app_open_retention.FiveMinutesNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "ten_minutes_new_user_app_open_retention":
+                ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
