@@ -131,6 +131,8 @@ from indicator_scripts import thirty_seconds_new_user_app_open_retention
 from indicator_scripts import three_minutes_new_user_app_open_retention
 from indicator_scripts import five_minutes_new_user_app_open_retention
 from indicator_scripts import ten_minutes_new_user_app_open_retention
+from indicator_scripts import push_ctr_without_experiments
+from indicator_scripts import push_ctr_people_without_experiments
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -252,6 +254,8 @@ KIND = {
     "three_minutes_new_user_app_open_retention": "three_minutes_new_user_app_open_retention",   # 使用时长3到5分钟的新用户app_open留存
     "five_minutes_new_user_app_open_retention": "five_minutes_new_user_app_open_retention",   # 使用时长5到10分钟的新用户app_open留存
     "ten_minutes_new_user_app_open_retention": "ten_minutes_new_user_app_open_retention",   # 使用时长10分钟以上的新用户app_open留存
+    "push_ctr_without_experiments": "push_ctr_without_experiments",     # 推送的ctr(次数)
+    "push_ctr_people_without_experiments": "push_ctr_people_without_experiments",     # 推送的ctr(人数)
 
 }
 
@@ -609,6 +613,12 @@ class AutoSyncMainDay:
 
             elif key == "ten_minutes_new_user_app_open_retention":
                 ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "push_ctr_without_experiments":
+                push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).computa_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "push_ctr_people_without_experiments":
+                push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, value, logger).computa_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

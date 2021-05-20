@@ -124,6 +124,8 @@ from indicator_scripts import thirty_seconds_new_user_app_open_retention
 from indicator_scripts import three_minutes_new_user_app_open_retention
 from indicator_scripts import five_minutes_new_user_app_open_retention
 from indicator_scripts import ten_minutes_new_user_app_open_retention
+from indicator_scripts import push_ctr_without_experiments
+from indicator_scripts import push_ctr_people_without_experiments
 
 # 指标列表
 KIND = {
@@ -240,6 +242,8 @@ KIND = {
     "three_minutes_new_user_app_open_retention": 1,   # 使用时长3到5分钟的新用户app_open留存
     "five_minutes_new_user_app_open_retention": 1,   # 使用时长5到10分钟的新用户app_open留存
     "ten_minutes_new_user_app_open_retention": 1,   # 使用时长10分钟以上的新用户app_open留存
+    "push_ctr_without_experiments": 1,     # 推送的ctr(次数)
+    "push_ctr_people_without_experiments": 1,     # 推送的ctr(人数)
 }
 
 
@@ -563,6 +567,10 @@ if __name__ == "__main__":
 
         ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "ten_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ten_minutes_new_user_app_open_retention"))
 
+        push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, country_code, "push_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_without_experiments"))
+
+        push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -789,6 +797,10 @@ if __name__ == "__main__":
         five_minutes_new_user_app_open_retention.FiveMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "five_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_user_app_open_retention"))
     elif kind == "ten_minutes_new_user_app_open_retention":
         ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "ten_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ten_minutes_new_user_app_open_retention"))
+    elif kind == "push_ctr_without_experiments":
+        push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, country_code, "push_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_without_experiments"))
+    elif kind == "push_ctr_people_without_experiments":
+        push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
     else:
         pass
 
