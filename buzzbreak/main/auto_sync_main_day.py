@@ -619,16 +619,16 @@ class AutoSyncMainDay:
                 ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "push_ctr_without_experiments":
-                push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).computa_data("{}/SQL/{}.sql".format(DIR, value))
+                push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "push_ctr_people_without_experiments":
-                push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, value, logger).computa_data("{}/SQL/{}.sql".format(DIR, value))
+                push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "points_out_statistics":
-                points_out_statistics.PointsOutStatistics(start_time, end_time, self.country_code, value, logger).computa_data("{}/SQL/{}.sql".format(DIR, value))
+                points_out_statistics.PointsOutStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "points_in_statistics":
-                points_in_statistics.PointsInStatistics(start_time, end_time, self.country_code, value, logger).computa_data("{}/SQL/{}.sql".format(DIR, value))
+                points_in_statistics.PointsInStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
