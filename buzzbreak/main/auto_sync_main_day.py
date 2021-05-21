@@ -134,6 +134,7 @@ from indicator_scripts import ten_minutes_new_user_app_open_retention
 from indicator_scripts import push_ctr_without_experiments
 from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import points_out_statistics
+from indicator_scripts import points_out_purpose_statistics
 from indicator_scripts import points_in_statistics
 
 # 新用户指标
@@ -259,6 +260,7 @@ KIND = {
     "push_ctr_without_experiments": "push_ctr_without_experiments",     # 推送的ctr(次数)
     "push_ctr_people_without_experiments": "push_ctr_people_without_experiments",     # 推送的ctr(人数)
     "points_out_statistics": "points_out_statistics",   # 积分支出统计
+    "points_out_purpose_statistics": "points_out_purpose_statistics",   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": "points_in_statistics",   # 积分收入统计
 
 }
@@ -626,6 +628,9 @@ class AutoSyncMainDay:
 
             elif key == "points_out_statistics":
                 points_out_statistics.PointsOutStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "points_out_purpose_statistics":
+                points_out_purpose_statistics.PointsOutPurposeStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "points_in_statistics":
                 points_in_statistics.PointsInStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))

@@ -127,6 +127,7 @@ from indicator_scripts import ten_minutes_new_user_app_open_retention
 from indicator_scripts import push_ctr_without_experiments
 from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import points_out_statistics
+from indicator_scripts import points_out_purpose_statistics
 from indicator_scripts import points_in_statistics
 
 # 指标列表
@@ -247,6 +248,7 @@ KIND = {
     "push_ctr_without_experiments": 1,     # 推送的ctr(次数)
     "push_ctr_people_without_experiments": 1,     # 推送的ctr(人数)
     "points_out_statistics": 1,   # 积分支出统计
+    "points_out_purpose_statistics": 1,   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": 1,   # 积分收入统计
 }
 
@@ -577,6 +579,8 @@ if __name__ == "__main__":
 
         points_out_statistics.PointsOutStatistics(start_time, end_time, country_code, "points_out_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_statistics"))
 
+        points_out_purpose_statistics.PointsOutPurposeStatistics(start_time, end_time, country_code, "points_out_purpose_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_purpose_statistics"))
+
         points_in_statistics.PointsInStatistics(start_time, end_time, country_code, "points_in_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_in_statistics"))
 
 
@@ -811,6 +815,8 @@ if __name__ == "__main__":
         push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
     elif kind == "points_out_statistics":
         points_out_statistics.PointsOutStatistics(start_time, end_time, country_code, "points_out_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_statistics"))
+    elif kind == "points_out_purpose_statistics":
+        points_out_purpose_statistics.PointsOutPurposeStatistics(start_time, end_time, country_code, "points_out_purpose_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_purpose_statistics"))
     elif kind == "points_in_statistics":
         points_in_statistics.PointsInStatistics(start_time, end_time, country_code, "points_in_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_in_statistics"))
     else:
