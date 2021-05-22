@@ -45,6 +45,8 @@ with
 
     initial_count as (select country_code, initial_date, count(distinct account_id) as initial_num from initial_event group by country_code, initial_date),
 
-    retention_count as (select country_code, initial_date, retention_date, date_diff, count(distinct account_id) as retention_num from retention_event group by country_code, initial_date, retention_date, date_diff)
+    retention_count as (select country_code, initial_date, retention_date, date_diff, count(distinct account_id) as retention_num from retention_event group by country_code, initial_date, retention_date, date_diff),
 
-    select i.country_code as country_code, i.initial_date as initial_date, retention_date, date_diff, initial_num, retention_num, round(retention_num/initial_num, 4) as retention_rate from initial_count as i inner join retention_count as r on i.country_code = r.country_code and i.initial_date = r.initial_date order by country_code, initial_date, date_diff
+    a as (select i.country_code as country_code, i.initial_date as initial_date, retention_date, date_diff, initial_num, retention_num, round(retention_num/initial_num, 4) as retention_rate from initial_count as i inner join retention_count as r on i.country_code = r.country_code and i.initial_date = r.initial_date order by country_code, initial_date, date_diff)
+
+    select a.country_code as country_code, initial_date, retention_date, date_diff, initial_num, new_user_total_num, round(initial_num/new_user_total_num, 4) as ratio, retention_num, retention_rate from a inner join new_user_total as n on a.country_code = n.country_code and date = initial_date
