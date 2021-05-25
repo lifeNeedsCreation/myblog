@@ -37,4 +37,4 @@ with
 
     retention_count as (select country_code, initial_date, retention_date, date_diff, key, value, count(distinct account_id) as retention_num from retention_event group by country_code, initial_date, retention_date, date_diff, key, value)
     
-    select i.country_code as country_code, i.initial_date as initial_date, retention_date, date_diff, i.key as treatment_name, i.value as value, initial_num, retention_num, round(retention_num/initial_num, 4) as retention_rate from initial_count as i inner join retention_count as r on i.country_code = r.country_code and i.initial_date = r.initial_date and i.key = r.key and i.value = r.value order by country_code, initial_date, date_diff, key, value
+    select i.country_code as country_code, i.initial_date as initial_date, retention_date, date_diff, i.key as treatment_name, i.value as value, initial_num, retention_num, round(retention_num/initial_num, 4) as retention_rate from initial_count as i inner join retention_count as r on i.country_code = r.country_code and i.initial_date = r.initial_date and i.key = r.key and i.value = r.value order by country_code, initial_date, date_diff, treatment_name, value
