@@ -18,7 +18,7 @@ class NewUserInviteMasterWithReferrals(object):
         self.country_code = country_code
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "date", "key", "value", "user_num"]
+        self.fields = ["country_code", "date", "treatment_name", "value", "user_num"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):

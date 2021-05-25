@@ -5,4 +5,4 @@ with
 
     account_memories as (select country_code, account_id, key, value, extract(date from updated_at) as date from account as a inner join partiko.memories as m on id = account_id and date <= extract(date from updated_at) and key = 'experiment_treatment_group_new_invite' and value in ('control', 'treatment') and updated_at >= '2021-05-22')
 
-    select country_code, date, key, value, count(distinct account_id) as user_num from account_memories where date >= '{start_time}' and date < '{end_time}' group by country_code, date, key, value order by country_code, date, key, value
+    select country_code, date, key as treatment_name, value, count(distinct account_id) as user_num from account_memories where date >= '{start_time}' and date < '{end_time}' group by country_code, date, key, value order by country_code, date, key, value

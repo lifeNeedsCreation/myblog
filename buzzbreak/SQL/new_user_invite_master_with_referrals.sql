@@ -9,4 +9,4 @@ with
 
     account_memories_referrals as (select country_code, account_id, key, value, extract(date from updated_at) as date from account_memories inner join referrals on account_id = referrer_account_id and updated_at < created_at)
 
-    select country_code, date, key, value, count(distinct account_id) as user_num from account_memories_referrals where date >= '{start_time}' and date < '{end_time}' group by country_code, date, key, value order by country_code, date, key, value
+    select country_code, date, key as treatment_name, value, count(distinct account_id) as user_num from account_memories_referrals where date >= '{start_time}' and date < '{end_time}' group by country_code, date, key, value order by country_code, date, key, value

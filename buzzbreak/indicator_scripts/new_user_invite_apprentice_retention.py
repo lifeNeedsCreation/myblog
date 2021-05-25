@@ -18,7 +18,7 @@ class NewUserInviteApprenticeRetention(object):
         self.country_code = country_code
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "initial_date", "retention_date", "date_diff", "key", "value", "initial_num", "retention_num", "retention_rate"]
+        self.fields = ["country_code", "initial_date", "retention_date", "date_diff", "treatment_name", "value", "initial_num", "retention_num", "retention_rate"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
