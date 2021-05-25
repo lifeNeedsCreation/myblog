@@ -136,6 +136,9 @@ from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import points_out_statistics
 from indicator_scripts import points_out_purpose_statistics
 from indicator_scripts import points_in_statistics
+from indicator_scripts import new_user_invite_master
+from indicator_scripts import new_user_invite_master_with_referrals
+from indicator_scripts import new_user_invite_apprentice_retention
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -262,6 +265,10 @@ KIND = {
     "points_out_statistics": "points_out_statistics",   # 积分支出统计
     "points_out_purpose_statistics": "points_out_purpose_statistics",   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": "points_in_statistics",   # 积分收入统计
+    "new_user_invite_master": "new_user_invite_master",     # new_user_inivte实验中每日进入实验的师傅的人数
+    "new_user_invite_master_with_referrals": "new_user_invite_master_with_referrals",     # new_user_inivte实验中每日进入实验且有邀请行为的师傅的人数
+    "new_user_invite_apprentice_retention": "new_user_invite_apprentice_retention",     # new_user_inivte实验中徒弟的留存
+    
 
 }
 
@@ -634,6 +641,15 @@ class AutoSyncMainDay:
 
             elif key == "points_in_statistics":
                 points_in_statistics.PointsInStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "new_user_invite_master":
+                new_user_invite_master.NewUserInviteMaster(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "new_user_invite_master_with_referrals":
+                new_user_invite_master_with_referrals.NewUserInviteMasterWithReferrals(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "new_user_invite_apprentice_retention":
+                new_user_invite_apprentice_retention.NewUserInviteApprenticeRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

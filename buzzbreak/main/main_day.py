@@ -129,6 +129,9 @@ from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import points_out_statistics
 from indicator_scripts import points_out_purpose_statistics
 from indicator_scripts import points_in_statistics
+from indicator_scripts import new_user_invite_master
+from indicator_scripts import new_user_invite_master_with_referrals
+from indicator_scripts import new_user_invite_apprentice_retention
 
 # 指标列表
 KIND = {
@@ -250,6 +253,9 @@ KIND = {
     "points_out_statistics": 1,   # 积分支出统计
     "points_out_purpose_statistics": 1,   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": 1,   # 积分收入统计
+    "new_user_invite_master": 1,     # new_user_inivte实验中每日进入实验的师傅的人数
+    "new_user_invite_master_with_referrals": 1,     # new_user_inivte实验中每日进入实验且有邀请行为的师傅的人数
+    "new_user_invite_apprentice_retention": 1,     # new_user_inivte实验中徒弟的留存
 }
 
 
@@ -583,6 +589,12 @@ if __name__ == "__main__":
 
         points_in_statistics.PointsInStatistics(start_time, end_time, country_code, "points_in_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_in_statistics"))
 
+        new_user_invite_master.NewUserInviteMaster(start_time, end_time, country_code, "new_user_invite_master", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_master"))
+
+        new_user_invite_master_with_referrals.NewUserInviteMasterWithReferrals(start_time, end_time, country_code, "new_user_invite_master_with_referrals", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_master_with_referrals"))
+
+        new_user_invite_apprentice_retention.NewUserInviteApprenticeRetention(start_time, end_time, country_code, "new_user_invite_apprentice_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_apprentice_retention"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -819,6 +831,12 @@ if __name__ == "__main__":
         points_out_purpose_statistics.PointsOutPurposeStatistics(start_time, end_time, country_code, "points_out_purpose_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_purpose_statistics"))
     elif kind == "points_in_statistics":
         points_in_statistics.PointsInStatistics(start_time, end_time, country_code, "points_in_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_in_statistics"))
+    elif kind == "new_user_invite_master":
+         new_user_invite_master.NewUserInviteMaster(start_time, end_time, country_code, "new_user_invite_master", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_master"))
+    elif kind == "new_user_invite_master_with_referrals":
+        new_user_invite_master_with_referrals.NewUserInviteMasterWithReferrals(start_time, end_time, country_code, "new_user_invite_master_with_referrals", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_master_with_referrals"))
+    elif kind == "new_user_invite_apprentice_retention":
+        new_user_invite_apprentice_retention.NewUserInviteApprenticeRetention(start_time, end_time, country_code, "new_user_invite_apprentice_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_apprentice_retention"))
     else:
         pass
 
