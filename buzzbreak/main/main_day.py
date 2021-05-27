@@ -132,6 +132,7 @@ from indicator_scripts import points_in_statistics
 from indicator_scripts import new_user_invite_master
 from indicator_scripts import new_user_invite_master_with_referrals
 from indicator_scripts import new_user_invite_apprentice_retention
+from indicator_scripts import new_user_retention_by_brand
 
 # 指标列表
 KIND = {
@@ -256,6 +257,7 @@ KIND = {
     "new_user_invite_master": 1,     # new_user_inivte实验中每日进入实验的师傅的人数
     "new_user_invite_master_with_referrals": 1,     # new_user_inivte实验中每日进入实验且有邀请行为的师傅的人数
     "new_user_invite_apprentice_retention": 1,     # new_user_inivte实验中徒弟的留存
+    "new_user_retention_by_brand": 1,     # 新用户留存(按手机品牌)
 }
 
 
@@ -595,6 +597,8 @@ if __name__ == "__main__":
 
         new_user_invite_apprentice_retention.NewUserInviteApprenticeRetention(start_time, end_time, country_code, "new_user_invite_apprentice_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_apprentice_retention"))
 
+        new_user_retention_by_brand.NewUserRetentionByBrand(start_time, end_time, country_code, "new_user_retention_by_brand", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_retention_by_brand"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -837,6 +841,8 @@ if __name__ == "__main__":
         new_user_invite_master_with_referrals.NewUserInviteMasterWithReferrals(start_time, end_time, country_code, "new_user_invite_master_with_referrals", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_master_with_referrals"))
     elif kind == "new_user_invite_apprentice_retention":
         new_user_invite_apprentice_retention.NewUserInviteApprenticeRetention(start_time, end_time, country_code, "new_user_invite_apprentice_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_invite_apprentice_retention"))
+    elif kind == "new_user_retention_by_brand":
+        new_user_retention_by_brand.NewUserRetentionByBrand(start_time, end_time, country_code, "new_user_retention_by_brand", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_retention_by_brand"))
     else:
         pass
 

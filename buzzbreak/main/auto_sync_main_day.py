@@ -139,6 +139,7 @@ from indicator_scripts import points_in_statistics
 from indicator_scripts import new_user_invite_master
 from indicator_scripts import new_user_invite_master_with_referrals
 from indicator_scripts import new_user_invite_apprentice_retention
+from indicator_scripts import new_user_retention_by_brand
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -268,8 +269,7 @@ KIND = {
     "new_user_invite_master": "new_user_invite_master",     # new_user_inivte实验中每日进入实验的师傅的人数
     "new_user_invite_master_with_referrals": "new_user_invite_master_with_referrals",     # new_user_inivte实验中每日进入实验且有邀请行为的师傅的人数
     "new_user_invite_apprentice_retention": "new_user_invite_apprentice_retention",     # new_user_inivte实验中徒弟的留存
-    
-
+    "new_user_retention_by_brand": "new_user_retention_by_brand",     # 新用户留存(按手机品牌)
 }
 
 class AutoSyncMainDay:
@@ -650,6 +650,9 @@ class AutoSyncMainDay:
 
             elif key == "new_user_invite_apprentice_retention":
                 new_user_invite_apprentice_retention.NewUserInviteApprenticeRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "new_user_retention_by_brand":
+                new_user_retention_by_brand.NewUserRetentionByBrand(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
