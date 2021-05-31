@@ -23,7 +23,7 @@ with
 
     thirty_day_app_open as (select distinct account_id, extract(date from created_at) as date from stream_events.app_open where created_at >= timestamp_sub(timestamp'{start_time}', interval 30 day) and created_at < timestamp_sub(timestamp'{end_time}', interval 30 day)),
 
-    app_open_all as (select * from app_open union distinct select * from one_day_app_open union distinct select * from three_day_app_open union distinct select * from fourteen_day_app_open union distinct select * from thirty_day_app_open),
+    app_open_all as (select * from app_open union distinct select * from one_day_app_open union distinct select * from three_day_app_open union distinct select * from seven_day_app_open union distinct select * from fourteen_day_app_open union distinct select * from thirty_day_app_open),
 
     account_app_open_all as (select country_code, u.account_id as account_id, key, value, u.date as date from users_info as u inner join app_open_all as a on u.account_id = a.account_id and u.date = a.date),
 
