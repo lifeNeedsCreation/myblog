@@ -141,6 +141,9 @@ from indicator_scripts import new_user_invite_master
 from indicator_scripts import new_user_invite_master_with_referrals
 from indicator_scripts import new_user_invite_apprentice_retention
 from indicator_scripts import new_user_retention_by_brand
+from indicator_scripts import news_read_duration_avg
+from indicator_scripts import video_watch_duration_avg
+from indicator_scripts import video_impression_duration_avg
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -272,6 +275,9 @@ KIND = {
     "new_user_invite_master_with_referrals": "new_user_invite_master_with_referrals",     # new_user_inivte实验中每日进入实验且有邀请行为的师傅的人数
     "new_user_invite_apprentice_retention": "new_user_invite_apprentice_retention",     # new_user_inivte实验中徒弟的留存
     "new_user_retention_by_brand": "new_user_retention_by_brand",     # 新用户留存(按手机品牌)
+    "news_read_duration_avg": "news_read_duration_avg",     # 用户读新闻平均时长
+    "video_watch_duration_avg": "video_watch_duration_avg",     # 用户沉浸流平均时长
+    "video_impression_duration_avg": "video_impression_duration_avg",     # 用户沉浸流外平均时长
 }
 
 class AutoSyncMainDay:
@@ -658,6 +664,15 @@ class AutoSyncMainDay:
 
             elif key == "new_user_retention_by_brand":
                 new_user_retention_by_brand.NewUserRetentionByBrand(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "news_read_duration_avg":
+                news_read_duration_avg.NewsReadDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "video_watch_duration_avg":
+                video_watch_duration_avg.VideoWatchDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "video_impression_duration_avg":
+                video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
