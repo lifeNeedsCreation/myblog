@@ -729,7 +729,7 @@ if __name__ == "__main__":
     elif kind == "posts":
         posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
     elif kind == "posts_user_count":
-        posts_user_count.PostUserCount(start_time, end_time, country_code, "posts_user_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts_user_count"))
+        posts_user_count.PostsUserCount(start_time, end_time, country_code, "posts_user_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts_user_count"))
     elif kind == "video_retention_recall":
         video_retention_recall.VideoRetentionRecall(start_time, end_time, country_code, recall_experiment, "video_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall"))
     elif kind == "video_retention_rank":
