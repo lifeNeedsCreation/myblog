@@ -74,6 +74,7 @@ from indicator_scripts import video_ctr_with_brand_rank
 from indicator_scripts import video_watch_average_by_dimension_recall
 from indicator_scripts import video_watch_average_rank
 from indicator_scripts import posts
+from indicator_scripts import posts_user_count
 from indicator_scripts import video_retention_recall
 from indicator_scripts import video_retention_rank
 from indicator_scripts import video_average_of_total_duration_recall
@@ -199,6 +200,7 @@ KIND = {
     "video_watch_average_by_dimension_recall": 1,   # 召回实验平均观看次数(按实验维度分组)
     "video_watch_average_rank": 1,   # Rank实验平均观看次数(按实验策略分组)
     "posts": 1,     # 发帖数量统计
+    "posts_user_count": 1,     # 发帖人数统计
     "video_retention_recall": 1,    # 召回实验视频留存(按实验策略分组)
     "video_retention_rank": 1,      # Rank实验视频留存(按实验策略分组)
     "video_average_of_total_duration_recall": 1,    # 召回实验用户平均总时长
@@ -481,6 +483,8 @@ if __name__ == "__main__":
 
         posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
 
+        posts_user_count.PostsUserCount(start_time, end_time, country_code, "posts_user_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts_user_count"))
+
         video_retention_recall.VideoRetentionRecall(start_time, end_time, country_code, recall_experiment, "video_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall"))
 
         video_retention_rank.VideoRetentionRank(start_time, end_time, country_code, rank_experiment, "video_retention_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_rank"))
@@ -724,6 +728,8 @@ if __name__ == "__main__":
         video_watch_average_rank.VideoWatchAverageRank(start_time, end_time, country_code, rank_experiment, "video_watch_average_rank", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_average_rank"))
     elif kind == "posts":
         posts.Posts(start_time, end_time, country_code, "posts", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts"))
+    elif kind == "posts_user_count":
+        posts_user_count.PostUserCount(start_time, end_time, country_code, "posts_user_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "posts_user_count"))
     elif kind == "video_retention_recall":
         video_retention_recall.VideoRetentionRecall(start_time, end_time, country_code, recall_experiment, "video_retention_recall", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_retention_recall"))
     elif kind == "video_retention_rank":
