@@ -264,8 +264,8 @@ KIND = {
     "new_user_invite_apprentice_retention": 1,     # new_user_inivte实验中徒弟的留存
     "new_user_retention_by_brand": 1,     # 新用户留存(按手机品牌)
     "news_read_duration_avg": 1,     # 用户读新闻平均时长
-    "video_watch_duration_avg": 1,     # 用户沉浸流平均时长
-    "video_impression_duration_avg": 1,     # 用户沉浸流外平均时长
+    "video_watch_duration_avg": 1,     # 用户沉浸流看视频平均时长
+    "video_impression_duration_avg": 1,     # 用户沉浸外看视频流外平均时长
 }
 
 

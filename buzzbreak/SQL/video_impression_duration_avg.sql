@@ -1,7 +1,7 @@
 with
-    accounts as (select id, country_code from input.accounts where name is not null and country_code in ('ID')),
+    accounts as (select id, country_code from input.accounts where name is not null and country_code in ({country_code})),
 
-    user_time as (select account_id, safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) as duration_in_seconds, extract(date from created_at) as date from stream_events.user_time where created_at >= '2021-05-01' and created_at < '2021-06-01' and json_extract_scalar(data, '$.page') like 'videos%'),
+    user_time as (select account_id, safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) as duration_in_seconds, extract(date from created_at) as date from stream_events.user_time where created_at >= '{start_time}' and created_at < '{end_time}' and json_extract_scalar(data, '$.page') like 'videos%'),
 
     account_user_time as (select country_code, account_id, duration_in_seconds, date from user_time inner join accounts on account_id = id),
 

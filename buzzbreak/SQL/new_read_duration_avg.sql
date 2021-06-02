@@ -1,7 +1,7 @@
 with
-    accounts as (select id, country_code from input.accounts where name is not null and country_code in ('ID')),
+    accounts as (select id, country_code from input.accounts where name is not null and country_code in ({country_code})),
 
-    news_read as (select account_id, safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) as duration_in_seconds, extract(date from created_at) as date from stream_events.news_read where created_at >= '2021-05-01' and created_at < '2021-06-01'),
+    news_read as (select account_id, safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) as duration_in_seconds, extract(date from created_at) as date from stream_events.news_read where created_at >= '{start_time}' and created_at < '{end_time}'),
 
     account_news_read as (select country_code, account_id, duration_in_seconds, date from news_read inner join accounts on account_id = id),
 
