@@ -135,7 +135,9 @@ from indicator_scripts import new_user_invite_master_with_referrals
 from indicator_scripts import new_user_invite_apprentice_retention
 from indicator_scripts import new_user_retention_by_brand
 from indicator_scripts import news_read_duration_avg
+from indicator_scripts import news_read_duration_avg_by_count
 from indicator_scripts import video_watch_duration_avg
+from indicator_scripts import video_watch_duration_avg_by_count
 from indicator_scripts import video_impression_duration_avg
 
 # 指标列表
@@ -264,7 +266,9 @@ KIND = {
     "new_user_invite_apprentice_retention": 1,     # new_user_inivte实验中徒弟的留存
     "new_user_retention_by_brand": 1,     # 新用户留存(按手机品牌)
     "news_read_duration_avg": 1,     # 用户读新闻平均时长
+    "news_read_duration_avg_by_count": 1,     # 用户读一个新闻平均时长
     "video_watch_duration_avg": 1,     # 用户沉浸流看视频平均时长
+    "video_watch_duration_avg_by_count": 1,     # 用户沉浸流看一个视频平均时长
     "video_impression_duration_avg": 1,     # 用户沉浸外看视频流外平均时长
 }
 
@@ -611,7 +615,11 @@ if __name__ == "__main__":
 
         news_read_duration_avg.NewsReadDurationAvg(start_time, end_time, country_code, "news_read_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "news_read_duration_avg"))
 
+        news_read_duration_avg_by_count.NewsReadDurationAvgByCount(start_time, end_time, country_code, "news_read_duration_avg_by_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "news_read_duration_avg_by_count"))
+
         video_watch_duration_avg.VideoWatchDurationAvg(start_time, end_time, country_code, "video_watch_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_duration_avg"))
+
+        video_watch_duration_avg_by_count.VideoWatchDurationAvgByCount(start_time, end_time, country_code, "video_watch_duration_avg_by_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_duration_avg_by_count"))
 
         video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, country_code, "video_impression_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_duration_avg"))
 
@@ -863,8 +871,12 @@ if __name__ == "__main__":
         new_user_retention_by_brand.NewUserRetentionByBrand(start_time, end_time, country_code, "new_user_retention_by_brand", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_user_retention_by_brand"))
     elif kind == "news_read_duration_avg":
         news_read_duration_avg.NewsReadDurationAvg(start_time, end_time, country_code, "news_read_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "news_read_duration_avg"))
+    elif kind == "news_read_duration_avg_by_count":
+        news_read_duration_avg_by_count.NewsReadDurationAvgByCount(start_time, end_time, country_code, "news_read_duration_avg_by_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "news_read_duration_avg_by_count"))
     elif kind == "video_watch_duration_avg":
         video_watch_duration_avg.VideoWatchDurationAvg(start_time, end_time, country_code, "video_watch_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_duration_avg"))
+    elif kind == "video_watch_duration_avg_by_count":
+        video_watch_duration_avg_by_count.VideoWatchDurationAvgByCount(start_time, end_time, country_code, "video_watch_duration_avg_by_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_duration_avg_by_count"))
     elif kind == "video_impression_duration_avg":
         video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, country_code, "video_impression_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_duration_avg"))
     else:
