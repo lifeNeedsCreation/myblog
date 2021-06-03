@@ -679,7 +679,7 @@ class AutoSyncMainDay:
                 video_watch_duration_avg.VideoWatchDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_watch_duration_avg_by_count":
-                video_watch_duration_avg_by_count.VideoWatchDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+                video_watch_duration_avg_by_count.VideoWatchDurationAvgByCount(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_impression_duration_avg":
                 video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
