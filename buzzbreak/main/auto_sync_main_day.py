@@ -146,6 +146,7 @@ from indicator_scripts import news_read_duration_avg_by_count
 from indicator_scripts import video_watch_duration_avg
 from indicator_scripts import video_watch_duration_avg_by_count
 from indicator_scripts import video_impression_duration_avg
+from indicator_scripts import job_query_log_cost
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -282,6 +283,7 @@ KIND = {
     "video_watch_duration_avg": "video_watch_duration_avg",     # 用户沉浸流看视频平均时长
     "video_watch_duration_avg_by_count": "video_watch_duration_avg_by_count",     # 用户沉浸流看一个视频平均时长
     "video_impression_duration_avg": "video_impression_duration_avg",     # 用户沉浸外看视频流外平均时长
+    "job_query_log_cost": "job_query_log_cost",     # BigQuery费用明细
 }
 
 class AutoSyncMainDay:
@@ -683,6 +685,9 @@ class AutoSyncMainDay:
 
             elif key == "video_impression_duration_avg":
                 video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "job_query_log_cost":
+                job_query_log_cost.JobQueryLogCost(start_time, end_time, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

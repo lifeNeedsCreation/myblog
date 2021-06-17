@@ -139,6 +139,7 @@ from indicator_scripts import news_read_duration_avg_by_count
 from indicator_scripts import video_watch_duration_avg
 from indicator_scripts import video_watch_duration_avg_by_count
 from indicator_scripts import video_impression_duration_avg
+from indicator_scripts import job_query_log_cost
 
 # 指标列表
 KIND = {
@@ -270,6 +271,7 @@ KIND = {
     "video_watch_duration_avg": 1,     # 用户沉浸流看视频平均时长
     "video_watch_duration_avg_by_count": 1,     # 用户沉浸流看一个视频平均时长
     "video_impression_duration_avg": 1,     # 用户沉浸外看视频流外平均时长
+    "job_query_log_cost": 1,    # BigQuery费用明细
 }
 
 
@@ -623,6 +625,8 @@ if __name__ == "__main__":
 
         video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, country_code, "video_impression_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_duration_avg"))
 
+        job_query_log_cost.JobQueryLogCost(start_time, end_time, "job_query_log_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "job_query_log_cost"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -879,6 +883,8 @@ if __name__ == "__main__":
         video_watch_duration_avg_by_count.VideoWatchDurationAvgByCount(start_time, end_time, country_code, "video_watch_duration_avg_by_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_watch_duration_avg_by_count"))
     elif kind == "video_impression_duration_avg":
         video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, country_code, "video_impression_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_duration_avg"))
+    elif kind == "job_query_log_cost":
+        job_query_log_cost.JobQueryLogCost(start_time, end_time, "job_query_log_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "job_query_log_cost"))
     else:
         pass
 
