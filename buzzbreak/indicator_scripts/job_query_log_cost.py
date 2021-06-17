@@ -11,10 +11,9 @@ class JobQueryLogCost(object):
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, end_time, logger=None):
+    def __init__(self, start_time, end_time, table_name, logger=None):
         self.start_time = start_time
         self.end_time = end_time
-        self.country_code = country_code
         self.table_name = table_name
         self.logger = logger
         self.fields = ["date", "user_email", "traffic", "total_cost"]
@@ -34,7 +33,7 @@ class JobQueryLogCost(object):
         start_time = self.start_time.strftime("%Y-%m-%d")
         end_time = self.end_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
-        params = {"start_time": start_time, "end_time": end_time, "country_code": self.country_code}
+        params = {"start_time": start_time, "end_time": end_time}
         query = sql.format(**params)
         job_query_log_cost_data = self.get_data(query)
         if job_query_log_cost_data[self.fields[0]]:
