@@ -687,7 +687,7 @@ class AutoSyncMainDay:
                 video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "job_query_log_cost":
-                job_query_log_cost.JobQueryLogCost(start_time, end_time, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+                job_query_log_cost.JobQueryLogCost(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
