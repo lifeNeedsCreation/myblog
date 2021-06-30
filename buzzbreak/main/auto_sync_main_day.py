@@ -158,38 +158,38 @@ NEW_USER_KIND = {
 }
 # 常规指标
 KIND = {    
-    "ctr": "day_news_ctr",   # 新闻ctr
-    "ctr_people": "day_news_ctr_people",  # 新闻 click_user_ratio
-    "news_ctr_notification_new_user": "day_news_ctr_notification_new_user",  # 新用户新闻push的ctr
-    "news_ctr_notification_new_user_people": "day_news_ctr_notification_new_user_people",  # 新用户新闻push的ctr（人）
-    "news_ctr_notification_old_user": "day_news_ctr_notification_old_user",  # 老用户新闻push的ctr
-    "news_ctr_notification_old_user_people": "day_news_ctr_notification_old_user_people",  # 老用户新闻push的ctr（人）
-    "video_ctr_notification_new_user": "day_video_ctr_notification_new_user",   # 新用户视频push的ctr
-    "video_ctr_notification_new_user_people": "day_video_ctr_notification_new_user_people",   # 新用户视频push的ctr（人）
-    "video_ctr_notification_old_user": "day_video_ctr_notification_old_user",   # 老用户视频push的ctr
-    "video_ctr_notification_old_user_people": "day_video_ctr_notification_old_user_people",   # 老用户视频push的ctr（人）
-    "new_user_news_click_average": "day_new_user_news_click_average",    # 新用户新闻平均点击率
-    "new_user_video_watch_average": "day_new_user_video_watch_average",      # 新用户视频平均观看次数
-    "old_user_video_watch_average": "day_old_user_video_watch_average",      # 老用户视频平均观看次数
-    "video_watch_average": "day_video_watch_average",      # 所有用户视频平均观看次数
-    "new_users_retention_news_event": "new_users_retention_news_event",   # 新闻用户留存率
-    "video_ctr": "day_video_ctr",   # 视频ctr
-    "video_ctr_people": "day_video_ctr_people",   # 视频 click_user_ratio
-    "new_users_retention_tab_impression": "new_users_retention_tab_impression",    # tab_impression 新用户留存
-    "experiment_new_users_retention_tab_impression": "experiment_new_users_retention_tab_impression",     # tab_impression 实验中新用户留存
-    "new_users_events_retention": "new_users_events_retention",    # 新用户在app_open与tab_impression下的留存
-    "old_users_events_retention": "old_users_events_retention",    # app_open与tab_impression 老用户留存
-    "partiko_memories_new_users_events_retention": "partiko_memories_new_users_events_retention",       # app_open与tab_impression 实验中新用户留存
-    "partiko_memories_new_users_events_retention_with_impression": "partiko_memories_new_users_events_retention_with_impression",   # 实验中新用户留存(去掉没有新闻视频曝光的用户)
-    "partiko_memories_old_users_events_retention": "partiko_memories_old_users_events_retention",       # app_open与tab_impression 实验中老用户留存
-    "partiko_experiment_average_of_invites": "partiko_experiment_average_of_invites",     # partiko.experiment 实验中的 平均邀请人数
-    "partiko_memories_average_of_invites": "partiko_memories_average_of_invites",     # partiko.memories 实验中的 平均邀请人数
-    "new_users_partiko_memories_average_of_invites": "new_users_partiko_memories_average_of_invites",     # partiko.memories 实验中的 新用户平均邀请人数
-    "partiko_memories_user_time_average_of_duration": "partiko_memories_user_time_average_of_duration",     # partiko.memories 实验中 用户在各个页面的停留时间
-    "partiko_memories_new_user_user_time_average_of_duration":  "partiko_memories_new_user_user_time_average_of_duration",  # partiko.memories 实验中新用户在各个页面的停留时间
-    "experiment_immersive_page_duration_avg":"experiment_immersive_page_duration_avg",   # 沉浸流页面用户平局停留时长
-    "new_user_news_ctr_people": "day_new_user_news_ctr_people",  # 新用户 新闻 click_user_ratio
-    "new_user_video_ctr_people": "day_new_user_video_ctr_people",  # 新用户 视频 click_user_ratio
+    # "ctr": "day_news_ctr",   # 新闻ctr
+    # "ctr_people": "day_news_ctr_people",  # 新闻 click_user_ratio
+    # "news_ctr_notification_new_user": "day_news_ctr_notification_new_user",  # 新用户新闻push的ctr
+    # "news_ctr_notification_new_user_people": "day_news_ctr_notification_new_user_people",  # 新用户新闻push的ctr（人）
+    # "news_ctr_notification_old_user": "day_news_ctr_notification_old_user",  # 老用户新闻push的ctr
+    # "news_ctr_notification_old_user_people": "day_news_ctr_notification_old_user_people",  # 老用户新闻push的ctr（人）
+    # "video_ctr_notification_new_user": "day_video_ctr_notification_new_user",   # 新用户视频push的ctr
+    # "video_ctr_notification_new_user_people": "day_video_ctr_notification_new_user_people",   # 新用户视频push的ctr（人）
+    # "video_ctr_notification_old_user": "day_video_ctr_notification_old_user",   # 老用户视频push的ctr
+    # "video_ctr_notification_old_user_people": "day_video_ctr_notification_old_user_people",   # 老用户视频push的ctr（人）
+    # "new_user_news_click_average": "day_new_user_news_click_average",    # 新用户新闻平均点击率
+    # "new_user_video_watch_average": "day_new_user_video_watch_average",      # 新用户视频平均观看次数
+    # "old_user_video_watch_average": "day_old_user_video_watch_average",      # 老用户视频平均观看次数
+    # "video_watch_average": "day_video_watch_average",      # 所有用户视频平均观看次数
+    # "new_users_retention_news_event": "new_users_retention_news_event",   # 新闻用户留存率
+    # "video_ctr": "day_video_ctr",   # 视频ctr
+    # "video_ctr_people": "day_video_ctr_people",   # 视频 click_user_ratio
+    # "new_users_retention_tab_impression": "new_users_retention_tab_impression",    # tab_impression 新用户留存
+    # "experiment_new_users_retention_tab_impression": "experiment_new_users_retention_tab_impression",     # tab_impression 实验中新用户留存
+    # "new_users_events_retention": "new_users_events_retention",    # 新用户在app_open与tab_impression下的留存
+    # "old_users_events_retention": "old_users_events_retention",    # app_open与tab_impression 老用户留存
+    # "partiko_memories_new_users_events_retention": "partiko_memories_new_users_events_retention",       # app_open与tab_impression 实验中新用户留存
+    # "partiko_memories_new_users_events_retention_with_impression": "partiko_memories_new_users_events_retention_with_impression",   # 实验中新用户留存(去掉没有新闻视频曝光的用户)
+    # "partiko_memories_old_users_events_retention": "partiko_memories_old_users_events_retention",       # app_open与tab_impression 实验中老用户留存
+    # "partiko_experiment_average_of_invites": "partiko_experiment_average_of_invites",     # partiko.experiment 实验中的 平均邀请人数
+    # "partiko_memories_average_of_invites": "partiko_memories_average_of_invites",     # partiko.memories 实验中的 平均邀请人数
+    # "new_users_partiko_memories_average_of_invites": "new_users_partiko_memories_average_of_invites",     # partiko.memories 实验中的 新用户平均邀请人数
+    # "partiko_memories_user_time_average_of_duration": "partiko_memories_user_time_average_of_duration",     # partiko.memories 实验中 用户在各个页面的停留时间
+    # "partiko_memories_new_user_user_time_average_of_duration":  "partiko_memories_new_user_user_time_average_of_duration",  # partiko.memories 实验中新用户在各个页面的停留时间
+    # "experiment_immersive_page_duration_avg":"experiment_immersive_page_duration_avg",   # 沉浸流页面用户平局停留时长
+    # "new_user_news_ctr_people": "day_new_user_news_ctr_people",  # 新用户 新闻 click_user_ratio
+    # "new_user_video_ctr_people": "day_new_user_video_ctr_people",  # 新用户 视频 click_user_ratio
     # "partiko_experiment_new_users_retention_tab_impression": "partiko_experiment_new_users_retention_tab_impression",     # partiko.experiment 实验中 新用户在各个 tab 的留存
     "cash_out": "cash_out", # 统计打钱，按国家和天
     "cashout_by_method": "cashout_by_method",   # 各国家打钱统计(按打钱方式)
