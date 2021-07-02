@@ -97,8 +97,12 @@ from indicator_scripts import five_minutes_video_ctr
 from indicator_scripts import five_minutes_new_video_ctr
 from indicator_scripts import five_minutes_video_completion_rate
 from indicator_scripts import five_minutes_new_video_completion_rate
+from indicator_scripts import push_ctr_without_experiments
+from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments_by_people
+from indicator_scripts import notification_news_ctr_without_experiments
+from indicator_scripts import notification_news_ctr_without_experiments_by_people
 from indicator_scripts import new_videos_ctr
 from indicator_scripts import immersive_video_watch_average_recall_by_model
 from indicator_scripts import immersive_video_watch_average_of_duration_recall_by_model
@@ -125,8 +129,6 @@ from indicator_scripts import thirty_seconds_new_user_app_open_retention
 from indicator_scripts import three_minutes_new_user_app_open_retention
 from indicator_scripts import five_minutes_new_user_app_open_retention
 from indicator_scripts import ten_minutes_new_user_app_open_retention
-from indicator_scripts import push_ctr_without_experiments
-from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import points_out_statistics
 from indicator_scripts import points_out_purpose_statistics
 from indicator_scripts import points_in_statistics
@@ -229,8 +231,12 @@ KIND = {
     "five_minutes_new_video_ctr": 1,   # 5分钟以下短视频点击率(7天内的视频)
     "five_minutes_video_completion_rate": 1,   # 5分钟以下短视频完播率
     "five_minutes_new_video_completion_rate": 1,   # 5分钟以下短视频完播率(7天内的视频)
-    "notification_video_ctr_without_experiments": 1,    # push的次数ctr
-    "notification_video_ctr_without_experiments_by_people": 1,    # push的人数ctr
+    "push_ctr_without_experiments": 1,     # 推送的ctr(次数)
+    "push_ctr_people_without_experiments": 1,     # 推送的ctr(人数)
+    "notification_video_ctr_without_experiments": 1,    # 视频推送的ctr(次数)
+    "notification_video_ctr_without_experiments_by_people": 1,    # 视频推送的ctr(人数)
+    "notification_news_ctr_without_experiments": 1,    # 新闻推送的ctr(次数)
+    "notification_news_ctr_without_experiments_by_people": 1,    # 新闻推送的ctr(人数)
     "new_videos_ctr": 1,    # 新视频ctr（2天内的视频）
     "immersive_video_watch_average_recall_by_model": 1,      # 召回实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_recall_by_model": 1,      # 召回实验平均观看时长(按模型统计)
@@ -257,8 +263,6 @@ KIND = {
     "three_minutes_new_user_app_open_retention": 1,   # 使用时长3到5分钟的新用户app_open留存
     "five_minutes_new_user_app_open_retention": 1,   # 使用时长5到10分钟的新用户app_open留存
     "ten_minutes_new_user_app_open_retention": 1,   # 使用时长10分钟以上的新用户app_open留存
-    "push_ctr_without_experiments": 1,     # 推送的ctr(次数)
-    "push_ctr_people_without_experiments": 1,     # 推送的ctr(人数)
     "points_out_statistics": 1,   # 积分支出统计
     "points_out_purpose_statistics": 1,   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": 1,   # 积分收入统计
@@ -541,9 +545,17 @@ if __name__ == "__main__":
 
         five_minutes_new_video_completion_rate.FiveMinutesNewVideoCompletionRate(start_time, end_time, country_code, "five_minutes_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_video_completion_rate"))
 
+        push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, country_code, "push_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_without_experiments"))
+
+        push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
+
         notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
 
         notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
+
+        notification_news_ctr_without_experiments.NotificationNewsCtrWithoutExperiments(start_time, end_time, country_code, "notification_news_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_news_ctr_without_experiments"))
+
+        notification_news_ctr_without_experiments_by_people.NotificationNewsCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_news_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_news_ctr_without_experiments_by_people"))
 
         new_videos_ctr.NewVideosCtr(start_time, end_time, country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
 
@@ -596,10 +608,6 @@ if __name__ == "__main__":
         five_minutes_new_user_app_open_retention.FiveMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "five_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_user_app_open_retention"))
 
         ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "ten_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ten_minutes_new_user_app_open_retention"))
-
-        push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, country_code, "push_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_without_experiments"))
-
-        push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
 
         points_out_statistics.PointsOutStatistics(start_time, end_time, country_code, "points_out_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_statistics"))
 
@@ -798,11 +806,18 @@ if __name__ == "__main__":
         five_minutes_video_completion_rate.FiveMinutesVideoCompletionRate(start_time, end_time, country_code, "five_minutes_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_video_completion_rate"))
     elif kind == "five_minutes_new_video_completion_rate":
         five_minutes_new_video_completion_rate.FiveMinutesNewVideoCompletionRate(start_time, end_time, country_code, "five_minutes_new_video_completion_rate", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_video_completion_rate"))
-
+    elif kind == "push_ctr_without_experiments":
+        push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, country_code, "push_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_without_experiments"))
+    elif kind == "push_ctr_people_without_experiments":
+        push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
     elif kind == "notification_video_ctr_without_experiments":
         notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, country_code, "notification_video_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments"))
     elif kind == "notification_video_ctr_without_experiments_by_people":
         notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_video_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_video_ctr_without_experiments_by_people"))
+    elif kind == "notification_news_ctr_without_experiments":
+        notification_news_ctr_without_experiments.NotificationNewsCtrWithoutExperiments(start_time, end_time, country_code, "notification_news_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_news_ctr_without_experiments"))
+    elif kind == "notification_news_ctr_without_experiments_by_people":
+        notification_news_ctr_without_experiments_by_people.NotificationNewsCtrWithoutExperimentsByPeople(start_time, end_time, country_code, "notification_news_ctr_without_experiments_by_people", logger).compute_data("{}/SQL/{}.sql".format(DIR, "notification_news_ctr_without_experiments_by_people"))
     elif kind == "new_videos_ctr":    
         new_videos_ctr.NewVideosCtr(start_time, end_time, country_code, "new_videos_ctr", logger).compute_data("{}/SQL/{}.sql".format(DIR, "new_videos_ctr"))
     elif kind == "immersive_video_watch_average_recall_by_model":    
@@ -855,10 +870,6 @@ if __name__ == "__main__":
         five_minutes_new_user_app_open_retention.FiveMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "five_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "five_minutes_new_user_app_open_retention"))
     elif kind == "ten_minutes_new_user_app_open_retention":
         ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, country_code, "ten_minutes_new_user_app_open_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "ten_minutes_new_user_app_open_retention"))
-    elif kind == "push_ctr_without_experiments":
-        push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, country_code, "push_ctr_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_without_experiments"))
-    elif kind == "push_ctr_people_without_experiments":
-        push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, country_code, "push_ctr_people_without_experiments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "push_ctr_people_without_experiments"))
     elif kind == "points_out_statistics":
         points_out_statistics.PointsOutStatistics(start_time, end_time, country_code, "points_out_statistics", logger).compute_data("{}/SQL/{}.sql".format(DIR, "points_out_statistics"))
     elif kind == "points_out_purpose_statistics":

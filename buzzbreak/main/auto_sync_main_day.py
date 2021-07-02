@@ -104,8 +104,12 @@ from indicator_scripts import five_minutes_video_ctr
 from indicator_scripts import five_minutes_new_video_ctr
 from indicator_scripts import five_minutes_video_completion_rate
 from indicator_scripts import five_minutes_new_video_completion_rate
+from indicator_scripts import push_ctr_without_experiments
+from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments
 from indicator_scripts import notification_video_ctr_without_experiments_by_people
+from indicator_scripts import notification_news_ctr_without_experiments
+from indicator_scripts import notification_news_ctr_without_experiments_by_people
 from indicator_scripts import new_videos_ctr
 from indicator_scripts import immersive_video_watch_average_recall_by_model
 from indicator_scripts import immersive_video_watch_average_of_duration_recall_by_model
@@ -132,8 +136,6 @@ from indicator_scripts import thirty_seconds_new_user_app_open_retention
 from indicator_scripts import three_minutes_new_user_app_open_retention
 from indicator_scripts import five_minutes_new_user_app_open_retention
 from indicator_scripts import ten_minutes_new_user_app_open_retention
-from indicator_scripts import push_ctr_without_experiments
-from indicator_scripts import push_ctr_people_without_experiments
 from indicator_scripts import points_out_statistics
 from indicator_scripts import points_out_purpose_statistics
 from indicator_scripts import points_in_statistics
@@ -241,8 +243,12 @@ KIND = {
     "five_minutes_new_video_ctr": "five_minutes_new_video_ctr",   # 5分钟以下短视频点击率(7天内的视频)
     "five_minutes_video_completion_rate": "five_minutes_video_completion_rate",   # 5分钟以下短视频完播率
     "five_minutes_new_video_completion_rate": "five_minutes_new_video_completion_rate",   # 5分钟以下短视频完播率(7天内的视频)
-    "notification_video_ctr_without_experiments": "notification_video_ctr_without_experiments",    # push的次数ctr
-    "notification_video_ctr_without_experiments_by_people": "notification_video_ctr_without_experiments_by_people",    # push的人数ctr
+    "push_ctr_without_experiments": "push_ctr_without_experiments",     # 推送的ctr(次数)
+    "push_ctr_people_without_experiments": "push_ctr_people_without_experiments",     # 推送的ctr(人数)
+    "notification_video_ctr_without_experiments": "notification_video_ctr_without_experiments",    # 视频推送的ctr(次数)
+    "notification_video_ctr_without_experiments_by_people": "notification_video_ctr_without_experiments_by_people",    # 视频推送的ctr(人数)
+    "notification_news_ctr_without_experiments": "notification_news_ctr_without_experiments",    # 新闻推送的ctr(次数)
+    "notification_news_ctr_without_experiments_by_people": "notification_news_ctr_without_experiments_by_people",    # 新闻推送的ctr(人数)
     "new_videos_ctr": "new_videos_ctr",    # 新视频的ctr(2天内的视频)
     "immersive_video_watch_average_recall_by_model": "immersive_video_watch_average_recall_by_model",      # 召回实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_recall_by_model": "immersive_video_watch_average_of_duration_recall_by_model",      # 召回实验平均观看时长(按模型统计)
@@ -269,8 +275,6 @@ KIND = {
     "three_minutes_new_user_app_open_retention": "three_minutes_new_user_app_open_retention",   # 使用时长3到5分钟的新用户app_open留存
     "five_minutes_new_user_app_open_retention": "five_minutes_new_user_app_open_retention",   # 使用时长5到10分钟的新用户app_open留存
     "ten_minutes_new_user_app_open_retention": "ten_minutes_new_user_app_open_retention",   # 使用时长10分钟以上的新用户app_open留存
-    "push_ctr_without_experiments": "push_ctr_without_experiments",     # 推送的ctr(次数)
-    "push_ctr_people_without_experiments": "push_ctr_people_without_experiments",     # 推送的ctr(人数)
     "points_out_statistics": "points_out_statistics",   # 积分支出统计
     "points_out_purpose_statistics": "points_out_purpose_statistics",   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": "points_in_statistics",   # 积分收入统计
@@ -560,11 +564,23 @@ class AutoSyncMainDay:
             elif key == "five_minutes_new_video_completion_rate":
                 five_minutes_new_video_completion_rate.FiveMinutesNewVideoCompletionRate(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
+            elif key == "push_ctr_without_experiments":
+                push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "push_ctr_people_without_experiments":
+                push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
             elif key == "notification_video_ctr_without_experiments":
                 notification_video_ctr_without_experiments.NotificationVideoCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "notification_video_ctr_without_experiments_by_people":
                 notification_video_ctr_without_experiments_by_people.NotificationVideoCtrWithoutExperimentsByPeople(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "notification_news_ctr_without_experiments":
+                notification_news_ctr_without_experiments.NotificationNewsCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "notification_news_ctr_without_experiments_by_people":
+                notification_news_ctr_without_experiments_by_people.NotificationNewsCtrWithoutExperimentsByPeople(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "new_videos_ctr":
                 new_videos_ctr.NewVideosCtr(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
@@ -643,12 +659,6 @@ class AutoSyncMainDay:
 
             elif key == "ten_minutes_new_user_app_open_retention":
                 ten_minutes_new_user_app_open_retention.TenMinutesNewUserAppOpenRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
-
-            elif key == "push_ctr_without_experiments":
-                push_ctr_without_experiments.PushCtrWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
-
-            elif key == "push_ctr_people_without_experiments":
-                push_ctr_people_without_experiments.PushCtrPeopleWithoutExperiments(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "points_out_statistics":
                 points_out_statistics.PointsOutStatistics(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
