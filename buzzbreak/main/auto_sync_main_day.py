@@ -152,11 +152,11 @@ from indicator_scripts import job_query_log_cost
 
 # 新用户指标
 NEW_USER_KIND = {
-    "is_click_video": ["buzzbreak-model-240306.stream_events.video_click", "new_user_day_click_video"],   # 新用户点击视频指标
-    "is_click_news": ["buzzbreak-model-240306.stream_events.news_click", "new_user_day_click_news"],     # 新用户点击新闻指标
-    "is_get_integral": ["buzzbreak-model-240306.partiko.point_transactions", "new_user_day_integral"],   # 新用户积分指标
-    "is_withdraw": ["buzzbreak-model-240306.partiko.withdraw_transactions", "new_user_day_withdraw"],   # 新用户提现指标
-    "is_invite_friends": ["buzzbreak-model-240306.partiko.referrals", "new_user_day_invite_friends"],   # 新用户邀请好友指标
+    # "is_click_video": ["buzzbreak-model-240306.stream_events.video_click", "new_user_day_click_video"],   # 新用户点击视频指标
+    # "is_click_news": ["buzzbreak-model-240306.stream_events.news_click", "new_user_day_click_news"],     # 新用户点击新闻指标
+    # "is_get_integral": ["buzzbreak-model-240306.partiko.point_transactions", "new_user_day_integral"],   # 新用户积分指标
+    # "is_withdraw": ["buzzbreak-model-240306.partiko.withdraw_transactions", "new_user_day_withdraw"],   # 新用户提现指标
+    # "is_invite_friends": ["buzzbreak-model-240306.partiko.referrals", "new_user_day_invite_friends"],   # 新用户邀请好友指标
 }
 # 常规指标
 KIND = {    
@@ -197,35 +197,35 @@ KIND = {
     "cashout_by_method": "cashout_by_method",   # 各国家打钱统计(按打钱方式)
     "cashout_by_created_at": "cashout_by_created_at",   # 各国家打钱统计(按打钱创建时间)
     "cashout_by_money": "cashout_by_money",   # 各国家打钱统计(按打钱金额)
-    "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
-    "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
-    "video_ctr_by_dimension_recall": "video_ctr_by_dimension_recall",  # 召回实验的视频ctr(按实验维度分组)
-    "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
-    "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
-    "video_ctr_people_dimension_recall": "video_ctr_people_dimension_recall",  # 召回实验的视频ctr(人)
-    "video_ctr_people_by_dimension_recall": "video_ctr_people_by_dimension_recall",  # 召回实验的视频ctr(人，按实验维度分组)
-    "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
-    "video_ctr_rank": "video_ctr_rank",  # Rank实验的视频ctr
-    "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
-    "video_watch_average_of_duration_recall": "video_watch_average_of_duration_recall", # 召回实验下所有用户的平均观看时长
-    "video_watch_average_of_duration_by_dimension_recall": "video_watch_average_of_duration_by_dimension_recall", # 召回实验下所有用户的平均观看时长(按实验维度分组)
-    "video_watch_average_of_duration_rank": "video_watch_average_of_duration_rank", # Rank实验下所有用户的平均观看时长
-    "immersive_retention_recall": "immersive_retention_recall",    # 沉浸流召回实验留存
-    "immersive_retention_by_dimension_recall": "immersive_retention_by_dimension_recall",    # 沉浸流召回实验留存(按实验维度分组)
-    "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
-    "video_ctr_with_device_model_recall": "video_ctr_with_device_model_recall",  # 召回实验视频ctr（按机型）
-    "video_ctr_with_device_model_rank": "video_ctr_with_device_model_rank",  # 召回实验视频ctr（按机型）
-    "video_ctr_with_brand_recall": "video_ctr_with_brand_recall",  # 召回实验视频ctr（按品牌）
-    "video_ctr_with_brand_rank": "video_ctr_with_brand_rank",  # Rank实验视频ctr（按品牌）
-    "video_watch_average_by_dimension_recall": "video_watch_average_by_dimension_recall",  # 召回实验平均观看次数(按实验维度分组)
-    "video_watch_average_rank": "video_watch_average_rank",  # Rank实验平均观看次数(按实验策略分组)
+    # "video_ctr_recall": "video_ctr_recall",  # 召回实验的视频ctr
+    # "video_ctr_dimension_recall": "video_ctr_dimension_recall",  # 召回实验的视频ctr(按维度分组)
+    # "video_ctr_by_dimension_recall": "video_ctr_by_dimension_recall",  # 召回实验的视频ctr(按实验维度分组)
+    # "video_ctr_recall_data_index0": "video_ctr_recall_data_index0",  # 召回实验的视频ctr(data_index=0)
+    # "video_ctr_people_recall": "video_ctr_people_recall",  # 召回实验的视频ctr(人)
+    # "video_ctr_people_dimension_recall": "video_ctr_people_dimension_recall",  # 召回实验的视频ctr(人)
+    # "video_ctr_people_by_dimension_recall": "video_ctr_people_by_dimension_recall",  # 召回实验的视频ctr(人，按实验维度分组)
+    # "video_ctr_people_recall_data_index0": "video_ctr_people_recall_data_index0",  # 召回实验的视频ctr(人)(data_index=0)
+    # "video_ctr_rank": "video_ctr_rank",  # Rank实验的视频ctr
+    # "video_ctr_people_rank": "video_ctr_people_rank",  # Rank实验的视频ctr(人)
+    # "video_watch_average_of_duration_recall": "video_watch_average_of_duration_recall", # 召回实验下所有用户的平均观看时长
+    # "video_watch_average_of_duration_by_dimension_recall": "video_watch_average_of_duration_by_dimension_recall", # 召回实验下所有用户的平均观看时长(按实验维度分组)
+    # "video_watch_average_of_duration_rank": "video_watch_average_of_duration_rank", # Rank实验下所有用户的平均观看时长
+    # "immersive_retention_recall": "immersive_retention_recall",    # 沉浸流召回实验留存
+    # "immersive_retention_by_dimension_recall": "immersive_retention_by_dimension_recall",    # 沉浸流召回实验留存(按实验维度分组)
+    # "immersive_retention_rank": "immersive_retention_rank",    # 沉浸流Rank实验留存
+    # "video_ctr_with_device_model_recall": "video_ctr_with_device_model_recall",  # 召回实验视频ctr（按机型）
+    # "video_ctr_with_device_model_rank": "video_ctr_with_device_model_rank",  # 召回实验视频ctr（按机型）
+    # "video_ctr_with_brand_recall": "video_ctr_with_brand_recall",  # 召回实验视频ctr（按品牌）
+    # "video_ctr_with_brand_rank": "video_ctr_with_brand_rank",  # Rank实验视频ctr（按品牌）
+    # "video_watch_average_by_dimension_recall": "video_watch_average_by_dimension_recall",  # 召回实验平均观看次数(按实验维度分组)
+    # "video_watch_average_rank": "video_watch_average_rank",  # Rank实验平均观看次数(按实验策略分组)
     "posts": "posts",   # 发帖数量统计
     "posts_user_count": "posts_user_count",     # 发帖人数统计
-    "video_retention_recall": "video_retention_recall",     # 召回实验视频留存(按实验策略分组)
-    "video_retention_rank": "video_retention_rank",     # Rank实验视频留存(按实验策略分组)
-    "video_average_of_total_duration_recall": "video_average_of_total_duration_recall",     # 召回实验用户平均总时长
-    "video_average_of_total_duration_rank": "video_average_of_total_duration_rank",     # Rank实验用户平均总时长
-    "video_average_of_total_duration_by_dimension_recall": "video_average_of_total_duration_by_dimension_recall",       # 召回实验用户平均总时长(按实验维度分组)
+    # "video_retention_recall": "video_retention_recall",     # 召回实验视频留存(按实验策略分组)
+    # "video_retention_rank": "video_retention_rank",     # Rank实验视频留存(按实验策略分组)
+    # "video_average_of_total_duration_recall": "video_average_of_total_duration_recall",     # 召回实验用户平均总时长
+    # "video_average_of_total_duration_rank": "video_average_of_total_duration_rank",     # Rank实验用户平均总时长
+    # "video_average_of_total_duration_by_dimension_recall": "video_average_of_total_duration_by_dimension_recall",       # 召回实验用户平均总时长(按实验维度分组)
     "video_ctr_without_experiments": "video_ctr_without_experiments",     # 视频ctr(按次数，不带实验)
     "video_ctr_people_without_experiments": "video_ctr_people_without_experiments",     # 视频ctr(按人数，不带实验)
     "video_watch_average_of_duration_without_experiments": "video_watch_average_of_duration_without_experiments",       # 用户平均观看时长(不带实验)
@@ -250,31 +250,31 @@ KIND = {
     "notification_news_ctr_without_experiments": "notification_news_ctr_without_experiments",    # 新闻推送的ctr(次数)
     "notification_news_ctr_without_experiments_by_people": "notification_news_ctr_without_experiments_by_people",    # 新闻推送的ctr(人数)
     "new_videos_ctr": "new_videos_ctr",    # 新视频的ctr(2天内的视频)
-    "immersive_video_watch_average_recall_by_model": "immersive_video_watch_average_recall_by_model",      # 召回实验平均观看次数(按模型统计)
-    "immersive_video_watch_average_of_duration_recall_by_model": "immersive_video_watch_average_of_duration_recall_by_model",      # 召回实验平均观看时长(按模型统计)
-    "immersive_retention_recall_by_model": "immersive_retention_recall_by_model",   # 召回实验留存(按模型统计)
+    # "immersive_video_watch_average_recall_by_model": "immersive_video_watch_average_recall_by_model",      # 召回实验平均观看次数(按模型统计)
+    # "immersive_video_watch_average_of_duration_recall_by_model": "immersive_video_watch_average_of_duration_recall_by_model",      # 召回实验平均观看时长(按模型统计)
+    # "immersive_retention_recall_by_model": "immersive_retention_recall_by_model",   # 召回实验留存(按模型统计)
     "immersive_video_watch_average_recall_by_bucket": "immersive_video_watch_average_recall_by_bucket",      # 召回实验平均观看次数(按桶统计)
     "immersive_video_watch_average_of_duration_recall_by_bucket": "immersive_video_watch_average_of_duration_recall_by_bucket",      # 召回实验平均观看时长(按桶统计)
     "immersive_retention_recall_by_bucket": "immersive_retention_recall_by_bucket",   # 召回实验留存(按桶统计)
     "immersive_video_watch_average_rough_rank_by_model": "immersive_video_watch_average_rough_rank_by_model",      # 粗排实验平均观看次数(按模型统计)
     "immersive_video_watch_average_of_duration_rough_rank_by_model": "immersive_video_watch_average_of_duration_rough_rank_by_model",      # 粗排实验平均观看时长(按模型统计)
     "immersive_retention_rough_rank_by_model": "immersive_retention_rough_rank_by_model",   # 粗排实验留存(按模型统计)
-    "video_ctr_recall_by_model": "video_ctr_recall_by_model",     # 召回实验视频次数ctr(按模型统计)
-    "video_ctr_people_recall_by_model": "video_ctr_people_recall_by_model",     # 召回实验视频人数ctr(按模型统计)
+    # "video_ctr_recall_by_model": "video_ctr_recall_by_model",     # 召回实验视频次数ctr(按模型统计)
+    # "video_ctr_people_recall_by_model": "video_ctr_people_recall_by_model",     # 召回实验视频人数ctr(按模型统计)
     "video_ctr_recall_by_bucket": "video_ctr_recall_by_bucket",     # 召回实验视频次数ctr(按桶统计)
     "video_ctr_people_recall_by_bucket": "video_ctr_people_recall_by_bucket",     # 召回实验视频人数ctr(按桶统计)
     "video_ctr_rough_rank_by_model": "video_ctr_rough_rank_by_model",     # 粗排实验视频次数ctr(按模型统计)
     "video_ctr_people_rough_rank_by_model": "video_ctr_people_rough_rank_by_model",     # 粗排实验视频人数ctr(按模型统计)
-    "video_click_average_recall_by_model": "video_click_average_recall_by_model",       # 召回实验视频平均点击次数(按模型统计)
+    # "video_click_average_recall_by_model": "video_click_average_recall_by_model",       # 召回实验视频平均点击次数(按模型统计)
     "video_click_average_recall_by_bucket": "video_click_average_recall_by_bucket",      # 召回实验视频平均点击次数(按桶统计)
     "video_click_average_rough_rank_by_model": "video_click_average_rough_rank_by_model",       # 粗排实验视频平均点击次数(按模型统计)
-    "video_retention_recall_by_model": "video_retention_recall_by_model",   # 召回实验视频留存(按模型统计)
+    # "video_retention_recall_by_model": "video_retention_recall_by_model",   # 召回实验视频留存(按模型统计)
     "video_retention_recall_by_bucket": "video_retention_recall_by_bucket",   # 召回实验视频留存(按桶统计)
     "video_retention_rough_rank_by_model": "video_retention_rough_rank_by_model",   # 粗排实验视频留存(按模型统计)
-    "thirty_seconds_new_user_app_open_retention": "thirty_seconds_new_user_app_open_retention",   # 使用时长30秒到3分钟的新用户app_open留存
-    "three_minutes_new_user_app_open_retention": "three_minutes_new_user_app_open_retention",   # 使用时长3到5分钟的新用户app_open留存
-    "five_minutes_new_user_app_open_retention": "five_minutes_new_user_app_open_retention",   # 使用时长5到10分钟的新用户app_open留存
-    "ten_minutes_new_user_app_open_retention": "ten_minutes_new_user_app_open_retention",   # 使用时长10分钟以上的新用户app_open留存
+    # "thirty_seconds_new_user_app_open_retention": "thirty_seconds_new_user_app_open_retention",   # 使用时长30秒到3分钟的新用户app_open留存
+    # "three_minutes_new_user_app_open_retention": "three_minutes_new_user_app_open_retention",   # 使用时长3到5分钟的新用户app_open留存
+    # "five_minutes_new_user_app_open_retention": "five_minutes_new_user_app_open_retention",   # 使用时长5到10分钟的新用户app_open留存
+    # "ten_minutes_new_user_app_open_retention": "ten_minutes_new_user_app_open_retention",   # 使用时长10分钟以上的新用户app_open留存
     "points_out_statistics": "points_out_statistics",   # 积分支出统计
     "points_out_purpose_statistics": "points_out_purpose_statistics",   # 积分支出统计(按gift下的活动统计)
     "points_in_statistics": "points_in_statistics",   # 积分收入统计
