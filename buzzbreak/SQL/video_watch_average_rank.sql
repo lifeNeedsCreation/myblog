@@ -7,7 +7,7 @@ with
     cross join unnest(v.experiment) as experiment
     cross join unnest(v.strategies) as strategy),
 
-    video_watch_update as (select account_id, experiment, strategy, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch where experiment in ({experiments})),
+    video_watch_update as (select account_id, experiment, strategy, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch where experiment in ({experiments})),
 
     account_video_watch_update as (select country_code, account_id, placement, experiment, strategy, video_id from video_watch_update inner join accounts on account_id = id),
 
@@ -19,7 +19,7 @@ with
     cross join unnest(v.experiment) as experiment
     cross join unnest(v.strategies) as strategy),
 
-    video_impression_update as (select distinct account_id, experiment, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression where experiment in ({experiments})),
+    video_impression_update as (select distinct account_id, experiment, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression where experiment in ({experiments})),
 
     account_video_impression_update as (select country_code, account_id, placement, experiment, strategy from video_impression_update inner join accounts on account_id = id),
 
@@ -27,7 +27,7 @@ with
 
     video_impression_union as (select distinct account_id, placement, experiment, strategy from video_watch union distinct select distinct account_id, placement, experiment, strategy from video_impression),
 
-    video_impression_union_update as (select distinct account_id, experiment, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression_union where experiment in ({experiments})),
+    video_impression_union_update as (select distinct account_id, experiment, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression_union where experiment in ({experiments})),
 
     account_video_impression_union_update as (select country_code, account_id, placement, experiment, strategy from video_impression_union_update inner join accounts on account_id = id),
 

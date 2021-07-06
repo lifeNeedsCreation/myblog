@@ -67,7 +67,7 @@ class PartikoMemoriesUserTimeAverageOfDuration:
 
             experiment_user_time as (select id,country_code,key,value,json_extract_scalar(data,'$.page') as page,safe_cast(json_extract_scalar(data,'$.duration_in_seconds') as numeric) as duration_in_seconds,created_at from experiment_accounts inner join user_time on id=account_id where extract(date from created_at)>=extract(date from updated_at)),
 
-            experiment_user_time_update as (select id, country_code, key, value, duration_in_seconds, created_at, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else page end) as page from experiment_user_time),
+            experiment_user_time_update as (select id, country_code, key, value, duration_in_seconds, created_at, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else page end) as page from experiment_user_time),
 
             experiment_app_open as (select distinct id,country_code,key,value,extract(date from created_at) as date from experiment_accounts inner join app_open on id=account_id where extract(date from created_at)>=extract(date from updated_at))
 

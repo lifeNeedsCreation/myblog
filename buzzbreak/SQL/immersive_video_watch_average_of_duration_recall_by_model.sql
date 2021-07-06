@@ -6,7 +6,7 @@ with
     video_watch as (select account_id, placement, duration_in_seconds, bucket, replace(strategy, '"', '') as strategy from video_watch_info as v
     cross join unnest(v.strategies) as strategy),
 
-    video_watch_update as (select distinct account_id, bucket, strategy, duration_in_seconds, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch),
+    video_watch_update as (select distinct account_id, bucket, strategy, duration_in_seconds, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch),
     
     account_video_watch as (select account_id, country_code, placement, duration_in_seconds, bucket, strategy from video_watch_update inner join accounts on account_id = id),
 

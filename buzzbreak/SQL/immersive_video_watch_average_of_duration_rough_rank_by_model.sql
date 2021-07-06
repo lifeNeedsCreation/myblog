@@ -3,7 +3,7 @@ with
     
     video_watch_info as (select account_id, json_extract_scalar(data, "$.placement") as placement, safe_cast(json_extract_scalar(data, "$.duration_in_seconds") as numeric) as duration_in_seconds, json_extract_scalar(meta_tag, "$.ranking_bucket") as bucket, json_extract_scalar(meta_tag, "$.ranking_strategy") as strategy from (select *, json_extract_scalar(data, "$.meta_tag") as meta_tag from `stream_events.video_watch` where created_at >= "{start_time}" and created_at < "{end_time}") where json_extract_scalar(meta_tag, "$.ranking_bucket") is not null),
 
-    video_watch_update as (select distinct account_id, bucket, strategy, duration_in_seconds, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch_info),
+    video_watch_update as (select distinct account_id, bucket, strategy, duration_in_seconds, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch_info),
     
     account_video_watch as (select account_id, country_code, placement, duration_in_seconds, bucket, strategy from video_watch_update inner join accounts on account_id = id),
 

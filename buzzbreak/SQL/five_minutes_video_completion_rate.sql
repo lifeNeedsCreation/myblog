@@ -5,7 +5,7 @@ with
 
     video_watch as (select distinct account_id, safe_cast(json_extract_scalar(data, '$.id') as numeric) as video_id, json_extract_scalar(data, '$.placement') as placement, safe_cast(json_extract_scalar(data, '$.duration_in_seconds') as numeric) as duration_in_seconds, extract(date from created_at) as date from stream_events.video_watch where created_at >= '{start_time}' and created_at < '{end_time}'),
 
-    video_watch_update as (select distinct account_id, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement, duration_in_seconds, date from video_watch),
+    video_watch_update as (select distinct account_id, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement, duration_in_seconds, date from video_watch),
 
     video_watch_info as (select country_code, a.*, (case when duration_in_seconds > video_length_seconds then video_length_seconds else duration_in_seconds end) as truely_duration_in_seconds from (select v.*, category, video_length_seconds from video_watch_update as v inner join video on video_id = id) as a inner join accounts on account_id = id where video_length_seconds != 0),
 

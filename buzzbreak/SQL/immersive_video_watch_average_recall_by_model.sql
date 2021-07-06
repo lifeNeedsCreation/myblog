@@ -6,7 +6,7 @@ with
     video_watch as (select account_id, placement, video_id, bucket, replace(strategy, '"', '') as strategy from video_watch_info as v
     cross join unnest(v.strategies) as strategy),
 
-    video_watch_update as (select distinct account_id, bucket, strategy, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch),
+    video_watch_update as (select distinct account_id, bucket, strategy, video_id, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_watch),
 
     account_video_watch_update as (select country_code, account_id, placement, bucket, strategy, video_id from video_watch_update inner join accounts on account_id = id),
 
@@ -17,7 +17,7 @@ with
     video_impression as (select account_id, placement, video_id, bucket, replace(strategy, '"', '') as strategy from video_impression_info as v
     cross join unnest(v.strategies) as strategy),
 
-    video_impression_update as (select distinct account_id, bucket, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression),
+    video_impression_update as (select distinct account_id, bucket, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression),
 
     account_video_impression_update as (select country_code, account_id, placement, bucket, strategy from video_impression_update inner join accounts on account_id = id),
 
@@ -25,7 +25,7 @@ with
 
     video_impression_union as (select distinct account_id, placement, bucket, strategy from video_watch union distinct select distinct account_id, placement, bucket, strategy from video_impression),
 
-    video_impression_union_update as (select distinct account_id, bucket, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression_union),
+    video_impression_union_update as (select distinct account_id, bucket, strategy, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression_union),
 
     account_video_impression_union_update as (select country_code, account_id, placement, bucket, strategy from video_impression_union_update inner join accounts on account_id = id),
 

@@ -13,7 +13,7 @@ with
 
     valid_experiment_user_time as (select * from (select info.*, max_rank from info inner join (select country_code, key, value, page, MAX(rank) as max_rank from info group by country_code, key, value, page) as a on info.country_code = a.country_code and info.key = a.key and info.value = a.value and info.page = a.page) where rank BETWEEN max_rank*0.05 AND max_rank*0.95),
 
-    valid_experiment_user_time_update as (select id, country_code, key, value, duration_in_seconds, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else page end) as page from valid_experiment_user_time),
+    valid_experiment_user_time_update as (select id, country_code, key, value, duration_in_seconds, (case when page in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else page end) as page from valid_experiment_user_time),
 
     total_duration as (select country_code, key, value, page, sum(duration_in_seconds) as duration_sum from valid_experiment_user_time_update group by country_code, key, value, page order by country_code, key, value, page, duration_sum desc),
 

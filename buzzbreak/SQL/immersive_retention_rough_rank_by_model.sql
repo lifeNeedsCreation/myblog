@@ -23,7 +23,7 @@ with
 
     video_impression_all_info as (select * from video_impression_info union all select * from video_impression_one_day_info union all select * from video_impression_seven_day_info union all select * from video_impression_thirty_day_info),
 
-    impression_event_update as (select distinct account_id, bucket, strategy, video_id, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression_all_info),
+    impression_event_update as (select distinct account_id, bucket, strategy, video_id, date, (case when placement in ("immersive_videos_tab_popular", "immersive_videos_tab_home", "immersive_videos_tab_home_tab_home_video", "immersive_videos_tab_news_detail_activity", "immersive_videos_tab_news_detail", "immersive_videos_tab_home_tab_for_you_video") then "immersive_videos_tab_popular" else placement end) as placement from video_impression_all_info),
 
     event_target_time as (select * from impression_event_update where date = extract(date from timestamp'{start_time}')),
 
