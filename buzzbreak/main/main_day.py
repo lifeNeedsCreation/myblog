@@ -142,6 +142,11 @@ from indicator_scripts import video_watch_duration_avg
 from indicator_scripts import video_watch_duration_avg_by_count
 from indicator_scripts import video_impression_duration_avg
 from indicator_scripts import job_query_log_cost
+from indicator_scripts import page_dau_and_penetration
+from indicator_scripts import page_avg_time
+from indicator_scripts import page_retention
+from indicator_scripts import image_ctr_by_placement
+from indicator_scripts import video_ctr_by_placement
 
 # 指标列表
 KIND = {
@@ -276,6 +281,11 @@ KIND = {
     "video_watch_duration_avg_by_count": 1,     # 用户沉浸流看一个视频平均时长
     "video_impression_duration_avg": 1,     # 用户沉浸外看视频流外平均时长
     "job_query_log_cost": 1,    # BigQuery费用明细
+    "page_dau_and_penetration": 1,     # 各页面DAU及渗透率
+    "page_avg_time": 1,     # 各页面平均时长
+    "page_retention": 1,     # 各页面留存
+    "image_ctr_by_placement": 1,     # 各位置照片ctr
+    "video_ctr_by_placement": 1,     # 各位置视频ctr
 }
 
 
@@ -635,6 +645,16 @@ if __name__ == "__main__":
 
         job_query_log_cost.JobQueryLogCost(start_time, end_time, "job_query_log_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "job_query_log_cost"))
 
+        page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
+
+        page_avg_time.PageAvgTime(start_time, end_time, "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
+
+        page_retention.PageRetention(start_time, end_time, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
+
+        image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
+
+        video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -896,6 +916,16 @@ if __name__ == "__main__":
         video_impression_duration_avg.VideoImpressionDurationAvg(start_time, end_time, country_code, "video_impression_duration_avg", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_duration_avg"))
     elif kind == "job_query_log_cost":
         job_query_log_cost.JobQueryLogCost(start_time, end_time, "job_query_log_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "job_query_log_cost"))
+    elif kind == "page_dau_and_penetration":
+        page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
+    elif kind == "page_avg_time":
+        page_avg_time.PageAvgTime(start_time, end_time, "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
+    elif kind == "page_retention":
+        page_retention.PageRetention(start_time, end_time, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
+    elif kind == "image_ctr_by_placement":
+        image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
+    elif kind == "video_ctr_by_placement":
+        video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
     else:
         pass
 

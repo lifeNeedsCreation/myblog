@@ -149,6 +149,11 @@ from indicator_scripts import video_watch_duration_avg
 from indicator_scripts import video_watch_duration_avg_by_count
 from indicator_scripts import video_impression_duration_avg
 from indicator_scripts import job_query_log_cost
+from indicator_scripts import page_dau_and_penetration
+from indicator_scripts import page_avg_time
+from indicator_scripts import page_retention
+from indicator_scripts import image_ctr_by_placement
+from indicator_scripts import video_ctr_by_placement
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -288,6 +293,11 @@ KIND = {
     "video_watch_duration_avg_by_count": "video_watch_duration_avg_by_count",     # 用户沉浸流看一个视频平均时长
     "video_impression_duration_avg": "video_impression_duration_avg",     # 用户沉浸外看视频流外平均时长
     "job_query_log_cost": "job_query_log_cost",     # BigQuery费用明细
+    "page_dau_and_penetration": "page_dau_and_penetration",     # 各页面DAU及渗透率
+    "page_avg_time": "page_avg_time",     # 各页面平均时长
+    "page_retention": "page_retention",     # 各页面留存
+    "image_ctr_by_placement": "image_ctr_by_placement",     # 各位置照片ctr
+    "video_ctr_by_placement": "video_ctr_by_placement",     # 各位置视频ctr
 }
 
 class AutoSyncMainDay:
@@ -698,6 +708,21 @@ class AutoSyncMainDay:
 
             elif key == "job_query_log_cost":
                 job_query_log_cost.JobQueryLogCost(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "page_dau_and_penetration":
+                page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "page_avg_time":
+                page_avg_time.PageAvgTime(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "page_retention":
+                page_retention.PageRetention(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "image_ctr_by_placement":
+                image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "video_ctr_by_placement":
+                video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
