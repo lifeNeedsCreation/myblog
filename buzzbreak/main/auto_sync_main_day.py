@@ -171,10 +171,10 @@ KIND = {
     # "news_ctr_notification_new_user_people": "day_news_ctr_notification_new_user_people",  # 新用户新闻push的ctr（人）
     # "news_ctr_notification_old_user": "day_news_ctr_notification_old_user",  # 老用户新闻push的ctr
     # "news_ctr_notification_old_user_people": "day_news_ctr_notification_old_user_people",  # 老用户新闻push的ctr（人）
-    # "video_ctr_notification_new_user": "day_video_ctr_notification_new_user",   # 新用户视频push的ctr
-    # "video_ctr_notification_new_user_people": "day_video_ctr_notification_new_user_people",   # 新用户视频push的ctr（人）
-    # "video_ctr_notification_old_user": "day_video_ctr_notification_old_user",   # 老用户视频push的ctr
-    # "video_ctr_notification_old_user_people": "day_video_ctr_notification_old_user_people",   # 老用户视频push的ctr（人）
+    "video_ctr_notification_new_user": "day_video_ctr_notification_new_user",   # 新用户视频push的ctr
+    "video_ctr_notification_new_user_people": "day_video_ctr_notification_new_user_people",   # 新用户视频push的ctr（人）
+    "video_ctr_notification_old_user": "day_video_ctr_notification_old_user",   # 老用户视频push的ctr
+    "video_ctr_notification_old_user_people": "day_video_ctr_notification_old_user_people",   # 老用户视频push的ctr（人）
     # "new_user_news_click_average": "day_new_user_news_click_average",    # 新用户新闻平均点击率
     # "new_user_video_watch_average": "day_new_user_video_watch_average",      # 新用户视频平均观看次数
     # "old_user_video_watch_average": "day_old_user_video_watch_average",      # 老用户视频平均观看次数
