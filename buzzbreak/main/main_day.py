@@ -645,15 +645,15 @@ if __name__ == "__main__":
 
         job_query_log_cost.JobQueryLogCost(start_time, end_time, "job_query_log_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "job_query_log_cost"))
 
-        page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
+        page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, country_code, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
 
-        page_avg_time.PageAvgTime(start_time, end_time, "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
+        page_avg_time.PageAvgTime(start_time, end_time, country_code "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
 
-        page_retention.PageRetention(start_time, end_time, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
+        page_retention.PageRetention(start_time, end_time, country_code, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
 
-        image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
+        image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, country_code,  "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
 
-        video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
+        video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, country_code,  "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
 
 
     elif kind == "ctr":
@@ -917,15 +917,15 @@ if __name__ == "__main__":
     elif kind == "job_query_log_cost":
         job_query_log_cost.JobQueryLogCost(start_time, end_time, "job_query_log_cost", logger).compute_data("{}/SQL/{}.sql".format(DIR, "job_query_log_cost"))
     elif kind == "page_dau_and_penetration":
-        page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
+        page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, country_code, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
     elif kind == "page_avg_time":
-        page_avg_time.PageAvgTime(start_time, end_time, "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
+        page_avg_time.PageAvgTime(start_time, end_time, country_code "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
     elif kind == "page_retention":
-        page_retention.PageRetention(start_time, end_time, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
+        page_retention.PageRetention(start_time, end_time, country_code, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
     elif kind == "image_ctr_by_placement":
-        image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
+        image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, country_code,  "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
     elif kind == "video_ctr_by_placement":
-        video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
+        video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, country_code,  "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
     else:
         pass
 
