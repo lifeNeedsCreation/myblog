@@ -647,7 +647,7 @@ if __name__ == "__main__":
 
         page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, country_code, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
 
-        page_avg_time.PageAvgTime(start_time, end_time, country_code "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
+        page_avg_time.PageAvgTime(start_time, end_time, country_code, "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
 
         page_retention.PageRetention(start_time, end_time, country_code, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
 
@@ -919,7 +919,7 @@ if __name__ == "__main__":
     elif kind == "page_dau_and_penetration":
         page_dau_and_penetration.PageDauAndPenetration(start_time, end_time, country_code, "page_dau_and_penetration", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_dau_and_penetration"))
     elif kind == "page_avg_time":
-        page_avg_time.PageAvgTime(start_time, end_time, country_code "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
+        page_avg_time.PageAvgTime(start_time, end_time, country_code, "page_avg_time", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_avg_time"))
     elif kind == "page_retention":
         page_retention.PageRetention(start_time, end_time, country_code, "page_retention", logger).compute_data("{}/SQL/{}.sql".format(DIR, "page_retention"))
     elif kind == "image_ctr_by_placement":
