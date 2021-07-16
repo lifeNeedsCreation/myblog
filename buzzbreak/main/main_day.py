@@ -147,6 +147,8 @@ from indicator_scripts import page_avg_time
 from indicator_scripts import page_retention
 from indicator_scripts import image_ctr_by_placement
 from indicator_scripts import video_ctr_by_placement
+from indicator_scripts import slience_user
+
 
 # 指标列表
 KIND = {
@@ -286,6 +288,7 @@ KIND = {
     "page_retention": 1,     # 各页面留存
     "image_ctr_by_placement": 1,     # 各位置照片ctr
     "video_ctr_by_placement": 1,     # 各位置视频ctr
+    "silent_user": 1,     # 沉默用户分级
 }
 
 
@@ -655,6 +658,8 @@ if __name__ == "__main__":
 
         video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, country_code,  "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
 
+        silent_user.SilentUser(start_time, end_time, country_code,  "silent_user", logger).compute_data("{}/SQL/{}.sql".format(DIR, "silent_user"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -926,6 +931,8 @@ if __name__ == "__main__":
         image_ctr_by_placement.ImageCtrByPlacement(start_time, end_time, country_code,  "image_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "image_ctr_by_placement"))
     elif kind == "video_ctr_by_placement":
         video_ctr_by_placement.VideoCtrByPlacement(start_time, end_time, country_code,  "video_ctr_by_placement", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_ctr_by_placement"))
+    elif kind == "silent_user":
+        silent_user.SilentUser(start_time, end_time, country_code,  "silent_user", logger).compute_data("{}/SQL/{}.sql".format(DIR, "silent_user"))
     else:
         pass
 
