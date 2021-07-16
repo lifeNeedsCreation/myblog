@@ -154,7 +154,7 @@ from indicator_scripts import page_avg_time
 from indicator_scripts import page_retention
 from indicator_scripts import image_ctr_by_placement
 from indicator_scripts import video_ctr_by_placement
-from indicator_scripts import slience_user
+from indicator_scripts import slient_user
 
 # 新用户指标
 NEW_USER_KIND = {
