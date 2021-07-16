@@ -147,7 +147,7 @@ from indicator_scripts import page_avg_time
 from indicator_scripts import page_retention
 from indicator_scripts import image_ctr_by_placement
 from indicator_scripts import video_ctr_by_placement
-from indicator_scripts import slience_user
+from indicator_scripts import silent_user
 
 
 # 指标列表
