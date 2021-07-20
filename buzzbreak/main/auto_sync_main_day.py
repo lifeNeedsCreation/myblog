@@ -155,6 +155,7 @@ from indicator_scripts import page_retention
 from indicator_scripts import image_ctr_by_placement
 from indicator_scripts import video_ctr_by_placement
 from indicator_scripts import silient_user
+from indicator_scripts import accounts_without_ad_click
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -300,6 +301,7 @@ KIND = {
     "image_ctr_by_placement": "image_ctr_by_placement",     # 各位置照片ctr
     "video_ctr_by_placement": "video_ctr_by_placement",     # 各位置视频ctr
     "silient_user": "silient_user",     # 沉默用户分级
+    "accounts_without_ad_click": "accounts_without_ad_click",       # 日活用户广告点击统计
 }
 
 class AutoSyncMainDay:
@@ -728,6 +730,9 @@ class AutoSyncMainDay:
 
             elif key == "silient_user":
                 silient_user.SilentUser(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "accounts_without_ad_click":
+                accounts_without_ad_click.AccountsWithoutAdClick(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
