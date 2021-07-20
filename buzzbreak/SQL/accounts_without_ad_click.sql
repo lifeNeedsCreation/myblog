@@ -11,7 +11,7 @@ with
         from (
             select account_id, day
             from bdp.stream_events_account_by_day
-            where day = date({start_time})
+            where day = date('{start_time}')
         )
         inner join accounts
         on account_id = id
@@ -22,8 +22,8 @@ with
         from (
             select distinct account_id, extract(date from created_at) as date
             from stream_events.ad_click
-            where created_at >= {start_time}
-            and created_at < {end_time}
+            where created_at >= '{start_time}'
+            and created_at < '{end_time}'
         )
         inner join accounts
         on account_id = id
