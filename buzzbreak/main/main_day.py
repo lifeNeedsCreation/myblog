@@ -666,7 +666,7 @@ if __name__ == "__main__":
 
         accounts_without_ad_click.AccountsWithoutAdClick(start_time, end_time, country_code,  "accounts_without_ad_click", logger).compute_data("{}/SQL/{}.sql".format(DIR, "accounts_without_ad_click"))
 
-        user_cash_value.UserCashVale(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
+        user_cash_value.UserCashValue(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
 
 
     elif kind == "ctr":
@@ -944,7 +944,7 @@ if __name__ == "__main__":
     elif kind == "accounts_without_ad_click":
         accounts_without_ad_click.AccountsWithoutAdClick(start_time, end_time, country_code,  "accounts_without_ad_click", logger).compute_data("{}/SQL/{}.sql".format(DIR, "accounts_without_ad_click"))
     elif kind == "user_cash_value":
-        user_cash_value.UserCashVale(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
+        user_cash_value.UserCashValue(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
     else:
         pass
 
