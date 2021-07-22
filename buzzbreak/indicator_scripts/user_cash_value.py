@@ -37,15 +37,22 @@ class UserCashValue(object):
         if user_cash_val_data[self.fields[0]]:
             # 结果数据存入数据库
             values = ""
+            n = 5000
             for field in self.fields:
                 values += field + ", "
             values += "create_time"
             insert_sql = f"INSERT INTO {self.table_name} ({values}) VALUES "
             now_time_utc = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+            value_sql = ''
             for i in range(len(user_cash_val_data[self.fields[0]])):
-                insert_sql += "("
+                value_sql += "("
                 for field in self.fields:
-                    insert_sql += f"'{user_cash_val_data[field][i]}', "
-                insert_sql += f"'{now_time_utc}'),"
-            insert_sql = insert_sql[:-1]
-            buzzbreak_mysql_client.execute_sql(insert_sql)
+                    value_sql += f'"{user_cash_val_data[field][i]}", '
+                value_sql += f"'{now_time_utc}'),"
+                if i % n == 0:
+                    insert_sql1 = insert_sql + value_sql[:-1]
+                    buzzbreak_mysql_client.execute_sql(insert_sql1)
+                    value_sql = ''
+                elif (i - len(user_cash_val_data[self.fields[0]])) == 0:
+                    insert_sql2 = insert_sql + value_sql[:-1]
+                    buzzbreak_mysql_client.execute_sql(insert_sql2)
