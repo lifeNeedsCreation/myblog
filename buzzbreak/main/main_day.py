@@ -149,6 +149,7 @@ from indicator_scripts import image_ctr_by_placement
 from indicator_scripts import video_ctr_by_placement
 from indicator_scripts import silient_user
 from indicator_scripts import accounts_without_ad_click
+from indicator_scripts import user_cash_value
 
 
 # 指标列表
@@ -291,6 +292,7 @@ KIND = {
     "video_ctr_by_placement": 1,     # 各位置视频ctr
     "silient_user": 1,     # 沉默用户分级
     "accounts_without_ad_click": 1,     # 日活用户广告点击统计
+    "user_cash_value": 1,       # 用户广告价值
 }
 
 
@@ -664,6 +666,8 @@ if __name__ == "__main__":
 
         accounts_without_ad_click.AccountsWithoutAdClick(start_time, end_time, country_code,  "accounts_without_ad_click", logger).compute_data("{}/SQL/{}.sql".format(DIR, "accounts_without_ad_click"))
 
+        user_cash_value.UserCashVale(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -939,6 +943,8 @@ if __name__ == "__main__":
         silient_user.SilentUser(start_time, end_time, country_code,  "silient_user", logger).compute_data("{}/SQL/{}.sql".format(DIR, "silient_user"))
     elif kind == "accounts_without_ad_click":
         accounts_without_ad_click.AccountsWithoutAdClick(start_time, end_time, country_code,  "accounts_without_ad_click", logger).compute_data("{}/SQL/{}.sql".format(DIR, "accounts_without_ad_click"))
+    elif kind == "user_cash_value":
+        user_cash_value.UserCashVale(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
     else:
         pass
 
