@@ -1,6 +1,6 @@
 with
     accounts as (
-        select id, name, country_code
+        select id, country_code
         from input.accounts
         where name is not null
     ),
@@ -44,7 +44,7 @@ with
     ),
 
     ad_click_info as (
-        select country_code, date, placement, account_id, name, click_count, total_click_count, ratio
+        select country_code, date, placement, account_id, click_count, total_click_count, ratio
         from (
             select u.date as date, u.placement as placement, account_id, click_count, total_click_count, round(click_count/total_click_count, 4) as ratio
             from ad_click_group_by_user as u
@@ -56,7 +56,7 @@ with
         on account_id = id
     )
   
-    select country_code, date, placement, account_id, name, click_count, total_click_count, ratio, round(sum(ad_value), 2) as ad_value, round(sum(val), 2) as val
+    select country_code, date, placement, account_id, click_count, total_click_count, ratio, round(sum(ad_value), 2) as ad_value, round(sum(val), 2) as val
     from (
       select c.*, round(val*ratio, 2) as ad_value, val
       from ad_click_info as c
@@ -65,5 +65,5 @@ with
       and c.placement = p.placement
       and c.date = p.date
     )
-    group by country_code, date, placement, account_id, name, click_count, total_click_count, ratio
+    group by country_code, date, placement, account_id, click_count, total_click_count, ratio
     order by country_code, date, placement, ratio desc

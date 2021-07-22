@@ -14,7 +14,7 @@ class UserCashValue(object):
         self.end_time = end_time
         self.table_name = table_name
         self.logger = logger
-        self.fields = ["country_code", "date", "placement", "account_id", "name", "click_count", "total_click_count", "ratio", "ad_value", "val"]
+        self.fields = ["country_code", "date", "placement", "account_id", "click_count", "total_click_count", "ratio", "ad_value", "val"]
 
     # 查询 BigQuery，并解析组装数据
     def get_data(self, sql):
