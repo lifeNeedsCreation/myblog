@@ -29,6 +29,7 @@ class UserCashValue(object):
     # 组装查询 sql，并将统计计算结果存入 mysql
     def compute_data(self, path):
         start_time = self.start_time.strftime("%Y-%m-%d")
+        end_time = self.end_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
         params = {"start_time": start_time, "end_time": end_time}
         query = sql.format(**params)
