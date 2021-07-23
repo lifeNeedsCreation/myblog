@@ -25,40 +25,41 @@ with
     ),
 
     ad_click as (
-        select account_id, json_extract_scalar(data, '$.placement') as placement, extract(date from created_at) as date
-        from stream_events.ad_click
-        where created_at >= '{start_time}'
-        and created_at < '{end_time}'
-    ),
-
-    ad_click_group_by_user as (
-        select date, placement, account_id, count(*) as click_count
-        from ad_click
-        group by date, placement, account_id
-    ),
-
-    ad_click_group_by_placement as (
-        select date, placement, count(*) as total_click_count
-        from ad_click
-        group by date, placement
-    ),
-
-    ad_click_info as (
-        select country_code, date, placement, account_id, click_count, total_click_count, ratio
+        select country_code, account_id, placement, date
         from (
-            select u.date as date, u.placement as placement, account_id, click_count, total_click_count, round(click_count/total_click_count, 4) as ratio
-            from ad_click_group_by_user as u
-            inner join ad_click_group_by_placement as p
-            on u.date = p.date 
-            and u.placement = p.placement
+            select account_id, json_extract_scalar(data, '$.placement') as placement, extract(date from created_at) as date
+            from stream_events.ad_click
+            where created_at >= '{start_time}'
+            and created_at < '{end_time}'
         )
         inner join accounts
         on account_id = id
+    ),
+
+    ad_click_group_by_user as (
+        select country_code, date, placement, account_id, count(*) as click_count
+        from ad_click
+        group by country_code, date, placement, account_id
+    ),
+
+    ad_click_group_by_placement as (
+        select country_code, date, placement, count(*) as total_click_count
+        from ad_click
+        group by country_code, date, placement
+    ),
+
+    ad_click_info as (
+        select u.country_code as country_code, u.date as date, u.placement as placement, account_id, click_count, total_click_count, round(click_count/total_click_count, 4) as ratio
+        from ad_click_group_by_user as u
+        inner join ad_click_group_by_placement as p
+        on u.country_code = p.country_code
+        and u.date = p.date 
+        and u.placement = p.placement
     )
   
-    select country_code, date, placement, account_id, click_count, total_click_count, ratio, round(sum(ad_value), 2) as ad_value, round(sum(val), 2) as val
+    select country_code, date, placement, account_id, click_count, total_click_count, ratio, round(sum(ad_value), 4) as ad_value, round(sum(val), 4) as val
     from (
-      select c.*, round(val*ratio, 2) as ad_value, val
+      select c.*, round(val*ratio, 4) as ad_value, val
       from ad_click_info as c
       inner join ad_placement_info as p
       on c.country_code = p.country_code
