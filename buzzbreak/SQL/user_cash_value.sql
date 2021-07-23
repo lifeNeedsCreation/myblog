@@ -57,7 +57,7 @@ with
         and u.placement = p.placement
     )
   
-    select country_code, date, placement, account_id, click_count, total_click_count, ratio, round(sum(ad_value), 4) as ad_value, round(sum(val), 4) as val
+    select country_code, date, placement, account_id, click_count, total_click_count, ratio, sum(ad_value) as ad_value, sum(val) as val
     from (
       select c.*, round(val*ratio, 4) as ad_value, val
       from ad_click_info as c
