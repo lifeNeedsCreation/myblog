@@ -59,7 +59,7 @@ with
   
     select country_code, date, placement, account_id, click_count, total_click_count, ratio, sum(ad_value) as ad_value, sum(val) as val
     from (
-      select c.*, round(val*ratio, 4) as ad_value, val
+      select c.*, (val*ratio) as ad_value, val
       from ad_click_info as c
       inner join ad_placement_info as p
       on c.country_code = p.country_code
