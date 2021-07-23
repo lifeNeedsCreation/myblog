@@ -49,7 +49,7 @@ with
     ),
 
     ad_click_info as (
-        select u.country_code as country_code, u.date as date, u.placement as placement, account_id, click_count, total_click_count, round(click_count/total_click_count, 4) as ratio
+        select u.country_code as country_code, u.date as date, u.placement as placement, account_id, click_count, total_click_count, (click_count/total_click_count) as ratio
         from ad_click_group_by_user as u
         inner join ad_click_group_by_placement as p
         on u.country_code = p.country_code
