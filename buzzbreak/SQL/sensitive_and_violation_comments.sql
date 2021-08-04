@@ -62,10 +62,14 @@ with
 
     one_level_violation_accounts_info as (
         select id, extract(date from comment_level_updated_at) as date
-        from partiko.accounts_comments_penalty_info
-        where comment_level_updated_at >= '{start_time}'
-        and comment_level_updated_at < '{end_time}'
-        and comment_penalty_level = 1
+        from (
+            select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
+            from partiko.accounts_comments_penalty_info
+            where comment_level_updated_at >= '{start_time}'
+            and comment_level_updated_at < '{end_time}'
+            and comment_penalty_level = 1
+            )
+        where rank = 1
     ),
 
     one_level_violation_accounts_group as (
@@ -78,10 +82,14 @@ with
 
     two_level_violation_accounts_info as (
         select id, extract(date from comment_level_updated_at) as date
-        from partiko.accounts_comments_penalty_info
-        where comment_level_updated_at >= '{start_time}'
-        and comment_level_updated_at < '{end_time}'
-        and comment_penalty_level = 2
+        from (
+            select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
+            from partiko.accounts_comments_penalty_info
+            where comment_level_updated_at >= '{start_time}'
+            and comment_level_updated_at < '{end_time}'
+            and comment_penalty_level = 2
+            )
+        where rank = 1
     ),
 
     two_level_violation_accounts_group as (
@@ -94,10 +102,14 @@ with
 
     three_level_violation_accounts_info as (
         select id, extract(date from comment_level_updated_at) as date
-        from partiko.accounts_comments_penalty_info
-        where comment_level_updated_at >= '{start_time}'
-        and comment_level_updated_at < '{end_time}'
-        and comment_penalty_level = 1
+        from (
+            select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
+            from partiko.accounts_comments_penalty_info
+            where comment_level_updated_at >= '{start_time}'
+            and comment_level_updated_at < '{end_time}'
+            and comment_penalty_level = 3
+            )
+        where rank = 1
     ),
 
     three_level_violation_accounts_group as (
@@ -110,10 +122,14 @@ with
 
     four_level_violation_accounts_info as (
         select id, extract(date from comment_level_updated_at) as date
-        from partiko.accounts_comments_penalty_info
-        where comment_level_updated_at >= '{start_time}'
-        and comment_level_updated_at < '{end_time}'
-        and comment_penalty_level = 1
+        from (
+            select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
+            from partiko.accounts_comments_penalty_info
+            where comment_level_updated_at >= '{start_time}'
+            and comment_level_updated_at < '{end_time}'
+            and comment_penalty_level = 4
+            )
+        where rank = 1
     ),
 
     four_level_violation_accounts_group as (
@@ -130,6 +146,7 @@ with
             select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
             from partiko.accounts_comments_penalty_info
             where comment_penalty_level = 1
+            and comment_level_updated_at < '{end_time}'
         )
         where rank = 1
     ),
@@ -148,6 +165,7 @@ with
             select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
             from partiko.accounts_comments_penalty_info
             where comment_penalty_level = 2
+            and comment_level_updated_at < '{end_time}'
         )
         where rank = 1
     ),
@@ -166,6 +184,7 @@ with
             select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
             from partiko.accounts_comments_penalty_info
             where comment_penalty_level = 3
+            and comment_level_updated_at < '{end_time}'
         )
         where rank = 1
     ),
@@ -184,6 +203,7 @@ with
             select *, row_number() over (partition by id order by comment_level_updated_at desc) as rank
             from partiko.accounts_comments_penalty_info
             where comment_penalty_level = 4
+            and comment_level_updated_at < '{end_time}'
         )
         where rank = 1
     ),
