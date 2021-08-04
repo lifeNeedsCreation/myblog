@@ -157,6 +157,7 @@ from indicator_scripts import video_ctr_by_placement
 from indicator_scripts import silient_user
 from indicator_scripts import accounts_without_ad_click
 from indicator_scripts import user_cash_value
+from indicator_scripts import sensitive_and_violation_comments
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -304,6 +305,7 @@ KIND = {
     "silient_user": "silient_user",     # 沉默用户分级
     "accounts_without_ad_click": "accounts_without_ad_click",       # 日活用户广告点击统计
     "user_cash_value": "user_cash_value",       # 用户广告价值
+    "sensitive_and_violation_comments": "sensitive_and_violation_comments",       # 含有敏感词违规评论统计
 }
 
 class AutoSyncMainDay:
@@ -738,6 +740,9 @@ class AutoSyncMainDay:
 
             elif key == "user_cash_value":
                 user_cash_value.UserCashValue(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "sensitive_and_violation_comments":
+                sensitive_and_violation_comments.SensitiveAndViolationComments(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
