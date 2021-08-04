@@ -266,6 +266,7 @@ with
         ) as c
         left join four_level_violation_accounts_all_group as f
         on c.country_code = f.country_code
+        where c.country_code is not null
     )
 
     select *
