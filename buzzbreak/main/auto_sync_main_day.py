@@ -305,7 +305,7 @@ KIND = {
     "silient_user": "silient_user",     # 沉默用户分级
     "accounts_without_ad_click": "accounts_without_ad_click",       # 日活用户广告点击统计
     "user_cash_value": "user_cash_value",       # 用户广告价值
-    "sensitive_and_violation_comments": "sensitive_and_violation_comments",       # 含有敏感词违规评论统计
+    # "sensitive_and_violation_comments": "sensitive_and_violation_comments",       # 含有敏感词违规评论统计
 }
 
 class AutoSyncMainDay:
@@ -750,7 +750,7 @@ class AutoSyncMainDay:
 
 if __name__ == "__main__":
     logger = Logger("BuzzBreak Auto Sync Main Day", os.path.join(DIR, 'logs/auto_sync_main_day.log'), users=["teddy"])
-    sync_tables = ["input.accounts", "partiko.memories", "partiko.account_profiles", "partiko.point_transactions", "partiko.withdraw_transactions", "partiko.referrals", "partiko.ads", "partiko.posts", "partiko.comments_review_status", "partiko.accounts_comments_penalty_info"]
+    sync_tables = ["input.accounts", "partiko.memories", "partiko.account_profiles", "partiko.point_transactions", "partiko.withdraw_transactions", "partiko.referrals", "partiko.ads", "partiko.posts", "partiko.comments_review_status"]
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
     while True:
