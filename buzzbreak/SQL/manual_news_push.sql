@@ -67,9 +67,9 @@ with
         group by country_code, date, news_id
     )
 
-    select a.country_code as country_code, a.date as date, a.news_id as news_id, ifnull(click_num, 0) as click_num, received_num, (case when received_num = 0 then 0 else round(click_num/received_num, 4) end) as click_ratio, pushed_num, received_ratio
+    select a.country_code as country_code, a.date as date, a.news_id as news_id, ifnull(click_num, 0) as click_num, received_num, (case when received_num = 0 then 0 else round(ifnull(click_num, 0)/received_num, 4) end) as click_ratio, pushed_num, received_ratio
     from (
-        select p.country_code as country_code, p.date as date, p.news_id as news_id, ifnull(received_num, 0) as received_num, pushed_num, (case when pushed_num = 0 then 0 else round(received_num/pushed_num, 4) end) received_ratio
+        select p.country_code as country_code, p.date as date, p.news_id as news_id, ifnull(received_num, 0) as received_num, pushed_num, (case when pushed_num = 0 then 0 else round(ifnull(received_num, 0)/pushed_num, 4) end) received_ratio
         from pushed_group as p
         left join received_group as r
         on p.country_code = r.country_code
