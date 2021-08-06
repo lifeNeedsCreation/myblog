@@ -158,6 +158,7 @@ from indicator_scripts import silient_user
 from indicator_scripts import accounts_without_ad_click
 from indicator_scripts import user_cash_value
 from indicator_scripts import sensitive_and_violation_comments
+from indicator_scripts import manual_news_push
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -306,6 +307,7 @@ KIND = {
     "accounts_without_ad_click": "accounts_without_ad_click",       # 日活用户广告点击统计
     "user_cash_value": "user_cash_value",       # 用户广告价值
     # "sensitive_and_violation_comments": "sensitive_and_violation_comments",       # 含有敏感词违规评论统计
+    "manual_news_push": "manual_news_push",      # 人工推送统计
 }
 
 class AutoSyncMainDay:
@@ -744,13 +746,16 @@ class AutoSyncMainDay:
             elif key == "sensitive_and_violation_comments":
                 sensitive_and_violation_comments.SensitiveAndViolationComments(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
+            elif key == "manual_news_push":
+                manual_news_push.ManulNewsPush(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
             self.logger.info("sync {} indicator end use {} seconds".format(key, indicator_use_time))
 
 if __name__ == "__main__":
     logger = Logger("BuzzBreak Auto Sync Main Day", os.path.join(DIR, 'logs/auto_sync_main_day.log'), users=["teddy"])
-    sync_tables = ["input.accounts", "partiko.memories", "partiko.account_profiles", "partiko.point_transactions", "partiko.withdraw_transactions", "partiko.referrals", "partiko.ads", "partiko.posts", "partiko.comments_review_status"]
+    sync_tables = ["input.accounts", "partiko.memories", "partiko.account_profiles", "partiko.point_transactions", "partiko.withdraw_transactions", "partiko.referrals", "partiko.ads", "partiko.posts", "partiko.comments_review_status", "partiko.news_push"]
     sync_tables_str = "'" + "', '".join(sync_tables) + "'"
     fields = ["table_name", "updated_at"]
     while True:

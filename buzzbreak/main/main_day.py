@@ -151,6 +151,7 @@ from indicator_scripts import silient_user
 from indicator_scripts import accounts_without_ad_click
 from indicator_scripts import user_cash_value
 from indicator_scripts import sensitive_and_violation_comments
+from indicator_scripts import manual_news_push
 
 
 # 指标列表
@@ -295,6 +296,7 @@ KIND = {
     "accounts_without_ad_click": 1,     # 日活用户广告点击统计
     "user_cash_value": 1,       # 用户广告价值
     "sensitive_and_violation_comments": 1,       # 含有敏感词违规评论统计
+    "manual_news_push": 1,      # 人工推送统计
 }
 
 
@@ -672,6 +674,8 @@ if __name__ == "__main__":
 
         sensitive_and_violation_comments.SensitiveAndViolationComments(start_time, end_time, country_code,  "sensitive_and_violation_comments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "sensitive_and_violation_comments"))
 
+        manual_news_push.ManualNewsPush(start_time, end_time, "manual_news_push", logger).compute_data("{}/SQL/{}.sql".format(DIR, "manual_news_push"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -951,6 +955,8 @@ if __name__ == "__main__":
         user_cash_value.UserCashValue(start_time, end_time, "user_cash_value", logger).compute_data("{}/SQL/{}.sql".format(DIR, "user_cash_value"))
     elif kind == "sensitive_and_violation_comments":
         sensitive_and_violation_comments.SensitiveAndViolationComments(start_time, end_time, country_code,  "sensitive_and_violation_comments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "sensitive_and_violation_comments"))
+    elif kind == "manual_news_push":
+        manual_news_push.ManualNewsPush(start_time, end_time, "manual_news_push", logger).compute_data("{}/SQL/{}.sql".format(DIR, "manual_news_push"))
     else:
         pass
 
