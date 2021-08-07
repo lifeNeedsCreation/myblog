@@ -19,6 +19,7 @@ with
         )
         left join accounts
         on id = account_id
+        where country_code is not null
     ),
 
     video_impression_info as (
@@ -31,6 +32,7 @@ with
         )
         left join accounts
         on account_id = id
+        where country_code is not null
     ),
 
     video_union_info as (
