@@ -967,7 +967,7 @@ if __name__ == "__main__":
         manual_news_push.ManualNewsPush(start_time, end_time, "manual_news_push", logger).compute_data("{}/SQL/{}.sql".format(DIR, "manual_news_push"))
     elif kind == "video_impression_count":
         video_impression_count.VideoImpressionCount(start_time, end_time, "video_impression_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_count"))
-    elif kind == "video_impression_count":
+    elif kind == "video_impression_author_count":
         video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, "video_impression_author_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_author_count"))
     else:
         pass
