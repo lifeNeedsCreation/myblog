@@ -9,8 +9,9 @@ class VideoImpressionAuthorCount(object):
     : param table_name：计算结果存的表
     """
     # 构造函数，初始化数据
-    def __init__(self, start_time, table_name, logger=None):
+    def __init__(self, start_time, end_time, table_name, logger=None):
         self.start_time = start_time
+        self.end_time = end_time
         self.table_name = table_name
         self.logger = logger
         self.fields = ["country_code", "date", "author_num"]
@@ -28,8 +29,9 @@ class VideoImpressionAuthorCount(object):
     # 组装查询 sql，并将统计计算结果存入 mysql
     def compute_data(self, path):
         start_time = self.start_time.strftime("%Y-%m-%d")
+        end_time = self.end_time.strftime("%Y-%m-%d")
         sql = read_sql(path)
-        params = {"start_time": start_time}
+        params = {"start_time": start_time, "end_time": end_time}
         query = sql.format(**params)
         video_impression_author_count_data = self.get_data(query)
         if video_impression_author_count_data[self.fields[0]]:
