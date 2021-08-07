@@ -159,6 +159,8 @@ from indicator_scripts import accounts_without_ad_click
 from indicator_scripts import user_cash_value
 from indicator_scripts import sensitive_and_violation_comments
 from indicator_scripts import manual_news_push
+from indicator_scripts import video_impression_count
+from indicator_scripts import video_impression_author_count
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -308,6 +310,8 @@ KIND = {
     "user_cash_value": "user_cash_value",       # 用户广告价值
     # "sensitive_and_violation_comments": "sensitive_and_violation_comments",       # 含有敏感词违规评论统计
     "manual_news_push": "manual_news_push",      # 人工推送统计
+    "video_impression_count": "video_impression_count",      # 视频曝光次数
+    "video_impression_author_count": "video_impression_author_count",      # 作者曝光次数
 }
 
 class AutoSyncMainDay:
@@ -748,6 +752,12 @@ class AutoSyncMainDay:
 
             elif key == "manual_news_push":
                 manual_news_push.ManulNewsPush(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "video_impression_count":
+                video_impression_count.VideoImpressionCount(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "video_impression_author_count":
+                video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time

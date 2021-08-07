@@ -152,6 +152,8 @@ from indicator_scripts import accounts_without_ad_click
 from indicator_scripts import user_cash_value
 from indicator_scripts import sensitive_and_violation_comments
 from indicator_scripts import manual_news_push
+from indicator_scripts import video_impression_count
+from indicator_scripts import video_impression_author_count
 
 
 # 指标列表
@@ -297,6 +299,8 @@ KIND = {
     "user_cash_value": 1,       # 用户广告价值
     "sensitive_and_violation_comments": 1,       # 含有敏感词违规评论统计
     "manual_news_push": 1,      # 人工推送统计
+    "video_impression_count": 1,      # 视频曝光次数
+    "video_impression_author_count": 1,      # 作者曝光次数
 }
 
 
@@ -676,6 +680,10 @@ if __name__ == "__main__":
 
         manual_news_push.ManualNewsPush(start_time, end_time, "manual_news_push", logger).compute_data("{}/SQL/{}.sql".format(DIR, "manual_news_push"))
 
+        video_impression_count.VideoImpressionCount(start_time, end_time, "video_impression_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_count"))
+
+        video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, "video_impression_author_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_author_count"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -957,6 +965,10 @@ if __name__ == "__main__":
         sensitive_and_violation_comments.SensitiveAndViolationComments(start_time, end_time, country_code,  "sensitive_and_violation_comments", logger).compute_data("{}/SQL/{}.sql".format(DIR, "sensitive_and_violation_comments"))
     elif kind == "manual_news_push":
         manual_news_push.ManualNewsPush(start_time, end_time, "manual_news_push", logger).compute_data("{}/SQL/{}.sql".format(DIR, "manual_news_push"))
+    elif kind == "video_impression_count":
+        video_impression_count.VideoImpressionCount(start_time, end_time, "video_impression_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_count"))
+    elif kind == "video_impression_count":
+        video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, "video_impression_author_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_author_count"))
     else:
         pass
 
