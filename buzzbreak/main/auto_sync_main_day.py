@@ -751,7 +751,7 @@ class AutoSyncMainDay:
                 sensitive_and_violation_comments.SensitiveAndViolationComments(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "manual_news_push":
-                manual_news_push.ManulNewsPush(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+                manual_news_push.ManualNewsPush(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             elif key == "video_impression_count":
                 video_impression_count.VideoImpressionCount(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
