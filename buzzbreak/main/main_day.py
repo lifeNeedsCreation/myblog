@@ -154,6 +154,7 @@ from indicator_scripts import sensitive_and_violation_comments
 from indicator_scripts import manual_news_push
 from indicator_scripts import video_impression_count
 from indicator_scripts import video_impression_author_count
+from indicator_scripts import dau
 
 
 # 指标列表
@@ -301,6 +302,7 @@ KIND = {
     "manual_news_push": 1,      # 人工推送统计
     "video_impression_count": 1,      # 视频曝光次数
     "video_impression_author_count": 1,      # 作者曝光次数
+    "dau": 1,      # 各国家日活统计
 }
 
 
@@ -684,6 +686,8 @@ if __name__ == "__main__":
 
         video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, "video_impression_author_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_author_count"))
 
+        dau.DAU(start_time, end_time, country_code,  "dau", logger).compute_data("{}/SQL/{}.sql".format(DIR, "dau"))
+
 
     elif kind == "ctr":
         ctr.CTRData(start_time, end_time, country_code, placement, indicator_dimension, "day_news_ctr", logger).compute_data()
@@ -969,6 +973,8 @@ if __name__ == "__main__":
         video_impression_count.VideoImpressionCount(start_time, end_time, "video_impression_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_count"))
     elif kind == "video_impression_author_count":
         video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, "video_impression_author_count", logger).compute_data("{}/SQL/{}.sql".format(DIR, "video_impression_author_count"))
+    elif kind == "dau":
+        dau.DAU(start_time, end_time, country_code,  "dau", logger).compute_data("{}/SQL/{}.sql".format(DIR, "dau"))
     else:
         pass
 

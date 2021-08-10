@@ -161,6 +161,7 @@ from indicator_scripts import sensitive_and_violation_comments
 from indicator_scripts import manual_news_push
 from indicator_scripts import video_impression_count
 from indicator_scripts import video_impression_author_count
+from indicator_scripts import dau
 
 # 新用户指标
 NEW_USER_KIND = {
@@ -312,6 +313,7 @@ KIND = {
     "manual_news_push": "manual_news_push",      # 人工推送统计
     "video_impression_count": "video_impression_count",      # 视频曝光次数
     "video_impression_author_count": "video_impression_author_count",      # 作者曝光次数
+    "dau": "dau",      # 各国家日活统计
 }
 
 class AutoSyncMainDay:
@@ -758,6 +760,9 @@ class AutoSyncMainDay:
 
             elif key == "video_impression_author_count":
                 video_impression_author_count.VideoImpressionAuthorCount(start_time, end_time, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
+
+            elif key == "dau":
+                dau.DAU(start_time, end_time, self.country_code, value, logger).compute_data("{}/SQL/{}.sql".format(DIR, value))
 
             indicator_end_time = datetime.datetime.now()
             indicator_use_time = indicator_end_time - indicator_start_time
