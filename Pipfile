@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-certifi = "==2019.3.9"
+certifi = "==2022.12.7"
 chardet = "==3.0.4"
 construct = "==2.5.3"
 django-haystack = "==2.8.1"
